@@ -56,7 +56,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
               </div>
               <div>
                 <h1 className="text-4xl md:text-6xl font-bold font-handwritten" style={{ color: '#CB748E' }}>
-                  TALK with <span className="text-yellow-300">NESTY!</span>
+                <span className="text-white">TALK with </span><span className="text-yellow-300">NESTY!</span>
                 </h1>
               </div>
             </div>
