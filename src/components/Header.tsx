@@ -117,7 +117,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
-          </div>
+          <img src="/logo-name.svg" alt="BukNEST" className="ml-2 h-6" />
         </div>
 
         {/* Mobile Navigation */}

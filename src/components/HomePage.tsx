@@ -64,9 +64,9 @@ export default function HomePage({ onPageChange }: HomePageProps) {
             </div>
             
             {/* Brand Name */}
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-green-800 mb-4 leading-tight tracking-tight font-handwritten">
-              BukNEST
-            </h1>
+            <div className="flex justify-center mb-4">
+              <img src="/logo-name.svg" alt="BukNEST" className="h-16 md:h-24 lg:h-32" />
+            </div>
             
             {/* Tagline */}
             <div className="text-2xl md:text-3xl lg:text-4xl font-medium text-green-600 mb-8 font-handwritten">
