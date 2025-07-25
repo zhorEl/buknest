@@ -504,8 +504,8 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
                   <div className="flex items-center">
                     <AlertTriangle className="h-4 w-4 text-green-600 mr-2" />
                     <span className="text-sm text-green-700 font-semibold font-readable">Error Rate</span>
-                  <p className="text-sm font-medium text-green-600 font-readable">Response</p>
-                  <p className="text-2xl font-bold text-green-800">{stats.avgResponseTime}ms</p>
+                  </div>
+                  <span className="text-sm font-bold text-green-600 font-readable">0.1%</span>
                 </div>
               </div>
             </div>
