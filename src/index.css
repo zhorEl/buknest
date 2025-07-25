@@ -14,5 +14,22 @@
 @layer base {
   body {
     font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 50%, #ecfdf5 100%);
+    min-height: 100vh;
   }
+}
+
+/* Custom animations for floating elements */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 3s ease-in-out infinite;
+  animation-delay: 1.5s;
 }
