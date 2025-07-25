@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Heart, User, Calendar, MessageCircle, LogIn, LogOut } from 'lucide-react';
+import { Menu, X, User, Calendar, MessageCircle, LogIn, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
@@ -24,9 +24,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-green-500 rounded-full flex items-center justify-center">
-              <Heart className="h-5 w-5 text-white" />
-            </div>
+            <img src="/icon.svg" alt="BukNEST Logo" className="w-8 h-8" />
             <span className="ml-2 text-xl font-bold text-green-800 font-handwritten">BukNEST</span>
           </div>
 

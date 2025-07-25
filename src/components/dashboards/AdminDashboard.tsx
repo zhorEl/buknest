@@ -183,7 +183,7 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             </div>
             <div className="hidden md:block">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-4">
-                <Shield className="h-10 w-10 text-white" />
+                <img src="/icon.svg" alt="BukNEST Logo" className="h-10 w-10" />
               </div>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, Users, Calendar, Star, ArrowRight, Shield, Clock, Heart } from 'lucide-react';
+import { MessageCircle, Users, Calendar, Star, ArrowRight, Shield, Clock } from 'lucide-react';
 
 interface HomePageProps {
   onPageChange: (page: string) => void;
@@ -59,9 +59,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
             {/* Brand Logo */}
             <div className="flex justify-center mb-6">
               <div className="p-6 bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg border border-white border-opacity-50">
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-green-500 rounded-2xl flex items-center justify-center">
-                  <Heart className="h-8 w-8 text-white" />
-                </div>
+                <img src="/icon.svg" alt="BukNEST Logo" className="w-16 h-16" />
               </div>
             </div>
             

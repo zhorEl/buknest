@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, User, MessageCircle, TrendingUp, Bell, Plus, Clock, Star, FileText, Baby, Heart, Activity, BookOpen, Users, Phone, MapPin, AlertCircle } from 'lucide-react';
+import { Calendar, User, MessageCircle, TrendingUp, Bell, Plus, Clock, Star, FileText, Baby, Activity, BookOpen, Users, Phone, MapPin, AlertCircle } from 'lucide-react';
 
 interface ParentDashboardProps {
   user: any;
@@ -136,7 +136,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
             </div>
             <div className="hidden md:block">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-4">
-                <Heart className="h-10 w-10 text-white" />
+                <img src="/icon.svg" alt="BukNEST Logo" className="h-10 w-10" />
               </div>
             </div>
           </div>
