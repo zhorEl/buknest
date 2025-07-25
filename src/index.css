@@ -1,16 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Custom font classes */
-.font-handwritten {
-  font-family: 'Kalam', cursive;
-}
-
-.font-sans {
-  font-family: 'Inter', sans-serif;
-}
 
 @layer base {
   body {
@@ -18,61 +9,17 @@
     @apply antialiased;
   }
   
+  .font-serif {
+    font-family: 'Playfair Display', serif;
+  }
+  
   html {
     scroll-behavior: smooth;
   }
-  
-  * {
-    @apply transition-colors duration-200;
-  }
 }
 
-/* Custom animations */
-@keyframes float {
-  0%, 100% { 
-    transform: translateY(0px) rotate(0deg); 
-  }
-  50% { 
-    transform: translateY(-15px) rotate(5deg); 
-  }
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
-}
-
-.animate-float-delayed {
-  animation: float 4s ease-in-out infinite;
-  animation-delay: 2s;
-}
-
-/* Custom shadow utilities */
 @layer utilities {
   .shadow-3xl {
     box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
-  }
-  
-  .shadow-4xl {
-    box-shadow: 0 45px 100px -12px rgba(0, 0, 0, 0.25);
-  }
-}
-
-/* Smooth scrolling for anchor links */
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
-  }
-}
-
-/* Custom gradient backgrounds */
-.bg-organic-gradient {
-  background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 25%, #ecfdf5 50%, #fef3c7 75%, #fdf2f8 100%);
-}
-
-/* Improved focus states for accessibility */
-@layer base {
-  button:focus-visible,
-  a:focus-visible {
-    @apply outline-2 outline-offset-2 outline-purple-500;
   }
 }
