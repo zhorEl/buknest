@@ -25,7 +25,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <img src="/icon.svg" alt="BukNEST Logo" className="w-8 h-8" />
-            <span className="ml-2 text-xl font-bold text-green-800 font-handwritten">BukNEST</span>
+            <img src="/logo-name.svg" alt="BukNEST" className="ml-2 h-6" />
           </div>
 
           {/* Desktop Navigation */}
