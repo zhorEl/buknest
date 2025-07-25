@@ -40,14 +40,16 @@ export default function HomePage({ onPageChange }: HomePageProps) {
   return (
     <div className="min-h-screen">
       {/* NESTY Jumbotron */}
-      <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white py-8 relative overflow-hidden">
+      <div className="bg-gradient-to-r from-pink-400 via-rose-400 to-green-500 text-white py-20 relative overflow-hidden min-h-[60vh]">
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
         <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
         <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-12 h-12 bg-white bg-opacity-10 rounded-full"></div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center min-h-[50vh]">
+          <div className="text-center w-full">
             <div className="flex justify-center items-center mb-4">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
                 <MessageCircle className="h-12 w-12 text-white" />
@@ -56,21 +58,32 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                 <h1 className="text-4xl md:text-6xl font-bold font-handwritten">
                   TALK with <span className="text-yellow-300">NESTY!</span>
                 </h1>
-                <p className="text-xl md:text-2xl text-white text-opacity-90 font-readable mt-2">
-                  Your AI-powered companion for assessment
-                </p>
               </div>
+            </div>
+            
+            <div className="max-w-4xl mx-auto mb-8">
+              <p className="text-xl md:text-2xl text-white text-opacity-95 font-readable mb-4">
+                Your friendly AI-powered companion for early assessment
+              </p>
+              <p className="text-lg md:text-xl text-white text-opacity-90 font-readable leading-relaxed">
+                NESTY creates a safe, welcoming space where you can share your concerns about your child's development. 
+                Through gentle conversation, NESTY helps identify early signs and provides personalized guidance to support 
+                your child's unique journey. No judgment, just understanding and support.
+              </p>
             </div>
             
             <div className="mt-6">
               <button
                 onClick={() => onPageChange('assessment')}
-                className="bg-white text-green-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto font-handwritten"
+                className="bg-white text-pink-600 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto font-handwritten"
               >
                 <MessageCircle className="h-6 w-6 mr-3" />
                 Start Chatting with NESTY
                 <ArrowRight className="ml-3 h-6 w-6" />
               </button>
+              <p className="text-sm text-white text-opacity-80 mt-4 font-readable">
+                Free • Confidential • No registration required
+              </p>
             </div>
           </div>
         </div>
