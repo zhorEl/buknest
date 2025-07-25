@@ -3,6 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Custom font classes */
 .font-handwritten {
   font-family: 'Kalam', cursive;
 }
@@ -14,22 +15,64 @@
 @layer base {
   body {
     font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 50%, #ecfdf5 100%);
-    min-height: 100vh;
+    @apply antialiased;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  * {
+    @apply transition-colors duration-200;
   }
 }
 
-/* Custom animations for floating elements */
+/* Custom animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  50% { 
+    transform: translateY(-15px) rotate(5deg); 
+  }
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4s ease-in-out infinite;
 }
 
 .animate-float-delayed {
-  animation: float 3s ease-in-out infinite;
-  animation-delay: 1.5s;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Custom shadow utilities */
+@layer utilities {
+  .shadow-3xl {
+    box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
+  }
+  
+  .shadow-4xl {
+    box-shadow: 0 45px 100px -12px rgba(0, 0, 0, 0.25);
+  }
+}
+
+/* Smooth scrolling for anchor links */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Custom gradient backgrounds */
+.bg-organic-gradient {
+  background: linear-gradient(135deg, #fdf2f8 0%, #f3e8ff 25%, #ecfdf5 50%, #fef3c7 75%, #fdf2f8 100%);
+}
+
+/* Improved focus states for accessibility */
+@layer base {
+  button:focus-visible,
+  a:focus-visible {
+    @apply outline-2 outline-offset-2 outline-purple-500;
+  }
 }
