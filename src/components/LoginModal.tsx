@@ -129,7 +129,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                   onClick={() => setUserType(type.value as any)}
                   className={`p-3 rounded-lg border text-center transition-colors ${
                     userType === type.value
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      ? 'border-green-500 bg-green-50 text-green-700'
                       : 'border-gray-300 hover:bg-gray-50'
                   }`}
                 >
@@ -141,18 +141,18 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
           </div>
 
           {/* Sample Credentials Helper */}
-          <div className="mb-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="mb-4 p-3 bg-green-50 rounded-lg border border-green-200">
             <div className="flex justify-between items-center">
               <div>
-                <p className="text-sm font-medium text-blue-800">Demo Credentials</p>
-                <p className="text-xs text-blue-600">
+                <p className="text-sm font-medium text-green-800">Demo Credentials</p>
+                <p className="text-xs text-green-600">
                   {sampleCredentials[userType].email} / {sampleCredentials[userType].password}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={fillSampleCredentials}
-                className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                className="px-3 py-1 bg-green-700 text-white text-xs rounded hover:bg-green-800 transition-colors"
               >
                 Use Demo
               </button>
@@ -187,7 +187,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   placeholder="Enter your email"
                   required
                 />
@@ -203,7 +203,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                   name="password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   placeholder="Enter your password"
                   required
                 />
@@ -227,7 +227,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     placeholder="Confirm your password"
                     required
                   />
@@ -237,7 +237,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
 
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+              className="w-full bg-green-700 text-white py-3 rounded-lg font-semibold hover:bg-green-800 transition-colors"
             >
               {isLogin ? 'Sign In' : 'Create Account'}
             </button>
@@ -246,7 +246,7 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
           <div className="mt-6 text-center">
             <button
               onClick={() => setIsLogin(!isLogin)}
-              className="text-blue-600 hover:text-blue-700 font-medium"
+              className="text-green-600 hover:text-green-700 font-medium"
             >
               {isLogin ? "Don't have an account? Sign up" : "Already have an account? Sign in"}
             </button>

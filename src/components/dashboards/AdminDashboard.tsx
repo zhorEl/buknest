@@ -175,7 +175,7 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Header */}
-        <div className="bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 rounded-3xl p-8 text-white mb-8 font-handwritten">
+        <div className="bg-gradient-to-r from-pink-400 via-rose-400 to-green-500 rounded-3xl p-8 text-white mb-8 font-handwritten">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">Admin Dashboard</h1>
@@ -279,7 +279,7 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             {/* Pending Verifications */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-purple-800">Pending Verifications</h3>
+                <h3 className="text-2xl font-bold text-green-800">Pending Verifications</h3>
                 <button className="text-purple-600 hover:text-purple-700 font-bold">
                   View All
                 </button>
@@ -287,13 +287,13 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
               
               <div className="space-y-4">
                 {pendingVerifications.map((verification) => (
-                  <div key={verification.id} className="border border-purple-200 rounded-2xl p-4 bg-purple-50 bg-opacity-30">
+                  <div key={verification.id} className="border border-green-200 rounded-2xl p-4 bg-green-50 bg-opacity-30">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h4 className="font-bold text-purple-800">{verification.name}</h4>
-                        <p className="text-purple-600 text-sm font-semibold font-readable">{verification.type}</p>
-                        <p className="text-xs text-purple-600 font-readable">{verification.email}</p>
-                        <p className="text-xs text-purple-600 font-readable">Experience: {verification.experience}</p>
+                        <h4 className="font-bold text-green-800">{verification.name}</h4>
+                        <p className="text-green-600 text-sm font-semibold font-readable">{verification.type}</p>
+                        <p className="text-xs text-green-600 font-readable">{verification.email}</p>
+                        <p className="text-xs text-green-600 font-readable">Experience: {verification.experience}</p>
                       </div>
                       <span className={`px-2 py-1 text-xs rounded-full ${
                         verification.status === 'pending' 
@@ -305,10 +305,10 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
                     </div>
                     
                     <div className="mb-3">
-                      <p className="text-sm text-purple-700 mb-2 font-semibold font-readable">Submitted: {new Date(verification.submittedDate).toLocaleDateString()}</p>
+                      <p className="text-sm text-green-700 mb-2 font-semibold font-readable">Submitted: {new Date(verification.submittedDate).toLocaleDateString()}</p>
                       <div className="flex flex-wrap gap-2">
                         {verification.documents.map((doc, index) => (
-                          <span key={index} className="px-2 py-1 bg-purple-100 text-purple-700 text-xs rounded-full font-semibold font-readable">
+                          <span key={index} className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full font-semibold font-readable">
                             {doc}
                           </span>
                         ))}
@@ -336,20 +336,20 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
 
             {/* User Growth Chart */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-6">User Growth</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-6">User Growth</h3>
               
               <div className="space-y-4">
                 {userGrowth.map((month, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl border border-purple-200">
+                  <div key={index} className="flex items-center justify-between p-4 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-green-200">
                     <div>
-                      <h4 className="font-bold text-purple-800">{month.month}</h4>
-                      <p className="text-sm text-purple-600 font-readable">Users: {month.users.toLocaleString()}</p>
-                      <p className="text-sm text-purple-600 font-readable">Professionals: {month.professionals}</p>
+                      <h4 className="font-bold text-green-800">{month.month}</h4>
+                      <p className="text-sm text-green-600 font-readable">Users: {month.users.toLocaleString()}</p>
+                      <p className="text-sm text-green-600 font-readable">Professionals: {month.professionals}</p>
                     </div>
                     <div className="text-right">
-                      <div className="w-24 h-2 bg-purple-200 rounded-full">
+                      <div className="w-24 h-2 bg-green-200 rounded-full">
                         <div 
-                          className="h-2 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full"
+                          className="h-2 bg-gradient-to-r from-pink-400 to-green-500 rounded-full"
                           style={{ width: `${(month.users / 3000) * 100}%` }}
                         ></div>
                       </div>
@@ -362,11 +362,11 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             {/* Recent Reports & Issues */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-purple-800">Recent Issues</h3>
+                <h3 className="text-2xl font-bold text-green-800">Recent Issues</h3>
                 <select
                   value={selectedTimeframe}
                   onChange={(e) => setSelectedTimeframe(e.target.value)}
-                  className="border border-purple-300 rounded-xl px-3 py-1 text-sm font-semibold"
+                  className="border border-green-300 rounded-xl px-3 py-1 text-sm font-semibold"
                 >
                   <option value="week">This Week</option>
                   <option value="month">This Month</option>
@@ -379,13 +379,13 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
                   <div key={report.id} className={`border rounded-2xl p-4 ${getPriorityColor(report.priority)}`}>
                     <div className="flex justify-between items-start mb-2">
                       <div>
-                        <h4 className="font-bold text-purple-800">{report.type}</h4>
-                        <p className="text-sm text-purple-700 font-semibold font-readable">{report.description}</p>
+                        <h4 className="font-bold text-green-800">{report.type}</h4>
+                        <p className="text-sm text-green-700 font-semibold font-readable">{report.description}</p>
                       </div>
-                      <span className="text-xs text-purple-600 font-semibold font-readable">{new Date(report.date).toLocaleDateString()}</span>
+                      <span className="text-xs text-green-600 font-semibold font-readable">{new Date(report.date).toLocaleDateString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-sm text-purple-700 font-semibold font-readable">Reported by: {report.reporter}</p>
+                      <p className="text-sm text-green-700 font-semibold font-readable">Reported by: {report.reporter}</p>
                       <span className={`px-2 py-1 text-xs rounded-full font-bold ${getPriorityColor(report.priority)}`}>
                         {report.priority} priority
                       </span>
@@ -400,17 +400,17 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
           <div className="space-y-8">
             {/* System Alerts */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-4">System Status</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-4">System Status</h3>
               
               <div className="space-y-3">
                 {systemAlerts.map((alert) => (
-                  <div key={alert.id} className="flex items-start p-3 rounded-2xl bg-purple-50 bg-opacity-50">
+                  <div key={alert.id} className="flex items-start p-3 rounded-2xl bg-green-50 bg-opacity-50">
                     <div className="mr-3 mt-0.5">
                       {getAlertIcon(alert.type)}
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm text-purple-800 font-semibold font-readable">{alert.message}</p>
-                      <p className="text-xs text-purple-600 mt-1 font-readable">{alert.time}</p>
+                      <p className="text-sm text-green-800 font-semibold font-readable">{alert.message}</p>
+                      <p className="text-xs text-green-600 mt-1 font-readable">{alert.time}</p>
                     </div>
                   </div>
                 ))}
@@ -419,19 +419,19 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
 
             {/* Recent Activities */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-4">Recent Activities</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-4">Recent Activities</h3>
               
               <div className="space-y-3">
                 {recentActivities.map((activity) => {
                   const Icon = activity.icon;
                   return (
-                    <div key={activity.id} className="flex items-start p-3 rounded-2xl bg-purple-50 bg-opacity-50">
+                    <div key={activity.id} className="flex items-start p-3 rounded-2xl bg-green-50 bg-opacity-50">
                       <div className="mr-3 mt-0.5">
-                        <Icon className="h-4 w-4 text-purple-600" />
+                        <Icon className="h-4 w-4 text-green-600" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm text-purple-800 font-semibold font-readable">{activity.description}</p>
-                        <p className="text-xs text-purple-600 mt-1 font-readable">{activity.time}</p>
+                        <p className="text-sm text-green-800 font-semibold font-readable">{activity.description}</p>
+                        <p className="text-xs text-green-600 mt-1 font-readable">{activity.time}</p>
                       </div>
                     </div>
                   );
@@ -441,30 +441,30 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
 
             {/* Quick Actions */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-4">Quick Actions</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-4">Quick Actions</h3>
               
               <div className="space-y-3">
-                <button className="w-full bg-gradient-to-r from-purple-400 to-pink-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-purple-500 hover:to-pink-500 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-2 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 flex items-center justify-center">
                   <Users className="h-4 w-4 mr-2" />
                   Manage Users
                 </button>
                 
-                <button className="w-full bg-gradient-to-r from-blue-400 to-purple-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-blue-500 hover:to-purple-500 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-gradient-to-r from-rose-400 to-green-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-rose-500 hover:to-green-500 transition-all duration-300 flex items-center justify-center">
                   <UserCheck className="h-4 w-4 mr-2" />
                   Review Professionals
                 </button>
                 
-                <button className="w-full bg-gradient-to-r from-green-400 to-blue-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-green-500 hover:to-blue-500 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-gradient-to-r from-green-400 to-emerald-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-green-500 hover:to-emerald-500 transition-all duration-300 flex items-center justify-center">
                   <FileText className="h-4 w-4 mr-2" />
                   Generate Reports
                 </button>
                 
-                <button className="w-full bg-white bg-opacity-80 border-2 border-purple-300 text-purple-700 px-4 py-2 rounded-2xl font-bold hover:bg-purple-50 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-white bg-opacity-80 border-2 border-green-300 text-green-700 px-4 py-2 rounded-2xl font-bold hover:bg-green-50 transition-all duration-300 flex items-center justify-center">
                   <Settings className="h-4 w-4 mr-2" />
                   Platform Settings
                 </button>
                 
-                <button className="w-full bg-white bg-opacity-80 border-2 border-orange-300 text-orange-700 px-4 py-2 rounded-2xl font-bold hover:bg-orange-50 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-white bg-opacity-80 border-2 border-rose-300 text-rose-700 px-4 py-2 rounded-2xl font-bold hover:bg-rose-50 transition-all duration-300 flex items-center justify-center">
                   <Database className="h-4 w-4 mr-2" />
                   System Backup
                 </button>
@@ -473,39 +473,39 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
 
             {/* Platform Health */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-4">Platform Health</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-4">Platform Health</h3>
               
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
-                    <Server className="h-4 w-4 text-purple-600 mr-2" />
-                    <span className="text-sm text-purple-700 font-semibold font-readable">Server Uptime</span>
+                    <Server className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="text-sm text-green-700 font-semibold font-readable">Server Uptime</span>
                   </div>
                   <span className="text-sm font-bold text-green-600 font-readable">99.9%</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
-                    <Zap className="h-4 w-4 text-purple-600 mr-2" />
-                    <span className="text-sm text-purple-700 font-semibold font-readable">Response Time</span>
+                    <Zap className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="text-sm text-green-700 font-semibold font-readable">Response Time</span>
                   </div>
-                  <span className="text-sm font-bold text-blue-600 font-readable">245ms</span>
+                  <span className="text-sm font-bold text-green-600 font-readable">245ms</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
-                    <Activity className="h-4 w-4 text-purple-600 mr-2" />
-                    <span className="text-sm text-purple-700 font-semibold font-readable">Active Sessions</span>
+                    <Activity className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="text-sm text-green-700 font-semibold font-readable">Active Sessions</span>
                   </div>
-                  <span className="text-sm font-bold text-purple-600 font-readable">1,247</span>
+                  <span className="text-sm font-bold text-green-600 font-readable">1,247</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
-                    <AlertTriangle className="h-4 w-4 text-purple-600 mr-2" />
-                    <span className="text-sm text-purple-700 font-semibold font-readable">Error Rate</span>
-                  </div>
-                  <span className="text-sm font-bold text-red-600 font-readable">0.02%</span>
+                    <AlertTriangle className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="text-sm text-green-700 font-semibold font-readable">Error Rate</span>
+                  <p className="text-sm font-medium text-green-600 font-readable">Response</p>
+                  <p className="text-2xl font-bold text-green-800">{stats.avgResponseTime}ms</p>
                 </div>
               </div>
             </div>

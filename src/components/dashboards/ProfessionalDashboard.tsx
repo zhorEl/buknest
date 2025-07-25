@@ -165,7 +165,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Header */}
-        <div className="bg-gradient-to-r from-green-400 via-blue-400 to-purple-400 rounded-3xl p-8 text-white mb-8 font-handwritten">
+        <div className="bg-gradient-to-r from-pink-400 via-rose-400 to-green-500 rounded-3xl p-8 text-white mb-8 font-handwritten">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">Welcome, {user.name}!</h1>
@@ -249,7 +249,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
             {/* Today's Schedule */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-purple-800">Today's Schedule</h3>
+                <h3 className="text-2xl font-bold text-green-800">Today's Schedule</h3>
                 <button className="text-purple-600 hover:text-purple-700 font-bold">
                   View Calendar
                 </button>
@@ -257,18 +257,18 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
               
               <div className="space-y-4">
                 {upcomingSessions.map((session) => (
-                  <div key={session.id} className="border border-purple-200 rounded-2xl p-4 bg-purple-50 bg-opacity-50">
+                  <div key={session.id} className="border border-green-200 rounded-2xl p-4 bg-green-50 bg-opacity-50">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h4 className="font-bold text-purple-800">{session.childName}</h4>
-                        <p className="text-sm text-purple-600 font-semibold font-readable">Parent: {session.parentName}</p>
+                        <h4 className="font-bold text-green-800">{session.childName}</h4>
+                        <p className="text-sm text-green-600 font-semibold font-readable">Parent: {session.parentName}</p>
                         <div className="flex items-center mt-1">
-                          <Phone className="h-3 w-3 text-purple-500 mr-1" />
-                          <span className="text-xs text-purple-600 font-readable">{session.parentPhone}</span>
+                          <Phone className="h-3 w-3 text-green-500 mr-1" />
+                          <span className="text-xs text-green-600 font-readable">{session.parentPhone}</span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-purple-800">{session.time}</p>
+                        <p className="font-bold text-green-800">{session.time}</p>
                         <span className={`px-2 py-1 text-xs rounded-full ${
                           session.type === 'home-visit' 
                             ? 'bg-blue-100 text-blue-800 font-semibold' 
@@ -280,7 +280,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                     </div>
                     
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center text-sm text-purple-700 font-readable">
+                      <div className="flex items-center text-sm text-green-700 font-readable">
                         <Clock className="h-4 w-4 mr-1" />
                         {session.duration} minutes
                       </div>
@@ -303,20 +303,20 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                     </div>
                     
                     {session.notes && (
-                      <div className="mt-3 p-2 bg-purple-100 rounded-xl text-sm text-purple-800 font-readable">
+                      <div className="mt-3 p-2 bg-green-100 rounded-xl text-sm text-green-800 font-readable">
                         <strong>Notes:</strong> {session.notes}
                       </div>
                     )}
                     
                     {session.address && (
-                      <div className="mt-2 flex items-center text-xs text-purple-600 font-readable">
+                      <div className="mt-2 flex items-center text-xs text-green-600 font-readable">
                         <Home className="h-3 w-3 mr-1" />
                         {session.address}
                       </div>
                     )}
                     
                     {session.meetingLink && (
-                      <div className="mt-2 flex items-center text-xs text-purple-600 font-readable">
+                      <div className="mt-2 flex items-center text-xs text-green-600 font-readable">
                         <Video className="h-3 w-3 mr-1" />
                         Meeting ready
                       </div>
@@ -328,35 +328,35 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
 
             {/* Client Progress Overview */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-6">Client Progress</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-6">Client Progress</h3>
               
               <div className="space-y-4">
                 {clientProgress.map((client) => (
-                  <div key={client.id} className="border border-purple-200 rounded-2xl p-4 bg-purple-50 bg-opacity-30">
+                  <div key={client.id} className="border border-green-200 rounded-2xl p-4 bg-green-50 bg-opacity-30">
                     <div className="flex justify-between items-start mb-3">
                       <div>
-                        <h4 className="font-bold text-purple-800">{client.childName}</h4>
-                        <p className="text-sm text-purple-600 font-semibold font-readable">{client.condition}</p>
+                        <h4 className="font-bold text-green-800">{client.childName}</h4>
+                        <p className="text-sm text-green-600 font-semibold font-readable">{client.condition}</p>
                       </div>
                       <div className="text-right">
                         <div className="flex items-center">
                           <div className="w-12 h-2 bg-gray-200 rounded-full mr-2">
                             <div 
-                              className="h-2 bg-gradient-to-r from-green-400 to-blue-500 rounded-full"
+                              className="h-2 bg-gradient-to-r from-pink-400 to-green-500 rounded-full"
                               style={{ width: `${client.progress}%` }}
                             ></div>
                           </div>
-                          <span className="text-sm font-bold text-purple-800">{client.progress}%</span>
+                          <span className="text-sm font-bold text-green-800">{client.progress}%</span>
                         </div>
                       </div>
                     </div>
                     
                     <div className="space-y-2">
-                      <div className="flex items-center text-xs text-purple-600 font-readable">
+                      <div className="flex items-center text-xs text-green-600 font-readable">
                         <Calendar className="h-3 w-3 mr-1" />
                         Last session: {new Date(client.lastSession).toLocaleDateString()}
                       </div>
-                      <div className="text-xs text-purple-700 font-readable">
+                      <div className="text-xs text-green-700 font-readable">
                         <strong>Next goal:</strong> {client.nextGoal}
                       </div>
                     </div>
@@ -367,7 +367,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
 
             {/* Weekly Schedule Overview */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-6">This Week's Overview</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-6">This Week's Overview</h3>
               
               <div className="grid grid-cols-5 gap-4">
                 {weeklySchedule.map((day, index) => (
@@ -377,11 +377,11 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                         ? 'bg-gradient-to-br from-green-100 to-blue-100 border border-green-200' 
                         : 'bg-gray-100 border border-gray-200'
                     }`}>
-                      <h4 className="font-bold text-purple-800 text-sm mb-2">{day.day}</h4>
+                      <h4 className="font-bold text-green-800 text-sm mb-2">{day.day}</h4>
                       <div className="space-y-1">
                         <div className="flex items-center justify-center">
-                          <Calendar className="h-3 w-3 text-purple-600 mr-1" />
-                          <span className="text-sm font-semibold text-purple-800 font-readable">{day.sessions}</span>
+                          <Calendar className="h-3 w-3 text-green-600 mr-1" />
+                          <span className="text-sm font-semibold text-green-800 font-readable">{day.sessions}</span>
                         </div>
                         <div className="flex items-center justify-center">
                           <DollarSign className="h-3 w-3 text-green-600 mr-1" />
@@ -400,11 +400,11 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
             {/* Performance Metrics */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-purple-800">Performance</h3>
+                <h3 className="text-2xl font-bold text-green-800">Performance</h3>
                 <select
                   value={selectedTimeframe}
                   onChange={(e) => setSelectedTimeframe(e.target.value)}
-                  className="border border-purple-300 rounded-xl px-3 py-1 text-sm font-semibold"
+                  className="border border-green-300 rounded-xl px-3 py-1 text-sm font-semibold"
                 >
                   <option value="week">This Week</option>
                   <option value="month">This Month</option>
@@ -413,16 +413,16 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
               </div>
               
               <div className="space-y-4">
-                <div className="text-center p-4 bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl border border-green-200">
+                <div className="text-center p-4 bg-gradient-to-br from-pink-100 to-green-100 rounded-2xl border border-green-200">
                   <TrendingUp className="h-8 w-8 text-green-600 mx-auto mb-2" />
                   <p className="text-2xl font-bold text-green-600">{stats.responseRate}%</p>
-                  <p className="text-sm text-purple-700 font-semibold font-readable">Response Rate</p>
+                  <p className="text-sm text-green-700 font-semibold font-readable">Response Rate</p>
                 </div>
                 
-                <div className="text-center p-4 bg-gradient-to-br from-blue-100 to-purple-100 rounded-2xl border border-blue-200">
-                  <CheckCircle className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                  <p className="text-2xl font-bold text-blue-600">{stats.completionRate}%</p>
-                  <p className="text-sm text-purple-700 font-semibold font-readable">Session Completion</p>
+                <div className="text-center p-4 bg-gradient-to-br from-rose-100 to-green-100 rounded-2xl border border-rose-200">
+                  <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
+                  <p className="text-2xl font-bold text-green-600">{stats.completionRate}%</p>
+                  <p className="text-sm text-green-700 font-semibold font-readable">Session Completion</p>
                 </div>
               </div>
             </div>
@@ -430,7 +430,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
             {/* Messages */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-2xl font-bold text-purple-800">Messages</h3>
+                <h3 className="text-2xl font-bold text-green-800">Messages</h3>
                 <button className="text-purple-600 hover:text-purple-700 font-bold">
                   View All
                 </button>
@@ -439,17 +439,17 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
               <div className="space-y-3">
                 {recentMessages.map((message) => (
                   <div key={message.id} className={`p-3 rounded-2xl border ${
-                    message.unread 
-                      ? 'bg-blue-50 border-blue-200' 
-                      : 'bg-purple-50 border-purple-200'
+                    message.unread
+                      ? 'bg-green-50 border-green-200'
+                      : 'bg-rose-50 border-rose-200'
                   }`}>
                     <div className="flex justify-between items-start mb-1">
-                      <p className="font-bold text-sm text-purple-800 font-readable">{message.from}</p>
-                      <span className="text-xs text-purple-600 font-readable">{message.time}</span>
+                      <p className="font-bold text-sm text-green-800 font-readable">{message.from}</p>
+                      <span className="text-xs text-green-600 font-readable">{message.time}</span>
                     </div>
-                    <p className="text-sm text-purple-700 font-readable">{message.message}</p>
+                    <p className="text-sm text-green-700 font-readable">{message.message}</p>
                     {message.unread && (
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+                      <div className="w-2 h-2 bg-green-600 rounded-full mt-2"></div>
                     )}
                   </div>
                 ))}
@@ -458,7 +458,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
 
             {/* Pending Reports */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-4">Pending Reports</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-4">Pending Reports</h3>
               
               <div className="space-y-3">
                 {pendingReports.map((report) => (
@@ -466,12 +466,12 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center">
                         <AlertCircle className="h-4 w-4 text-orange-600 mr-2" />
-                        <span className="font-bold text-sm text-purple-800 font-readable">{report.childName}</span>
+                        <span className="font-bold text-sm text-green-800 font-readable">{report.childName}</span>
                       </div>
                       <span className="text-xs text-orange-600 font-semibold font-readable">Due: {new Date(report.dueDate).toLocaleDateString()}</span>
                     </div>
-                    <p className="text-sm text-purple-700 font-semibold font-readable">{report.type}</p>
-                    <p className="text-xs text-purple-600 font-readable">Session: {new Date(report.sessionDate).toLocaleDateString()}</p>
+                    <p className="text-sm text-green-700 font-semibold font-readable">{report.type}</p>
+                    <p className="text-xs text-green-600 font-readable">Session: {new Date(report.sessionDate).toLocaleDateString()}</p>
                   </div>
                 ))}
               </div>
@@ -483,25 +483,25 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
 
             {/* Quick Actions */}
             <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-6 border border-white border-opacity-50 font-handwritten">
-              <h3 className="text-2xl font-bold text-purple-800 mb-4">Quick Actions</h3>
+              <h3 className="text-2xl font-bold text-green-800 mb-4">Quick Actions</h3>
               
               <div className="space-y-3">
-                <button className="w-full bg-gradient-to-r from-blue-400 to-purple-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-blue-500 hover:to-purple-500 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-2 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 flex items-center justify-center">
                   <Calendar className="h-4 w-4 mr-2" />
                   Update Availability
                 </button>
                 
-                <button className="w-full bg-gradient-to-r from-green-400 to-blue-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-green-500 hover:to-blue-500 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-gradient-to-r from-rose-400 to-green-400 text-white px-4 py-2 rounded-2xl font-bold hover:from-rose-500 hover:to-green-500 transition-all duration-300 flex items-center justify-center">
                   <MessageCircle className="h-4 w-4 mr-2" />
                   Message Parents
                 </button>
                 
-                <button className="w-full bg-white bg-opacity-80 border-2 border-purple-300 text-purple-700 px-4 py-2 rounded-2xl font-bold hover:bg-purple-50 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-white bg-opacity-80 border-2 border-green-300 text-green-700 px-4 py-2 rounded-2xl font-bold hover:bg-green-50 transition-all duration-300 flex items-center justify-center">
                   <FileText className="h-4 w-4 mr-2" />
                   Generate Report
                 </button>
                 
-                <button className="w-full bg-white bg-opacity-80 border-2 border-pink-300 text-pink-700 px-4 py-2 rounded-2xl font-bold hover:bg-pink-50 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-white bg-opacity-80 border-2 border-rose-300 text-rose-700 px-4 py-2 rounded-2xl font-bold hover:bg-rose-50 transition-all duration-300 flex items-center justify-center">
                   <BookOpen className="h-4 w-4 mr-2" />
                   Resource Library
                 </button>

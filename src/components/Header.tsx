@@ -24,10 +24,10 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
-            <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-purple-400 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-gradient-to-br from-pink-400 to-green-500 rounded-full flex items-center justify-center">
               <Heart className="h-5 w-5 text-white" />
             </div>
-            <span className="ml-2 text-xl font-bold text-purple-800 font-handwritten">BukNEST</span>
+            <span className="ml-2 text-xl font-bold text-green-800 font-handwritten">BukNEST</span>
           </div>
 
           {/* Desktop Navigation */}
@@ -42,8 +42,8 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
                       onClick={() => onPageChange(item.id)}
                       className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                         currentPage === item.id
-                          ? 'text-blue-600 bg-blue-50'
-                          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                          ? 'text-green-600 bg-green-50'
+                          : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
                       }`}
                     >
                       <Icon className="h-4 w-4 mr-2" />
@@ -64,8 +64,8 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
                       onClick={() => onPageChange(item.id)}
                       className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                         currentPage === item.id
-                          ? 'text-blue-600 bg-blue-50'
-                          : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                          ? 'text-green-600 bg-green-50'
+                          : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
                       }`}
                     >
                       <Icon className="h-4 w-4 mr-2" />
@@ -103,7 +103,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
             ) : (
               <button
                 onClick={onLogin}
-                className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors"
+                className="flex items-center px-4 py-2 bg-green-700 text-white rounded-md font-medium hover:bg-green-800 transition-colors"
               >
                 <LogIn className="h-4 w-4 mr-2" />
                 Login
@@ -137,8 +137,8 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
                     }}
                     className={`flex items-center w-full px-3 py-2 rounded-md text-base font-medium transition-colors ${
                       currentPage === item.id
-                        ? 'text-blue-600 bg-blue-50'
-                        : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+                        ? 'text-green-600 bg-green-50'
+                        : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
                     }`}
                   >
                     <Icon className="h-5 w-5 mr-3" />
@@ -176,7 +176,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
                       onLogin();
                       setIsMenuOpen(false);
                     }}
-                    className="flex items-center w-full px-3 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md"
+                    className="flex items-center w-full px-3 py-2 text-base font-medium text-white bg-green-700 hover:bg-green-800 rounded-md"
                   >
                     <LogIn className="h-5 w-5 mr-3" />
                     Login
