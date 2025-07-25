@@ -13,8 +13,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigation = [
-    { name: 'Home', id: 'home', icon: Heart },
-    { name: 'AI Assessment', id: 'assessment', icon: MessageCircle },
+    { name: 'Assessment with NESTY', id: 'assessment', icon: MessageCircle },
     { name: 'Professionals', id: 'professionals', icon: User },
     { name: 'My Bookings', id: 'bookings', icon: Calendar },
   ];
@@ -23,16 +22,19 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center">
+          <button 
+            onClick={() => onPageChange('home')}
+            className="flex items-center hover:opacity-80 transition-opacity"
+          >
             <img src="/icon.svg" alt="BukNEST Logo" className="w-8 h-8" />
             <img src="/logo-name.svg" alt="BukNEST" className="ml-2 h-6" />
-          </div>
+          </button>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
             {!user && (
               <>
-                {navigation.slice(0, 2).map((item) => {
+                {navigation.slice(0, 1).map((item) => {
                   const Icon = item.icon;
                   return (
                     <button
