@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Baby } from 'lucide-react'
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -10,29 +10,29 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-200 to-amber-300 rounded-full flex items-center justify-center mr-3 shadow-lg">
-              <div className="w-6 h-6 bg-gradient-to-br from-amber-600 to-amber-700 rounded-full"></div>
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mr-3">
+              <Baby className="w-6 h-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-purple-800 font-serif">BUKNEST</span>
+            <span className="text-2xl font-bold text-purple-800">BUKNEST</span>
           </div>
 
           {/* Navigation */}
           <nav className="hidden lg:flex space-x-8">
-            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-200">Home</a>
-            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-200">Services</a>
-            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-200">About</a>
-            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium transition-colors duration-200">Contact</a>
+            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">Home</a>
+            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">Services</a>
+            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">About</a>
+            <a href="#" className="text-gray-700 hover:text-purple-600 font-medium">Contact</a>
           </nav>
 
           <div className="flex items-center space-x-4">
-            {/* Login Button */}
-            <button className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 shadow-lg">
+            {/* Get Started Button */}
+            <button className="bg-gradient-to-r from-purple-500 to-purple-600 text-white px-6 py-2 rounded-full font-semibold hover:from-purple-600 hover:to-purple-700 transition-all duration-300">
               Get Started
             </button>
             
             {/* Mobile menu button */}
             <button 
-              className="lg:hidden p-2 rounded-full hover:bg-gray-100 transition-colors"
+              className="lg:hidden p-2"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -42,12 +42,12 @@ const Header = () => {
         
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-100">
+          <div className="lg:hidden py-4 border-t">
             <nav className="flex flex-col space-y-2">
-              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2 px-4 rounded-lg hover:bg-purple-50 transition-all">Home</a>
-              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2 px-4 rounded-lg hover:bg-purple-50 transition-all">Services</a>
-              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2 px-4 rounded-lg hover:bg-purple-50 transition-all">About</a>
-              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2 px-4 rounded-lg hover:bg-purple-50 transition-all">Contact</a>
+              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2">Home</a>
+              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2">Services</a>
+              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2">About</a>
+              <a href="#" className="text-gray-700 hover:text-purple-600 font-medium py-2">Contact</a>
             </nav>
           </div>
         )}
