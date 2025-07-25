@@ -39,6 +39,43 @@ export default function HomePage({ onPageChange }: HomePageProps) {
 
   return (
     <div className="min-h-screen">
+      {/* NESTY Jumbotron */}
+      <div className="bg-gradient-to-r from-green-600 via-emerald-600 to-teal-600 text-white py-8 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
+        <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
+        <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center">
+            <div className="flex justify-center items-center mb-4">
+              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
+                <MessageCircle className="h-12 w-12 text-white" />
+              </div>
+              <div>
+                <h1 className="text-4xl md:text-6xl font-bold font-handwritten">
+                  TALK with <span className="text-yellow-300">NESTY!</span>
+                </h1>
+                <p className="text-xl md:text-2xl text-white text-opacity-90 font-readable mt-2">
+                  Your AI-powered companion for assessment
+                </p>
+              </div>
+            </div>
+            
+            <div className="mt-6">
+              <button
+                onClick={() => onPageChange('assessment')}
+                className="bg-white text-green-600 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto font-handwritten"
+              >
+                <MessageCircle className="h-6 w-6 mr-3" />
+                Start Chatting with NESTY
+                <ArrowRight className="ml-3 h-6 w-6" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Organic Hero Section */}
       <div className="relative bg-gradient-to-br from-pink-50 via-rose-50 to-green-50 overflow-hidden min-h-screen">
         {/* Organic Background Shapes */}
