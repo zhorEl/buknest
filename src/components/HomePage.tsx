@@ -69,20 +69,13 @@ export default function HomePage({ onPageChange }: HomePageProps) {
             </div>
             
             {/* Tagline */}
-            <div className="text-2xl md:text-3xl lg:text-4xl font-medium text-green-600 mb-8 font-handwritten">
-              <span className="inline-block mx-2">Safe.</span>
-              <span className="inline-block mx-2">Smart.</span>
-              <span className="inline-block mx-2">Supportive.</span>
-            </div>
-            
             {/* Main Description */}
             <div className="bg-white bg-opacity-70 backdrop-blur-sm rounded-3xl p-8 mb-12 max-w-4xl mx-auto border border-white border-opacity-50">
               <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-4 font-handwritten">
                 A safe nest for every child with special needs
               </h2>
               <p className="text-lg md:text-xl text-green-700 leading-relaxed font-readable">
-                Connect with certified professionals who understand your child's unique journey. 
-                Get AI-powered guidance, book consultations, and track progress in a warm, supportive environment.
+                Get AI-powered guidance, book consultations, and Connect with certified professionals who understand your child's unique journey. Track progress in a warm, supportive environment.
               </p>
             </div>
             
