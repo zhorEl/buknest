@@ -55,7 +55,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                 <MessageCircle className="h-12 w-12 text-white" />
               </div>
               <div>
-                <h1 className="text-4xl md:text-6xl font-bold font-handwritten">
+                <h1 className="text-4xl md:text-6xl font-bold font-handwritten" style={{ color: '#CB748E' }}>
                   TALK with <span className="text-yellow-300">NESTY!</span>
                 </h1>
               </div>
@@ -121,7 +121,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
             {/* Tagline */}
             {/* Main Description */}
             <div className="bg-white bg-opacity-70 backdrop-blur-sm rounded-3xl p-8 mb-12 max-w-4xl mx-auto border border-white border-opacity-50">
-              <h2 className="text-2xl md:text-3xl font-bold text-green-800 mb-4 font-handwritten">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>
                 A safe nest for every child with special needs
               </h2>
               <p className="text-lg md:text-xl text-green-700 leading-relaxed font-readable">
@@ -131,7 +131,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
             
             {/* How It Works Preview */}
             <div className="bg-white bg-opacity-60 backdrop-blur-sm rounded-3xl p-8 mb-12 max-w-5xl mx-auto border border-white border-opacity-50">
-              <h3 className="text-3xl md:text-4xl font-bold text-green-800 mb-6 font-handwritten">How it works?</h3>
+              <h3 className="text-3xl md:text-4xl font-bold mb-6 font-handwritten" style={{ color: '#CB748E' }}>How it works?</h3>
               <p className="text-lg text-green-600 mb-8 font-readable">Smart. Safe. Supportive.</p>
               
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
@@ -139,7 +139,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                   <div className="w-12 h-12 bg-pink-300 rounded-full mb-4 flex items-center justify-center">
                     <span className="text-white font-bold font-handwritten">1</span>
                   </div>
-                  <h4 className="font-bold text-green-800 mb-2 font-handwritten">Parent Engagement</h4>
+                  <h4 className="font-bold mb-2 font-handwritten" style={{ color: '#CB748E' }}>Parent Engagement</h4>
                   <p className="text-sm text-green-700 font-readable">Share concerns through our conversational AI chatbot</p>
                 </div>
                 
@@ -147,7 +147,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                   <div className="w-12 h-12 bg-rose-300 rounded-full mb-4 flex items-center justify-center">
                     <span className="text-white font-bold font-handwritten">2</span>
                   </div>
-                  <h4 className="font-bold text-green-800 mb-2 font-handwritten">AI Initial Support</h4>
+                  <h4 className="font-bold mb-2 font-handwritten" style={{ color: '#CB748E' }}>AI Initial Support</h4>
                   <p className="text-sm text-green-700 font-readable">Get personalized insights and expert recommendations</p>
                 </div>
                 
@@ -155,7 +155,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                   <div className="w-12 h-12 bg-green-300 rounded-full mb-4 flex items-center justify-center">
                     <span className="text-white font-bold font-handwritten">3</span>
                   </div>
-                  <h4 className="font-bold text-green-800 mb-2 font-handwritten">Expert Connection</h4>
+                  <h4 className="font-bold mb-2 font-handwritten" style={{ color: '#CB748E' }}>Expert Connection</h4>
                   <p className="text-sm text-green-700 font-readable">Book with verified professionals for ongoing support</p>
                 </div>
               </div>
@@ -199,7 +199,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-green-800 mb-6 font-handwritten">Starting Where It Matters Most</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-handwritten" style={{ color: '#CB748E' }}>Starting Where It Matters Most</h2>
           </div>
           
           <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -207,7 +207,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
               <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-8 border border-white border-opacity-50">
                 <div className="flex items-center mb-4">
                   <div className="w-8 h-8 bg-pink-300 rounded-full mr-3"></div>
-                  <h3 className="text-xl font-bold text-green-800 font-handwritten">Why Start Here?</h3>
+                  <h3 className="text-xl font-bold font-handwritten" style={{ color: '#CB748E' }}>Why Start Here?</h3>
                 </div>
                 <ul className="space-y-3 text-green-700 font-readable">
                   <li>• 1 in 6 children may have developmental delays, but access to specialists remains limited</li>
@@ -218,7 +218,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
               <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-8 border border-white border-opacity-50">
                 <div className="flex items-center mb-4">
                   <div className="w-8 h-8 bg-rose-300 rounded-full mr-3"></div>
-                  <h3 className="text-xl font-bold text-green-800 font-handwritten">BukNEST bridges that gap:</h3>
+                  <h3 className="text-xl font-bold font-handwritten" style={{ color: '#CB748E' }}>BukNEST bridges that gap:</h3>
                 </div>
                 <ul className="space-y-3 text-green-700 font-readable">
                   <li>• AI-powered guidance available 24/7</li>
@@ -230,7 +230,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
               <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-8 border border-white border-opacity-50">
                 <div className="flex items-center mb-4">
                   <div className="w-8 h-8 bg-green-300 rounded-full mr-3"></div>
-                  <h3 className="text-xl font-bold text-green-800 font-handwritten">The Vision Ahead</h3>
+                  <h3 className="text-xl font-bold font-handwritten" style={{ color: '#CB748E' }}>The Vision Ahead</h3>
                 </div>
                 <ul className="space-y-3 text-green-700 font-readable">
                   <li>• Pilot with real families</li>
@@ -246,7 +246,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                   <div className="w-32 h-32 bg-gradient-to-br from-pink-200 to-green-200 rounded-full mx-auto mb-6 flex items-center justify-center">
                     <Users className="h-16 w-16 text-green-600" />
                   </div>
-                  <h4 className="text-xl font-bold text-green-800 mb-4 font-handwritten">Join Our Community</h4>
+                  <h4 className="text-xl font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>Join Our Community</h4>
                   <p className="text-green-700 mb-6 font-readable">Be part of a supportive network of families and professionals</p>
                   <button
                     onClick={() => onPageChange('assessment')}
@@ -269,7 +269,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-green-800 mb-6 font-handwritten">How We Support Your Family</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-handwritten" style={{ color: '#CB748E' }}>How We Support Your Family</h2>
             <p className="text-xl text-green-600 max-w-3xl mx-auto font-readable">Comprehensive care through our innovative platform</p>
           </div>
           
@@ -286,7 +286,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                   <div className={`bg-gradient-to-br ${colors[index].bg} w-16 h-16 rounded-2xl flex items-center justify-center mb-6 shadow-lg`}>
                     <Icon className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">{feature.title}</h3>
+                  <h3 className="text-2xl font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>{feature.title}</h3>
                   <p className="text-green-700 mb-8 leading-relaxed font-readable">{feature.description}</p>
                   <button
                     onClick={feature.action}
@@ -310,7 +310,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-green-800 mb-6 font-handwritten">Trusted by Families</h2>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 font-handwritten" style={{ color: '#CB748E' }}>Trusted by Families</h2>
             <p className="text-xl text-green-600 max-w-3xl mx-auto font-readable">Your child's safety and progress are our top priorities</p>
           </div>
           
@@ -319,21 +319,21 @@ export default function HomePage({ onPageChange }: HomePageProps) {
               <div className="bg-white bg-opacity-80 backdrop-blur-sm w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 border border-white border-opacity-50">
                 <Shield className="h-10 w-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">Verified Professionals</h3>
+              <h3 className="text-2xl font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>Verified Professionals</h3>
               <p className="text-green-700 text-lg font-readable">All therapists are licensed and background-checked</p>
             </div>
             <div className="text-center">
               <div className="bg-white bg-opacity-80 backdrop-blur-sm w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 border border-white border-opacity-50">
                 <Clock className="h-10 w-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">24/7 Support</h3>
+              <h3 className="text-2xl font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>24/7 Support</h3>
               <p className="text-green-700 text-lg font-readable">Round-the-clock assistance for your family</p>
             </div>
             <div className="text-center">
               <div className="bg-white bg-opacity-80 backdrop-blur-sm w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 border border-white border-opacity-50">
                 <Star className="h-10 w-10 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">Proven Results</h3>
+              <h3 className="text-2xl font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>Proven Results</h3>
               <p className="text-green-700 text-lg font-readable">95% of families see improvement within 3 months</p>
             </div>
           </div>
