@@ -11,13 +11,13 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
     {
       id: '1',
       type: 'ai',
-      content: "Hello! I'm here to help you understand your child's needs better. This assessment is completely free and doesn't require registration. Let's start with some basic information about your child.",
+      content: "Hello! I'm NESTY, your friendly AI companion! 🌸 I'm here to create a safe, welcoming space where you can share your concerns about your child's development. Through our gentle conversation, I'll help identify early signs and provide personalized guidance to support your child's unique journey. No judgment, just understanding and support.",
       timestamp: new Date().toISOString()
     },
     {
       id: '2',
       type: 'ai',
-      content: "What is your child's age, and what specific concerns or challenges have you noticed?",
+      content: "Let's start with some basic information. What is your child's age, and what specific concerns or challenges have you noticed? Remember, this is completely free, confidential, and no registration is required.",
       timestamp: new Date().toISOString()
     }
   ]);
@@ -97,19 +97,40 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="p-3 bg-blue-600 rounded-full">
-              <Bot className="h-8 w-8 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-green-50">
+      {/* NESTY Header */}
+      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-12 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
+        <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
+        <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
+        
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+          <div className="flex justify-center items-center mb-4">
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
+              <Bot className="h-12 w-12 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold font-handwritten">
+                <span className="text-white">Chat with </span><span className="text-yellow-300">NESTY!</span>
+              </h1>
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">AI Pre-Assessment</h1>
-          <p className="text-gray-600">Free, confidential assessment to understand your child's needs</p>
+          
+          <div className="max-w-3xl mx-auto">
+            <p className="text-xl text-white text-opacity-95 mb-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
+              Your safe space for early developmental assessment
+            </p>
+            <p className="text-lg text-white text-opacity-90 leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
+              Share your concerns in a judgment-free environment. NESTY will guide you through gentle questions 
+              to help identify early signs and provide personalized recommendations for your child's development.
+            </p>
+          </div>
         </div>
+      </div>
 
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg overflow-hidden border border-white border-opacity-50">
           {/* Chat Messages */}
           <div className="h-96 overflow-y-auto p-6 space-y-4">
             {messages.map((message) => (
@@ -120,7 +141,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
                 <div className={`flex items-start space-x-3 max-w-xs lg:max-w-md ${
                   message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''
                 }`}>
-                  <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
+                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
                     message.type === 'user' ? 'bg-blue-600' : 'bg-gray-200'
                   }`}>
                     {message.type === 'user' ? (
@@ -131,8 +152,8 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
                   </div>
                   <div className={`px-4 py-2 rounded-lg ${
                     message.type === 'user'
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-900'
+                      ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white'
+                      : 'bg-gradient-to-r from-pink-50 to-green-50 text-gray-900 border border-pink-200'
                   }`}>
                     <p className="text-sm">{message.content}</p>
                   </div>
@@ -143,8 +164,8 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
             {isTyping && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                    <Bot className="h-4 w-4 text-gray-600" />
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-r from-pink-200 to-green-200 flex items-center justify-center">
+                    <Bot className="h-5 w-5 text-green-600" />
                   </div>
                   <div className="px-4 py-2 rounded-lg bg-gray-100">
                     <div className="flex space-x-1">
@@ -161,7 +182,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
 
           {/* Assessment Results */}
           {assessmentComplete && assessmentResults && (
-            <div className="border-t border-gray-200 p-6 bg-blue-50">
+            <div className="border-t border-pink-200 p-6 bg-gradient-to-r from-pink-50 to-green-50">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Assessment Summary</h3>
               
               <div className="grid md:grid-cols-2 gap-6 mb-6">
@@ -170,7 +191,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
                   <ul className="space-y-1">
                     {assessmentResults.concerns.map((concern: string, index: number) => (
                       <li key={index} className="text-sm text-gray-600 flex items-center">
-                        <div className="w-2 h-2 bg-blue-600 rounded-full mr-2"></div>
+                        <div className="w-2 h-2 bg-gradient-to-r from-[#CB748E] to-[#698a60] rounded-full mr-2"></div>
                         {concern}
                       </li>
                     ))}
@@ -182,7 +203,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
                   <ul className="space-y-1">
                     {assessmentResults.suggestedProfessionals.map((professional: string, index: number) => (
                       <li key={index} className="text-sm text-gray-600 flex items-center">
-                        <div className="w-2 h-2 bg-green-600 rounded-full mr-2"></div>
+                        <div className="w-2 h-2 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mr-2"></div>
                         {professional}
                       </li>
                     ))}
@@ -193,7 +214,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
               <div className="flex flex-col sm:flex-row gap-4">
                 <button
                   onClick={() => onPageChange('professionals')}
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
+                  className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-semibold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center font-handwritten"
                 >
                   <Users className="h-5 w-5 mr-2" />
                   Find Professionals
@@ -201,7 +222,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
                 </button>
                 <button
                   onClick={() => onPageChange('bookings')}
-                  className="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors border border-blue-600 flex items-center justify-center"
+                  className="bg-white bg-opacity-80 border-2 border-pink-300 text-green-700 px-6 py-3 rounded-2xl font-semibold hover:bg-pink-50 transition-all duration-300 flex items-center justify-center font-handwritten"
                 >
                   <Calendar className="h-5 w-5 mr-2" />
                   Book Consultation
@@ -212,20 +233,20 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
 
           {/* Input Area */}
           {!assessmentComplete && (
-            <div className="border-t border-gray-200 p-4">
+            <div className="border-t border-pink-200 p-4 bg-gradient-to-r from-pink-50 to-green-50">
               <div className="flex space-x-4">
                 <textarea
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Type your response here..."
-                  className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  placeholder="Share your thoughts with NESTY..."
+                  className="flex-1 border border-pink-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent resize-none bg-white bg-opacity-80"
                   rows={2}
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputMessage.trim() || isTyping}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-2 rounded-2xl hover:from-pink-500 hover:to-green-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center font-handwritten"
                 >
                   <Send className="h-5 w-5" />
                 </button>
@@ -234,8 +255,12 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
           )}
         </div>
 
-        <div className="mt-6 text-center text-sm text-gray-500">
-          <p>This assessment is for informational purposes only and does not replace professional medical advice.</p>
+        <div className="mt-6 text-center">
+          <div className="bg-white bg-opacity-70 backdrop-blur-sm rounded-2xl p-4 border border-white border-opacity-50">
+            <p className="text-sm text-green-700 font-readable">
+              This assessment is for informational purposes only and does not replace professional medical advice.
+            </p>
+          </div>
         </div>
       </div>
     </div>
