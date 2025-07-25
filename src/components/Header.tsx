@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, User, Calendar, MessageCircle, LogIn, LogOut } from 'lucide-react';
+import { Menu, X, User, Calendar, MessageCircle, LogIn, LogOut, Heart } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
