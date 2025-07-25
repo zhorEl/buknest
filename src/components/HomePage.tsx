@@ -40,7 +40,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
   return (
     <div className="min-h-screen">
       {/* NESTY Jumbotron */}
-      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] py-20 relative overflow-hidden min-h-[60vh]">
+      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-20 relative overflow-hidden min-h-[60vh]">
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
         <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
@@ -52,20 +52,20 @@ export default function HomePage({ onPageChange }: HomePageProps) {
           <div className="text-center w-full">
             <div className="flex justify-center items-center mb-4">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
-                <MessageCircle className="h-12 w-12" style={{ color: '#CB748E' }} />
+                <MessageCircle className="h-12 w-12 text-white" />
               </div>
               <div>
-                <h1 className="text-4xl md:text-6xl font-bold font-handwritten" style={{ color: '#CB748E' }}>
+                <h1 className="text-4xl md:text-6xl font-bold font-handwritten">
                   TALK with <span className="text-yellow-300">NESTY!</span>
                 </h1>
               </div>
             </div>
             
             <div className="max-w-4xl mx-auto mb-8">
-              <p className="text-xl md:text-2xl mb-4" style={{ fontFamily: 'Calibri, sans-serif', color: '#CB748E' }}>
+              <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
                 Your friendly AI-powered companion for early assessment
               </p>
-              <p className="text-lg md:text-xl leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif', color: '#CB748E' }}>
+              <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
                 NESTY creates a safe, welcoming space where you can share your concerns about your child's development. 
                 Through gentle conversation, NESTY helps identify early signs and provides personalized guidance to support 
                 your child's unique journey. No judgment, just understanding and support.
@@ -81,7 +81,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                 Start Chatting with NESTY
                 <ArrowRight className="ml-3 h-6 w-6" />
               </button>
-              <p className="text-sm mt-4" style={{ fontFamily: 'Calibri, sans-serif', color: '#CB748E' }}>
+              <p className="text-sm text-white text-opacity-80 mt-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
                 Free • Confidential • No registration required
               </p>
             </div>
