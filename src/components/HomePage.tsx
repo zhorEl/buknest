@@ -40,7 +40,7 @@ export default function HomePage({ onPageChange }: HomePageProps) {
   return (
     <div className="min-h-screen">
       {/* NESTY Jumbotron */}
-      <div className="bg-gradient-to-r from-pink-400 via-rose-400 to-green-500 text-white py-20 relative overflow-hidden min-h-[60vh]">
+      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-20 relative overflow-hidden min-h-[60vh]">
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
         <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
@@ -62,10 +62,10 @@ export default function HomePage({ onPageChange }: HomePageProps) {
             </div>
             
             <div className="max-w-4xl mx-auto mb-8">
-              <p className="text-xl md:text-2xl text-white text-opacity-95 font-readable mb-4">
+              <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
                 Your friendly AI-powered companion for early assessment
               </p>
-              <p className="text-lg md:text-xl text-white text-opacity-90 font-readable leading-relaxed">
+              <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
                 NESTY creates a safe, welcoming space where you can share your concerns about your child's development. 
                 Through gentle conversation, NESTY helps identify early signs and provides personalized guidance to support 
                 your child's unique journey. No judgment, just understanding and support.
@@ -75,13 +75,13 @@ export default function HomePage({ onPageChange }: HomePageProps) {
             <div className="mt-6">
               <button
                 onClick={() => onPageChange('assessment')}
-                className="bg-white text-pink-600 px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto font-handwritten"
+                className="bg-white text-[#CB748E] px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto font-handwritten"
               >
                 <MessageCircle className="h-6 w-6 mr-3" />
                 Start Chatting with NESTY
                 <ArrowRight className="ml-3 h-6 w-6" />
               </button>
-              <p className="text-sm text-white text-opacity-80 mt-4 font-readable">
+              <p className="text-sm text-white text-opacity-80 mt-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
                 Free • Confidential • No registration required
               </p>
             </div>
