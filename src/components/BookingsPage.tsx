@@ -956,7 +956,7 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                     </div>
                   </div>
                 )
-              )}
+              ))}
               
               {filteredBookings.length === 0 && (
                 <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative overflow-hidden">
