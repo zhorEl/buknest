@@ -12,6 +12,14 @@ export interface Professional {
   availability: string[];
   bio: string;
   credentials: string[];
+  services?: {
+    id: string;
+    name: string;
+    description: string;
+    duration: number;
+    rate: number;
+    type: 'consultation' | 'service';
+  }[];
 }
 
 export interface Child {

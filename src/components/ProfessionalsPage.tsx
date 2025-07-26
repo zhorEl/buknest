@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Clock, Filter, Calendar, MessageCircle, Award, User, Grid, List } from 'lucide-react';
+import { Star, MapPin, Clock, Filter, Calendar, MessageCircle, Award, User, Grid, List, X, CheckCircle, Home, Video, DollarSign, Users as UsersIcon } from 'lucide-react';
 import { Professional } from '../types';
 
 interface ProfessionalsPageProps {
@@ -13,6 +13,13 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [selectedAvailability, setSelectedAvailability] = useState('all');
   const [viewMode, setViewMode] = useState<'thumbnail' | 'table'>('thumbnail');
+  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedProfessional, setSelectedProfessional] = useState<Professional | null>(null);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [selectedSessionType, setSelectedSessionType] = useState<'home-visit' | 'online' | ''>('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [specialRequests, setSpecialRequests] = useState('');
 
   const professionals: Professional[] = [
     {
@@ -28,7 +35,33 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
       hourlyRate: 85,
       availability: ['Mon', 'Wed', 'Fri'],
       bio: 'Specialized in working with children on the autism spectrum and language development.',
-      credentials: ['MS-SLP', 'CCC-SLP', 'BCBA']
+      credentials: ['MS-SLP', 'CCC-SLP', 'BCBA'],
+      services: [
+        {
+          id: '1',
+          name: 'Initial Speech Assessment',
+          description: 'Comprehensive evaluation of speech and language abilities',
+          duration: 90,
+          rate: 150,
+          type: 'consultation'
+        },
+        {
+          id: '2',
+          name: 'Individual Speech Therapy',
+          description: 'One-on-one therapy sessions for speech development',
+          duration: 60,
+          rate: 85,
+          type: 'service'
+        },
+        {
+          id: '3',
+          name: 'Articulation Therapy',
+          description: 'Focused sessions on sound production and clarity',
+          duration: 45,
+          rate: 75,
+          type: 'service'
+        }
+      ]
     },
     {
       id: '2',
@@ -43,7 +76,33 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
       hourlyRate: 75,
       availability: ['Tue', 'Thu', 'Sat'],
       bio: 'Passionate about helping children develop independence through sensory integration therapy.',
-      credentials: ['OTR/L', 'SI Certified']
+      credentials: ['OTR/L', 'SI Certified'],
+      services: [
+        {
+          id: '1',
+          name: 'Occupational Therapy Assessment',
+          description: 'Comprehensive evaluation of motor skills and sensory processing',
+          duration: 90,
+          rate: 120,
+          type: 'consultation'
+        },
+        {
+          id: '2',
+          name: 'Sensory Integration Therapy',
+          description: 'Therapy focused on sensory processing and integration',
+          duration: 60,
+          rate: 75,
+          type: 'service'
+        },
+        {
+          id: '3',
+          name: 'Fine Motor Skills Training',
+          description: 'Targeted therapy for hand and finger coordination',
+          duration: 45,
+          rate: 65,
+          type: 'service'
+        }
+      ]
     },
     {
       id: '3',
@@ -58,7 +117,33 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
       hourlyRate: 120,
       availability: ['Mon', 'Tue', 'Thu'],
       bio: 'Board-certified developmental pediatrician with expertise in neurodevelopmental disorders.',
-      credentials: ['MD', 'Board Certified Pediatrics', 'Developmental-Behavioral Pediatrics']
+      credentials: ['MD', 'Board Certified Pediatrics', 'Developmental-Behavioral Pediatrics'],
+      services: [
+        {
+          id: '1',
+          name: 'Developmental Assessment',
+          description: 'Comprehensive medical evaluation of developmental milestones',
+          duration: 120,
+          rate: 200,
+          type: 'consultation'
+        },
+        {
+          id: '2',
+          name: 'ADHD Evaluation',
+          description: 'Specialized assessment for attention and behavioral concerns',
+          duration: 90,
+          rate: 150,
+          type: 'consultation'
+        },
+        {
+          id: '3',
+          name: 'Follow-up Consultation',
+          description: 'Regular check-ups and treatment plan adjustments',
+          duration: 45,
+          rate: 120,
+          type: 'service'
+        }
+      ]
     },
     {
       id: '4',
@@ -73,7 +158,33 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
       hourlyRate: 60,
       availability: ['Mon', 'Wed', 'Fri', 'Sat'],
       bio: 'Dedicated special education teacher helping children reach their academic potential.',
-      credentials: ['M.Ed Special Education', 'State Certified']
+      credentials: ['M.Ed Special Education', 'State Certified'],
+      services: [
+        {
+          id: '1',
+          name: 'Educational Assessment',
+          description: 'Comprehensive evaluation of learning abilities and challenges',
+          duration: 90,
+          rate: 80,
+          type: 'consultation'
+        },
+        {
+          id: '2',
+          name: 'Individual Tutoring',
+          description: 'One-on-one academic support and skill building',
+          duration: 60,
+          rate: 60,
+          type: 'service'
+        },
+        {
+          id: '3',
+          name: 'IEP Development Support',
+          description: 'Assistance with Individualized Education Program planning',
+          duration: 75,
+          rate: 70,
+          type: 'service'
+        }
+      ]
     }
   ];
 
@@ -110,7 +221,7 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
     return matchesSpecialization && matchesLocation;
   });
 
-  const handleBookSession = () => {
+  const handleBookSession = (professional?: Professional) => {
     if (!user) {
       // If user is not logged in, redirect to login
       if (onLogin) {
@@ -118,9 +229,339 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
       }
       return;
     }
-    // If user is logged in, proceed to bookings page
-    onPageChange('bookings');
+    // If user is logged in, show booking modal
+    if (professional) {
+      setSelectedProfessional(professional);
+      setShowBookingModal(true);
+    }
   };
+
+  const handleServiceToggle = (serviceId: string) => {
+    setSelectedServices(prev => 
+      prev.includes(serviceId) 
+        ? prev.filter(id => id !== serviceId)
+        : [...prev, serviceId]
+    );
+  };
+
+  const calculateTotal = () => {
+    if (!selectedProfessional) return 0;
+    return selectedServices.reduce((total, serviceId) => {
+      const service = selectedProfessional.services?.find(s => s.id === serviceId);
+      return total + (service?.rate || 0);
+    }, 0);
+  };
+
+  const handleBookingSubmit = () => {
+    if (!selectedProfessional || selectedServices.length === 0 || !selectedSessionType || !selectedDate || !selectedTime) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Here you would typically submit the booking to your backend
+    console.log('Booking submitted:', {
+      professional: selectedProfessional.name,
+      services: selectedServices,
+      sessionType: selectedSessionType,
+      date: selectedDate,
+      time: selectedTime,
+      specialRequests,
+      total: calculateTotal()
+    });
+
+    // Reset form and close modal
+    setSelectedServices([]);
+    setSelectedSessionType('');
+    setSelectedDate('');
+    setSelectedTime('');
+    setSpecialRequests('');
+    setShowBookingModal(false);
+    setSelectedProfessional(null);
+    
+    alert('Booking request submitted successfully! The professional will review and confirm your appointment.');
+  };
+
+  const handleCloseModal = () => {
+    setSelectedServices([]);
+    setSelectedSessionType('');
+    setSelectedDate('');
+    setSelectedTime('');
+    setSpecialRequests('');
+    setShowBookingModal(false);
+    setSelectedProfessional(null);
+  };
+
+  const BookingModal = () => {
+    if (!showBookingModal || !selectedProfessional) return null;
+
+    const consultations = selectedProfessional.services?.filter(s => s.type === 'consultation') || [];
+    const services = selectedProfessional.services?.filter(s => s.type === 'service') || [];
+    const timeSlots = ['9:00 AM', '10:00 AM', '11:00 AM', '2:00 PM', '3:00 PM', '4:00 PM'];
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 className="text-3xl font-bold text-gray-900 font-handwritten">Book Session</h2>
+            <button
+              onClick={handleCloseModal}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
+          
+          <div className="p-8">
+            {/* Professional Info */}
+            <div className="flex items-center mb-8 p-6 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
+              <img
+                src={selectedProfessional.avatar}
+                alt={selectedProfessional.name}
+                className="w-20 h-20 rounded-full object-cover mr-6 border-4 border-white shadow-lg"
+              />
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-gray-900 font-handwritten">{selectedProfessional.name}</h3>
+                <p className="text-xl text-[#CB748E] font-semibold font-sans">{selectedProfessional.title}</p>
+                <div className="flex items-center mt-2">
+                  <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
+                  <span className="text-sm font-bold text-gray-800 font-sans">{selectedProfessional.rating}</span>
+                  <span className="text-sm text-gray-600 ml-1 font-sans">({selectedProfessional.reviewCount} reviews)</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Left Column - Services */}
+              <div className="space-y-6">
+                {/* Consultations */}
+                {consultations.length > 0 && (
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                      <UsersIcon className="h-5 w-5 mr-2 text-[#CB748E]" />
+                      Consultations
+                    </h4>
+                    <div className="space-y-3">
+                      {consultations.map((service) => (
+                        <div
+                          key={service.id}
+                          className={`border-2 rounded-2xl p-4 cursor-pointer transition-all duration-300 ${
+                            selectedServices.includes(service.id)
+                              ? 'border-[#CB748E] bg-pink-50'
+                              : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                          }`}
+                          onClick={() => handleServiceToggle(service.id)}
+                        >
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <div className="flex items-center">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedServices.includes(service.id)}
+                                  onChange={() => handleServiceToggle(service.id)}
+                                  className="mr-3 h-4 w-4 text-[#CB748E] focus:ring-[#CB748E] border-gray-300 rounded"
+                                />
+                                <h5 className="font-bold text-gray-800 font-sans">{service.name}</h5>
+                              </div>
+                              <p className="text-sm text-gray-600 mt-2 ml-7 font-sans">{service.description}</p>
+                              <div className="flex items-center mt-3 ml-7 space-x-4">
+                                <div className="flex items-center text-sm text-gray-700 font-sans">
+                                  <Clock className="h-4 w-4 mr-1" />
+                                  {service.duration} min
+                                </div>
+                                <div className="flex items-center text-sm font-bold text-[#698a60] font-sans">
+                                  <DollarSign className="h-4 w-4 mr-1" />
+                                  ₱{service.rate}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Services */}
+                {services.length > 0 && (
+                  <div>
+                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                      <Award className="h-5 w-5 mr-2 text-[#698a60]" />
+                      Therapy Services
+                    </h4>
+                    <div className="space-y-3">
+                      {services.map((service) => (
+                        <div
+                          key={service.id}
+                          className={`border-2 rounded-2xl p-4 cursor-pointer transition-all duration-300 ${
+                            selectedServices.includes(service.id)
+                              ? 'border-[#698a60] bg-green-50'
+                              : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                          }`}
+                          onClick={() => handleServiceToggle(service.id)}
+                        >
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <div className="flex items-center">
+                                <input
+                                  type="checkbox"
+                                  checked={selectedServices.includes(service.id)}
+                                  onChange={() => handleServiceToggle(service.id)}
+                                  className="mr-3 h-4 w-4 text-[#698a60] focus:ring-[#698a60] border-gray-300 rounded"
+                                />
+                                <h5 className="font-bold text-gray-800 font-sans">{service.name}</h5>
+                              </div>
+                              <p className="text-sm text-gray-600 mt-2 ml-7 font-sans">{service.description}</p>
+                              <div className="flex items-center mt-3 ml-7 space-x-4">
+                                <div className="flex items-center text-sm text-gray-700 font-sans">
+                                  <Clock className="h-4 w-4 mr-1" />
+                                  {service.duration} min
+                                </div>
+                                <div className="flex items-center text-sm font-bold text-[#698a60] font-sans">
+                                  <DollarSign className="h-4 w-4 mr-1" />
+                                  ₱{service.rate}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column - Booking Details */}
+              <div className="space-y-6">
+                {/* Session Type */}
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Session Type *</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedSessionType('home-visit')}
+                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+                        selectedSessionType === 'home-visit'
+                          ? 'border-[#CB748E] bg-pink-50 text-[#CB748E]'
+                          : 'border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <Home className="h-6 w-6 mx-auto mb-2" />
+                      <div className="font-bold font-sans">Home Visit</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedSessionType('online')}
+                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+                        selectedSessionType === 'online'
+                          ? 'border-[#698a60] bg-green-50 text-[#698a60]'
+                          : 'border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <Video className="h-6 w-6 mx-auto mb-2" />
+                      <div className="font-bold font-sans">Online</div>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Date Selection */}
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Preferred Date *</label>
+                  <input
+                    type="date"
+                    value={selectedDate}
+                    onChange={(e) => setSelectedDate(e.target.value)}
+                    min={new Date().toISOString().split('T')[0]}
+                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                  />
+                </div>
+
+                {/* Time Selection */}
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Preferred Time *</label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {timeSlots.map((time) => (
+                      <button
+                        key={time}
+                        type="button"
+                        onClick={() => setSelectedTime(time)}
+                        className={`p-3 rounded-xl border-2 text-center transition-all duration-300 font-sans ${
+                          selectedTime === time
+                            ? 'border-[#CB748E] bg-pink-50 text-[#CB748E] font-bold'
+                            : 'border-gray-300 hover:bg-gray-50'
+                        }`}
+                      >
+                        {time}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Special Requests */}
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Special Requests</label>
+                  <textarea
+                    value={specialRequests}
+                    onChange={(e) => setSpecialRequests(e.target.value)}
+                    rows={3}
+                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                    placeholder="Any specific needs or requests for the session..."
+                  />
+                </div>
+
+                {/* Total Cost */}
+                {selectedServices.length > 0 && (
+                  <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200">
+                    <h4 className="text-lg font-bold text-gray-800 mb-3 font-handwritten">Booking Summary</h4>
+                    <div className="space-y-2">
+                      {selectedServices.map((serviceId) => {
+                        const service = selectedProfessional.services?.find(s => s.id === serviceId);
+                        return service ? (
+                          <div key={serviceId} className="flex justify-between items-center text-sm font-sans">
+                            <span className="text-gray-700">{service.name}</span>
+                            <span className="font-bold text-gray-800">₱{service.rate}</span>
+                          </div>
+                        ) : null;
+                      })}
+                      <div className="border-t border-gray-300 pt-2 mt-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-lg font-bold text-gray-800 font-handwritten">Total:</span>
+                          <span className="text-2xl font-bold text-[#698a60] font-handwritten">₱{calculateTotal()}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
+              <button
+                onClick={handleBookingSubmit}
+                disabled={selectedServices.length === 0 || !selectedSessionType || !selectedDate || !selectedTime}
+                className={`flex-1 px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten ${
+                  selectedServices.length > 0 && selectedSessionType && selectedDate && selectedTime
+                    ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                <CheckCircle className="h-5 w-5 mr-2" />
+                Book Session (₱{calculateTotal()})
+              </button>
+              <button
+                onClick={handleCloseModal}
+                className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 text-gray-700 flex items-center justify-center font-handwritten"
+              >
+                <X className="h-5 w-5 mr-2" />
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-green-50">
       {/* Hero Section */}
@@ -355,7 +796,7 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
 
                   <div className="flex space-x-2">
                     <button
-                      onClick={handleBookSession}
+                      onClick={() => handleBookSession(professional)}
                       className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center border border-white border-opacity-20"
                     >
                       <Calendar className="h-4 w-4 mr-2" />
@@ -436,7 +877,7 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
                       <td className="px-6 py-4">
                         <div className="flex space-x-2 justify-center">
                           <button
-                            onClick={handleBookSession}
+                            onClick={() => handleBookSession(professional)}
                             className="bg-gradient-to-r from-pink-400 to-green-500 text-white px-3 py-2 rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 text-xs font-sans"
                           >
                             {user ? 'Book' : 'Sign In'}
@@ -482,6 +923,9 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
           </div>
         )}
       </div>
+      
+      {/* Booking Modal */}
+      <BookingModal />
     </div>
   );
 }
