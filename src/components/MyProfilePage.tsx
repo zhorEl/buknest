@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, MapPin, Clock, Star, Award, Edit, Save, X, Phone, Mail, Calendar, DollarSign, BookOpen, Users, Shield, Camera, Plus, Trash2 } from 'lucide-react';
+import { User, MapPin, Clock, Star, Award, Edit, Save, X, Phone, Mail, Calendar, DollarSign, BookOpen, Users, Shield, Camera, Plus, Trash2, AlertCircle, CheckCircle } from 'lucide-react';
 
 interface MyProfilePageProps {
   user: any;
@@ -43,12 +43,67 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
 
   const [newSpecialization, setNewSpecialization] = useState('');
   const [newCredential, setNewCredential] = useState('');
+  const [newEducation, setNewEducation] = useState({
+    degree: '',
+    institution: '',
+    year: ''
+  });
+  const [newLanguage, setNewLanguage] = useState('');
+  const [newAchievement, setNewAchievement] = useState('');
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
 
   const handleInputChange = (field: string, value: any) => {
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+    
     setProfileData(prev => ({
       ...prev,
       [field]: value
     }));
+  };
+
+  const validateForm = () => {
+    const newErrors: {[key: string]: string} = {};
+    
+    if (!profileData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
+    }
+    
+    if (!profileData.title.trim()) {
+      newErrors.title = 'Professional title is required';
+    }
+    
+    if (!profileData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(profileData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!profileData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    }
+    
+    if (!profileData.bio.trim()) {
+      newErrors.bio = 'Professional bio is required';
+    }
+    
+    if (profileData.hourlyRate <= 0) {
+      newErrors.hourlyRate = 'Hourly rate must be greater than 0';
+    }
+    
+    if (profileData.specializations.length === 0) {
+      newErrors.specializations = 'At least one specialization is required';
+    }
+    
+    if (profileData.credentials.length === 0) {
+      newErrors.credentials = 'At least one credential is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const addSpecialization = () => {
@@ -58,6 +113,7 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
         specializations: [...prev.specializations, newSpecialization.trim()]
       }));
       setNewSpecialization('');
+      if (errors.specializations) setErrors(prev => ({ ...prev, specializations: '' }));
     }
   };
 
@@ -75,6 +131,7 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
         credentials: [...prev.credentials, newCredential.trim()]
       }));
       setNewCredential('');
+      if (errors.credentials) setErrors(prev => ({ ...prev, credentials: '' }));
     }
   };
 
@@ -85,10 +142,110 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
     }));
   };
 
+  const addEducation = () => {
+    if (newEducation.degree.trim() && newEducation.institution.trim() && newEducation.year.trim()) {
+      setProfileData(prev => ({
+        ...prev,
+        education: [...prev.education, { ...newEducation }]
+      }));
+      setNewEducation({ degree: '', institution: '', year: '' });
+    }
+  };
+
+  const removeEducation = (index: number) => {
+    setProfileData(prev => ({
+      ...prev,
+      education: prev.education.filter((_, i) => i !== index)
+    }));
+  };
+
+  const addLanguage = () => {
+    if (newLanguage.trim() && !profileData.languages.includes(newLanguage.trim())) {
+      setProfileData(prev => ({
+        ...prev,
+        languages: [...prev.languages, newLanguage.trim()]
+      }));
+      setNewLanguage('');
+    }
+  };
+
+  const removeLanguage = (index: number) => {
+    setProfileData(prev => ({
+      ...prev,
+      languages: prev.languages.filter((_, i) => i !== index)
+    }));
+  };
+
+  const addAchievement = () => {
+    if (newAchievement.trim()) {
+      setProfileData(prev => ({
+        ...prev,
+        achievements: [...prev.achievements, newAchievement.trim()]
+      }));
+      setNewAchievement('');
+    }
+  };
+
+  const removeAchievement = (index: number) => {
+    setProfileData(prev => ({
+      ...prev,
+      achievements: prev.achievements.filter((_, i) => i !== index)
+    }));
+  };
+
+  const toggleAvailability = (day: string) => {
+    setProfileData(prev => ({
+      ...prev,
+      availability: prev.availability.includes(day)
+        ? prev.availability.filter(d => d !== day)
+        : [...prev.availability, day]
+    }));
+  };
+
+  const toggleSessionType = (type: string) => {
+    setProfileData(prev => ({
+      ...prev,
+      sessionTypes: prev.sessionTypes.includes(type)
+        ? prev.sessionTypes.filter(t => t !== type)
+        : [...prev.sessionTypes, type]
+    }));
+  };
+
   const handleSave = () => {
-    // Here you would typically save to database
+    if (!validateForm()) {
+      setSaveStatus('error');
+      return;
+    }
+    
+    setSaveStatus('saving');
+    
+    // Simulate API call
+    setTimeout(() => {
+      try {
+        // Here you would typically save to database
+        console.log('Saving profile data:', profileData);
+        
+        setSaveStatus('saved');
+        setIsEditing(false);
+        
+        // Reset save status after 3 seconds
+        setTimeout(() => {
+          setSaveStatus('idle');
+        }, 3000);
+      } catch (error) {
+        setSaveStatus('error');
+        setTimeout(() => {
+          setSaveStatus('idle');
+        }, 3000);
+      }
+    }, 1500);
+  };
+
+  const handleCancel = () => {
     setIsEditing(false);
-    // Show success message
+    setErrors({});
+    setSaveStatus('idle');
+    // Reset form data to original values if needed
   };
 
   return (
@@ -150,14 +307,30 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                       type="text"
                       value={profileData.fullName}
                       onChange={(e) => handleInputChange('fullName', e.target.value)}
-                      className="text-3xl font-bold border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-handwritten"
+                      className={`text-3xl font-bold border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-handwritten ${
+                        errors.fullName ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.fullName && (
+                      <div className="flex items-center text-red-600 text-sm">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.fullName}
+                      </div>
+                    )}
                     <input
                       type="text"
                       value={profileData.title}
                       onChange={(e) => handleInputChange('title', e.target.value)}
-                      className="text-xl border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      className={`text-xl border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
+                        errors.title ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      }`}
                     />
+                    {errors.title && (
+                      <div className="flex items-center text-red-600 text-sm">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.title}
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div>
@@ -183,13 +356,35 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                 <>
                   <button
                     onClick={handleSave}
-                    className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
+                    disabled={saveStatus === 'saving'}
+                    className={`px-6 py-3 rounded-xl font-bold transition-colors flex items-center font-sans ${
+                      saveStatus === 'saving'
+                        ? 'bg-gray-400 text-white cursor-not-allowed'
+                        : saveStatus === 'saved'
+                        ? 'bg-green-600 text-white'
+                        : 'bg-[#698a60] text-white hover:bg-green-700'
+                    }`}
                   >
-                    <Save className="h-4 w-4 mr-2" />
-                    Save Changes
+                    {saveStatus === 'saving' ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                        Saving...
+                      </>
+                    ) : saveStatus === 'saved' ? (
+                      <>
+                        <CheckCircle className="h-4 w-4 mr-2" />
+                        Saved!
+                      </>
+                    ) : (
+                      <>
+                        <Save className="h-4 w-4 mr-2" />
+                        Save Changes
+                      </>
+                    )}
                   </button>
                   <button
-                    onClick={() => setIsEditing(false)}
+                    onClick={handleCancel}
+                    disabled={saveStatus === 'saving'}
                     className="px-6 py-3 border border-gray-300 rounded-xl font-bold hover:bg-gray-50 transition-colors flex items-center font-sans"
                   >
                     <X className="h-4 w-4 mr-2" />
@@ -233,6 +428,21 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
           </div>
         </div>
 
+        {/* Error Summary */}
+        {Object.keys(errors).length > 0 && isEditing && (
+          <div className="bg-red-50 border border-red-200 rounded-2xl p-4 mb-8">
+            <div className="flex items-center mb-2">
+              <AlertCircle className="h-5 w-5 text-red-600 mr-2" />
+              <h3 className="text-lg font-bold text-red-800 font-handwritten">Please fix the following errors:</h3>
+            </div>
+            <ul className="list-disc list-inside text-red-700 font-sans">
+              {Object.values(errors).map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Left Column */}
@@ -249,7 +459,12 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                       type="email"
                       value={profileData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      className={`flex-1 border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
+                        errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      }`}
+                    />
+                    {errors.email && (
+                      <div className="text-red-600 text-sm mt-1">{errors.email}</div>
                     />
                   ) : (
                     <span className="text-gray-700 font-sans">{profileData.email}</span>
@@ -263,7 +478,12 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                       type="tel"
                       value={profileData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      className={`flex-1 border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
+                        errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                      }`}
+                    />
+                    {errors.phone && (
+                      <div className="text-red-600 text-sm mt-1">{errors.phone}</div>
                     />
                   ) : (
                     <span className="text-gray-700 font-sans">{profileData.phone}</span>
@@ -307,12 +527,20 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                   ))}
                 </div>
                 
+                {errors.specializations && (
+                  <div className="flex items-center text-red-600 text-sm">
+                    <AlertCircle className="h-4 w-4 mr-1" />
+                    {errors.specializations}
+                  </div>
+                )}
+                
                 {isEditing && (
                   <div className="flex space-x-2">
                     <input
                       type="text"
                       value={newSpecialization}
                       onChange={(e) => setNewSpecialization(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addSpecialization()}
                       placeholder="Add new specialization"
                       className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
                     />
@@ -332,13 +560,26 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
               <h3 className="text-2xl font-bold text-gray-800 mb-6 font-handwritten">Professional Bio</h3>
               
               {isEditing ? (
-                <textarea
-                  value={profileData.bio}
-                  onChange={(e) => handleInputChange('bio', e.target.value)}
-                  rows={6}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
-                  placeholder="Tell families about your experience and approach..."
-                />
+                <div>
+                  <textarea
+                    value={profileData.bio}
+                    onChange={(e) => handleInputChange('bio', e.target.value)}
+                    rows={6}
+                    className={`w-full border-2 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans ${
+                      errors.bio ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                    }`}
+                    placeholder="Tell families about your experience and approach..."
+                  />
+                  {errors.bio && (
+                    <div className="flex items-center text-red-600 text-sm mt-2">
+                      <AlertCircle className="h-4 w-4 mr-1" />
+                      {errors.bio}
+                    </div>
+                  )}
+                  <div className="text-sm text-gray-500 mt-2 font-sans">
+                    {profileData.bio.length}/500 characters
+                  </div>
+                </div>
               ) : (
                 <p className="text-gray-700 leading-relaxed font-sans">{profileData.bio}</p>
               )}
@@ -369,12 +610,20 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                   ))}
                 </div>
                 
+                {errors.credentials && (
+                  <div className="flex items-center text-red-600 text-sm">
+                    <AlertCircle className="h-4 w-4 mr-1" />
+                    {errors.credentials}
+                  </div>
+                )}
+                
                 {isEditing && (
                   <div className="flex space-x-2">
                     <input
                       type="text"
                       value={newCredential}
                       onChange={(e) => setNewCredential(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addCredential()}
                       placeholder="Add new credential"
                       className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
                     />
@@ -395,12 +644,57 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
               
               <div className="space-y-4">
                 {profileData.education.map((edu, index) => (
-                  <div key={index} className="border-l-4 border-[#CB748E] pl-4">
+                  <div key={index} className="border-l-4 border-[#CB748E] pl-4 relative">
                     <h4 className="font-bold text-gray-800 font-sans">{edu.degree}</h4>
                     <p className="text-gray-600 font-sans">{edu.institution}</p>
                     <p className="text-sm text-gray-500 font-sans">{edu.year}</p>
+                    {isEditing && (
+                      <button
+                        onClick={() => removeEducation(index)}
+                        className="absolute top-0 right-0 text-red-500 hover:text-red-700"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    )}
                   </div>
                 ))}
+                
+                {isEditing && (
+                  <div className="border-t pt-4">
+                    <h4 className="font-bold text-gray-700 mb-3 font-sans">Add Education</h4>
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        value={newEducation.degree}
+                        onChange={(e) => setNewEducation(prev => ({ ...prev, degree: e.target.value }))}
+                        placeholder="Degree (e.g., Master of Science in Speech-Language Pathology)"
+                        className="w-full border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      />
+                      <input
+                        type="text"
+                        value={newEducation.institution}
+                        onChange={(e) => setNewEducation(prev => ({ ...prev, institution: e.target.value }))}
+                        placeholder="Institution (e.g., University of the Philippines)"
+                        className="w-full border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      />
+                      <div className="flex space-x-2">
+                        <input
+                          type="text"
+                          value={newEducation.year}
+                          onChange={(e) => setNewEducation(prev => ({ ...prev, year: e.target.value }))}
+                          placeholder="Year (e.g., 2016)"
+                          className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                        />
+                        <button
+                          onClick={addEducation}
+                          className="px-4 py-2 bg-[#698a60] text-white rounded-xl hover:bg-green-700 transition-colors"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -412,12 +706,23 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Hourly Rate (₱)</label>
                   {isEditing ? (
-                    <input
-                      type="number"
-                      value={profileData.hourlyRate}
-                      onChange={(e) => handleInputChange('hourlyRate', parseInt(e.target.value))}
-                      className="w-full border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                    />
+                    <div>
+                      <input
+                        type="number"
+                        value={profileData.hourlyRate}
+                        onChange={(e) => handleInputChange('hourlyRate', parseInt(e.target.value) || 0)}
+                        min="0"
+                        className={`w-full border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
+                          errors.hourlyRate ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                        }`}
+                      />
+                      {errors.hourlyRate && (
+                        <div className="flex items-center text-red-600 text-sm mt-1">
+                          <AlertCircle className="h-4 w-4 mr-1" />
+                          {errors.hourlyRate}
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     <div className="flex items-center">
                       <DollarSign className="h-5 w-5 text-gray-500 mr-2" />
@@ -428,35 +733,101 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                 
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Session Types</label>
-                  <div className="flex flex-wrap gap-2">
-                    {profileData.sessionTypes.map((type, index) => (
-                      <span key={index} className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold font-sans">
-                        {type}
-                      </span>
-                    ))}
-                  </div>
+                  {isEditing ? (
+                    <div className="space-y-2">
+                      {['Home Visit', 'Online'].map((type) => (
+                        <label key={type} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={profileData.sessionTypes.includes(type)}
+                            onChange={() => toggleSessionType(type)}
+                            className="mr-2 h-4 w-4 text-[#CB748E] focus:ring-[#CB748E] border-gray-300 rounded"
+                          />
+                          <span className="font-sans">{type}</span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {profileData.sessionTypes.map((type, index) => (
+                        <span key={index} className="px-3 py-1 bg-gray-100 text-gray-800 rounded-full text-sm font-semibold font-sans">
+                          {type}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Languages</label>
-                  <div className="flex flex-wrap gap-2">
-                    {profileData.languages.map((language, index) => (
-                      <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold font-sans">
-                        {language}
-                      </span>
-                    ))}
-                  </div>
+                  {isEditing ? (
+                    <div className="space-y-3">
+                      <div className="flex flex-wrap gap-2">
+                        {profileData.languages.map((language, index) => (
+                          <div key={index} className="flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold font-sans">
+                            <span>{language}</span>
+                            <button
+                              onClick={() => removeLanguage(index)}
+                              className="ml-2 text-red-500 hover:text-red-700"
+                            >
+                              <X className="h-3 w-3" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex space-x-2">
+                        <input
+                          type="text"
+                          value={newLanguage}
+                          onChange={(e) => setNewLanguage(e.target.value)}
+                          onKeyPress={(e) => e.key === 'Enter' && addLanguage()}
+                          placeholder="Add language"
+                          className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                        />
+                        <button
+                          onClick={addLanguage}
+                          className="px-4 py-2 bg-[#698a60] text-white rounded-xl hover:bg-green-700 transition-colors"
+                        >
+                          <Plus className="h-4 w-4" />
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {profileData.languages.map((language, index) => (
+                        <span key={index} className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold font-sans">
+                          {language}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Availability</label>
-                  <div className="flex flex-wrap gap-2">
-                    {profileData.availability.map((day, index) => (
-                      <span key={index} className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold font-sans">
-                        {day}
-                      </span>
-                    ))}
-                  </div>
+                  {isEditing ? (
+                    <div className="grid grid-cols-2 gap-2">
+                      {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+                        <label key={day} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={profileData.availability.includes(day)}
+                            onChange={() => toggleAvailability(day)}
+                            className="mr-2 h-4 w-4 text-[#CB748E] focus:ring-[#CB748E] border-gray-300 rounded"
+                          />
+                          <span className="font-sans">{day}</span>
+                        </label>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {profileData.availability.map((day, index) => (
+                        <span key={index} className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold font-sans">
+                          {day}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -467,11 +838,38 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
               
               <div className="space-y-3">
                 {profileData.achievements.map((achievement, index) => (
-                  <div key={index} className="flex items-center p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+                  <div key={index} className="flex items-center justify-between p-3 bg-yellow-50 rounded-xl border border-yellow-200">
                     <Award className="h-5 w-5 text-yellow-600 mr-3" />
                     <span className="text-gray-700 font-sans">{achievement}</span>
+                    {isEditing && (
+                      <button
+                        onClick={() => removeAchievement(index)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    )}
                   </div>
                 ))}
+                
+                {isEditing && (
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={newAchievement}
+                      onChange={(e) => setNewAchievement(e.target.value)}
+                      onKeyPress={(e) => e.key === 'Enter' && addAchievement()}
+                      placeholder="Add achievement"
+                      className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                    />
+                    <button
+                      onClick={addAchievement}
+                      className="px-4 py-2 bg-[#698a60] text-white rounded-xl hover:bg-green-700 transition-colors"
+                    >
+                      <Plus className="h-4 w-4" />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
