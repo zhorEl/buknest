@@ -459,6 +459,175 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Collapsible Calendar View */}
+        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-8 border border-white border-opacity-50">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold text-gray-800 font-handwritten">Calendar View</h3>
+            <button
+              onClick={() => setShowCalendar(!showCalendar)}
+              className={`px-4 py-2 rounded-2xl font-bold transition-all duration-300 flex items-center font-sans ${
+                showCalendar 
+                  ? 'bg-red-500 text-white hover:bg-red-600' 
+                  : 'bg-[#CB748E] text-white hover:bg-[#d698ab]'
+              }`}
+            >
+              {showCalendar ? (
+                <>
+                  <X className="h-4 w-4 mr-2" />
+                  Hide Calendar
+                </>
+              ) : (
+                <>
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Show Calendar
+                </>
+              )}
+            </button>
+          </div>
+          
+          {showCalendar && (
+            <div className="space-y-6">
+              {/* Calendar Header */}
+              <div className="flex justify-between items-center">
+                <button
+                  onClick={() => navigateMonth('prev')}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <ChevronLeft className="h-6 w-6 text-gray-600" />
+                </button>
+                
+                <h3 className="text-2xl font-bold text-gray-800 font-handwritten">
+                  {['January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'][currentDate.getMonth()]} {currentDate.getFullYear()}
+                </h3>
+                
+                <button
+                  onClick={() => navigateMonth('next')}
+                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <ChevronRight className="h-6 w-6 text-gray-600" />
+                </button>
+              </div>
+
+              {/* Calendar Grid */}
+              <div className="grid grid-cols-7 gap-2">
+                {/* Day Headers */}
+                {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                  <div key={day} className="text-center font-bold text-gray-600 p-3 font-sans">
+                    {day}
+                  </div>
+                ))}
+                
+                {/* Empty cells for days before month starts */}
+                {Array.from({ length: (() => {
+                  const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+                  return firstDay;
+                })() }, (_, i) => (
+                  <div key={`empty-${i}`} className="p-3"></div>
+                ))}
+                
+                {/* Calendar Days */}
+                {Array.from({ length: (() => {
+                  const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+                  return daysInMonth;
+                })() }, (_, i) => {
+                  const day = i + 1;
+                  const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                  const dateString = date.toISOString().split('T')[0];
+                  const isToday = date.toDateString() === new Date().toDateString();
+                  const sessionsForDay = bookings.filter(booking => booking.date === dateString);
+                  const confirmedSessions = sessionsForDay.filter(session => 
+                    user?.role === 'professional' ? getBookingStatus(session.id) === 'confirmed' : session.status === 'confirmed'
+                  );
+                  const pendingSessions = sessionsForDay.filter(session => 
+                    user?.role === 'professional' ? getBookingStatus(session.id) === 'pending' : session.status === 'pending'
+                  );
+                  const acceptedSessions = sessionsForDay.filter(session => 
+                    user?.role === 'professional' ? getBookingStatus(session.id) === 'accepted' : false
+                  );
+                  
+                  return (
+                    <div
+                      key={day}
+                      className={`p-3 text-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-gray-100 font-sans min-h-[80px] flex flex-col ${
+                        isToday
+                          ? 'bg-[#CB748E] text-white font-bold shadow-lg'
+                          : confirmedSessions.length > 0
+                          ? 'bg-green-100 text-green-800 font-semibold border-2 border-green-300'
+                          : acceptedSessions.length > 0
+                          ? 'bg-blue-100 text-blue-800 font-semibold border-2 border-blue-300'
+                          : pendingSessions.length > 0
+                          ? 'bg-yellow-100 text-yellow-800 font-semibold border-2 border-yellow-300'
+                          : 'hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="text-lg font-bold">{day}</div>
+                      {sessionsForDay.length > 0 && (
+                        <div className="flex-1 flex flex-col justify-center mt-1">
+                          <div className="text-xs space-y-1">
+                            {sessionsForDay.slice(0, 2).map((session, index) => (
+                              <div
+                                key={index}
+                                className={`px-1 py-0.5 rounded text-xs font-bold truncate ${
+                                  user?.role === 'professional' 
+                                    ? getBookingStatus(session.id) === 'confirmed' 
+                                      ? 'bg-green-600 text-white' 
+                                      : getBookingStatus(session.id) === 'accepted'
+                                      ? 'bg-blue-600 text-white'
+                                      : getBookingStatus(session.id) === 'pending'
+                                      ? 'bg-yellow-600 text-white'
+                                      : 'bg-gray-600 text-white'
+                                    : session.status === 'confirmed' 
+                                      ? 'bg-green-600 text-white' 
+                                      : session.status === 'pending'
+                                      ? 'bg-yellow-600 text-white'
+                                      : 'bg-gray-600 text-white'
+                                }`}
+                              >
+                                {user?.role === 'professional' ? session.child : session.professional} - {session.time}
+                              </div>
+                            ))}
+                            {sessionsForDay.length > 2 && (
+                              <div className="text-xs font-bold text-gray-600">
+                                +{sessionsForDay.length - 2} more
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              
+              {/* Calendar Legend */}
+              <div className="bg-gray-50 rounded-2xl p-6">
+                <h4 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Legend</h4>
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-[#CB748E] rounded-full mr-3"></div>
+                    <span className="text-sm text-gray-700 font-sans">Today</span>
+                  </div>
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-green-400 rounded-full mr-3"></div>
+                    <span className="text-sm text-gray-700 font-sans">Confirmed Sessions</span>
+                  </div>
+                  {user?.role === 'professional' && (
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-blue-400 rounded-full mr-3"></div>
+                      <span className="text-sm text-gray-700 font-sans">Accepted Sessions</span>
+                    </div>
+                  )}
+                  <div className="flex items-center">
+                    <div className="w-4 h-4 bg-yellow-400 rounded-full mr-3"></div>
+                    <span className="text-sm text-gray-700 font-sans">Pending Requests</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Filters */}
         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-10 border border-white border-opacity-50">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
@@ -489,14 +658,6 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               </div>
               
               <div className="relative">
-                <button
-                  onClick={() => setShowCalendar(true)}
-                  className="mr-4 px-4 py-3 bg-[#CB748E] text-white rounded-2xl font-bold hover:bg-[#d698ab] transition-all duration-300 flex items-center font-sans"
-                >
-                  <Calendar className="h-4 w-4 mr-2" />
-                  Calendar View
-                </button>
-                
                 <select
                   value={selectedTimeframe}
                   onChange={(e) => setSelectedTimeframe(e.target.value)}
