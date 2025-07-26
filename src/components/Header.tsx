@@ -23,6 +23,9 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
 
   const loggedInNavigation = [
     { name: 'My Bookings', id: 'bookings', icon: Calendar },
+    ...(user?.role === 'parent' ? [
+      { name: 'Kids Profile', id: 'kids-profile', icon: Users }
+    ] : []),
     ...(user?.role === 'professional' ? [
       { name: 'My Services', id: 'my-services', icon: User },
       { name: 'My Clients', id: 'my-clients', icon: Users }
