@@ -340,6 +340,220 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
     }, 3000);
   };
 
+  const PaymentModal = () => {
+    if (!showPaymentModal || !selectedProfessional) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 className="text-3xl font-bold text-gray-900 font-handwritten">Payment</h2>
+            <button
+              onClick={handleCloseModal}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
+          
+          <div className="p-8">
+            {paymentSuccess ? (
+              <div className="text-center">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <CheckCircle className="h-12 w-12 text-green-600" />
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">Payment Successful!</h3>
+                <p className="text-gray-600 mb-6 font-sans">Your booking has been confirmed. The professional will contact you soon.</p>
+              </div>
+            ) : isProcessingPayment ? (
+              <div className="text-center">
+                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
+                  <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">Processing Payment...</h3>
+                <p className="text-gray-600 font-sans">Please wait while we process your payment securely.</p>
+              </div>
+            ) : (
+              <>
+                {/* Booking Summary */}
+                <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200 mb-6">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4 font-handwritten">Booking Summary</h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700 font-sans">Professional:</span>
+                      <span className="font-bold text-gray-800 font-sans">{selectedProfessional.name}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700 font-sans">Child:</span>
+                      <span className="font-bold text-gray-800 font-sans">
+                        {parentChildren.find(c => c.id === selectedChild)?.name || 'Not selected'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700 font-sans">Date & Time:</span>
+                      <span className="font-bold text-gray-800 font-sans">{selectedDate} at {selectedTime}</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700 font-sans">Session Type:</span>
+                      <span className="font-bold text-gray-800 font-sans capitalize">{selectedSessionType?.replace('-', ' ')}</span>
+                    </div>
+                    <div className="border-t border-gray-300 pt-2 mt-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg font-bold text-gray-800 font-handwritten">Total Amount:</span>
+                        <span className="text-2xl font-bold text-[#698a60] font-handwritten">₱{calculateTotal()}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Payment Methods */}
+                <div className="mb-6">
+                  <h4 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Select Payment Method</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('card')}
+                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+                        paymentMethod === 'card'
+                          ? 'border-[#CB748E] bg-pink-50'
+                          : 'border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-bold font-sans">Credit/Debit Card</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('gcash')}
+                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+                        paymentMethod === 'gcash'
+                          ? 'border-[#698a60] bg-green-50'
+                          : 'border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-bold font-sans">GCash</div>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('maya')}
+                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
+                        paymentMethod === 'maya'
+                          ? 'border-[#CB748E] bg-pink-50'
+                          : 'border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-bold font-sans">Maya</div>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Payment Details */}
+                {paymentMethod === 'card' && (
+                  <div className="space-y-4 mb-6">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Card Number</label>
+                      <input
+                        type="text"
+                        value={paymentDetails.cardNumber}
+                        onChange={(e) => setPaymentDetails({...paymentDetails, cardNumber: e.target.value})}
+                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                        placeholder="1234 5678 9012 3456"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Expiry Date</label>
+                        <input
+                          type="text"
+                          value={paymentDetails.expiryDate}
+                          onChange={(e) => setPaymentDetails({...paymentDetails, expiryDate: e.target.value})}
+                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                          placeholder="MM/YY"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">CVV</label>
+                        <input
+                          type="text"
+                          value={paymentDetails.cvv}
+                          onChange={(e) => setPaymentDetails({...paymentDetails, cvv: e.target.value})}
+                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                          placeholder="123"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Cardholder Name</label>
+                      <input
+                        type="text"
+                        value={paymentDetails.cardName}
+                        onChange={(e) => setPaymentDetails({...paymentDetails, cardName: e.target.value})}
+                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                        placeholder="John Doe"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === 'gcash' && (
+                  <div className="space-y-4 mb-6">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">GCash Number</label>
+                      <input
+                        type="text"
+                        value={paymentDetails.gcashNumber}
+                        onChange={(e) => setPaymentDetails({...paymentDetails, gcashNumber: e.target.value})}
+                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#698a60] focus:border-transparent font-sans"
+                        placeholder="09123456789"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === 'maya' && (
+                  <div className="space-y-4 mb-6">
+                    <div>
+                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Maya Number</label>
+                      <input
+                        type="text"
+                        value={paymentDetails.mayaNumber}
+                        onChange={(e) => setPaymentDetails({...paymentDetails, mayaNumber: e.target.value})}
+                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                        placeholder="09123456789"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex space-x-4 pt-6 border-t border-gray-200">
+                  <button
+                    onClick={handlePaymentSubmit}
+                    disabled={!paymentMethod}
+                    className={`flex-1 px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten ${
+                      paymentMethod
+                        ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                  >
+                    <CheckCircle className="h-5 w-5 mr-2" />
+                    Pay ₱{calculateTotal()}
+                  </button>
+                  <button
+                    onClick={handleCloseModal}
+                    className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 text-gray-700 flex items-center justify-center font-handwritten"
+                  >
+                    <X className="h-5 w-5 mr-2" />
+                    Cancel
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const BookingModal = () => {
     if (!showBookingModal || !selectedProfessional) return null;
 
