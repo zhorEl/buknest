@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import VerificationModal from './VerificationModal';
 import { User, MapPin, Clock, Star, Award, Edit, Save, X, Phone, Mail, Calendar, DollarSign, BookOpen, Users, Shield, Camera, Plus, Trash2, AlertCircle, CheckCircle } from 'lucide-react';
 
 interface MyProfilePageProps {
