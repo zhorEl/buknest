@@ -346,25 +346,28 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                     {filteredSessions.map((session) => (
                       <div key={session.id} className="border border-gray-200 rounded-2xl p-6 bg-gray-50">
                         <div className="flex justify-between items-start mb-4">
-                          <div className="flex items-center mb-2">
+                          <div className="flex items-center">
                             <img
                               src={session.childAvatar}
                               alt={session.childName}
-                              className="w-8 h-8 rounded-full object-cover mr-3 border-2 border-white shadow-sm"
+                              className="w-10 h-10 rounded-full object-cover mr-3 border-2 border-white shadow-lg"
                             />
-                            <span className="text-sm font-bold text-[#CB748E] font-handwritten">
-                              {session.childName}
-                            </span>
+                            <div>
+                              <span className="text-lg font-bold text-[#CB748E] font-handwritten">
+                                {session.childName}
+                              </span>
+                              <p className="text-xs text-gray-600 font-sans">Session for {session.childName}</p>
+                            </div>
                           </div>
+                          <span className="px-3 py-1 bg-pink-100 text-[#CB748E] text-xs rounded-full font-semibold font-sans">
+                            {session.sessionType}
+                          </span>
                         </div>
                         <div className="flex justify-between items-start mb-4">
                           <div>
                             <h4 className="font-bold text-gray-800">{session.professional}</h4>
                             <p className="text-gray-600 text-sm font-semibold font-sans">{session.type}</p>
                           </div>
-                          <span className="px-3 py-1 bg-pink-100 text-[#CB748E] text-xs rounded-full font-semibold font-sans">
-                            {session.sessionType}
-                          </span>
                         </div>
                         <div className="flex items-center text-sm text-gray-700 font-sans">
                           <Calendar className="h-4 w-4 mr-2" />
@@ -387,7 +390,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                         <img
                           src={activity.childAvatar}
                           alt={activity.childName}
-                          className="w-6 h-6 rounded-full object-cover mr-3 border border-white shadow-sm"
+                          className="w-8 h-8 rounded-full object-cover mr-3 border-2 border-white shadow-lg"
                         />
                         <div className={`w-4 h-4 rounded-full mr-3 ${
                           activity.completed ? 'bg-[#CB748E]' : 'bg-yellow-400'
@@ -396,7 +399,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                           <div className="flex justify-between items-center">
                             <div className="flex items-center">
                               <span className="font-semibold text-gray-800">{activity.time}</span>
-                              <span className="text-xs text-[#CB748E] font-bold ml-2 font-handwritten">
+                              <span className="text-sm text-[#CB748E] font-bold ml-3 px-2 py-1 bg-pink-100 rounded-full font-handwritten">
                                 {activity.childName}
                               </span>
                             </div>
@@ -503,7 +506,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                         <p className="text-sm text-gray-700 font-sans">{milestone.description}</p>
                         <div className="flex justify-between items-center mt-2">
                           <p className="text-xs text-gray-600 font-sans">{new Date(milestone.date).toLocaleDateString()}</p>
-                          <span className="text-xs text-[#CB748E] font-bold font-handwritten">
+                          <span className="text-xs text-[#CB748E] font-bold px-2 py-1 bg-pink-100 rounded-full font-handwritten">
                             {milestone.childName}
                           </span>
                         </div>
