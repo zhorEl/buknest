@@ -696,13 +696,6 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                           Reschedule
                         </button>
                         <button
-                          onClick={() => handleMarkAsDone(session.id)}
-                          className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
-                        >
-                          <CheckCircle className="h-4 w-4 mr-2" />
-                          Mark as Done
-                        </button>
-                        <button
                           onClick={() => handleMarkAsDone(booking.id)}
                           className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
                         >
