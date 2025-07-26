@@ -63,6 +63,57 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
   const [showAddForm, setShowAddForm] = useState(false);
   const [showSessionModal, setShowSessionModal] = useState(false);
   const [selectedSession, setSelectedSession] = useState<SessionRecord | null>(null);
+  const [showAddChildForm, setShowAddChildForm] = useState(false);
+  const [newChildData, setNewChildData] = useState({
+    name: '',
+    dateOfBirth: '',
+    gender: '',
+    conditions: [] as string[],
+    allergies: [] as string[],
+    medications: [] as string[],
+    emergencyContact: {
+      name: '',
+      relationship: '',
+      phone: '',
+      email: ''
+    },
+    pediatrician: {
+      name: '',
+      phone: '',
+      clinic: ''
+    },
+    insurance: {
+      provider: '',
+      policyNumber: '',
+      groupNumber: ''
+    },
+    schoolInfo: {
+      schoolName: '',
+      grade: '',
+      teacherName: '',
+      specialServices: [] as string[]
+    },
+    developmentalHistory: {
+      birthWeight: '',
+      gestationalAge: '',
+      complications: '',
+      milestones: {
+        firstWords: '',
+        walking: '',
+        pottyTrained: ''
+      }
+    },
+    currentConcerns: '',
+    goals: [] as string[],
+    notes: ''
+  });
+  const [newCondition, setNewCondition] = useState('');
+  const [newAllergy, setNewAllergy] = useState('');
+  const [newMedication, setNewMedication] = useState('');
+  const [newGoal, setNewGoal] = useState('');
+  const [newSpecialService, setNewSpecialService] = useState('');
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [selectedChildForSessions, setSelectedChildForSessions] = useState<string | null>(null);
   const [newChild, setNewChild] = useState({
     name: '',
