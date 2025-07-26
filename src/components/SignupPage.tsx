@@ -90,7 +90,7 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
           {/* User Type Selection */}
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-center mb-6 font-handwritten" style={{ color: '#CB748E' }}>
-              Choose Your Role
+              I am a
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               <button
