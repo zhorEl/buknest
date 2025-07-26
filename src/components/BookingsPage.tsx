@@ -260,6 +260,46 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
       setSelectedDate(new Date(currentYear, currentMonth + direction, 1));
     };
     
+    // Calculate total calendar cells needed (6 weeks * 7 days = 42 cells)
+    const totalCells = 42;
+    const prevMonth = new Date(currentYear, currentMonth - 1, 0);
+    const nextMonth = new Date(currentYear, currentMonth + 1, 1);
+    
+    // Generate all calendar days
+    const calendarDays = [];
+    
+    // Previous month's trailing days
+    for (let i = startingDayOfWeek - 1; i >= 0; i--) {
+      const day = prevMonth.getDate() - i;
+      calendarDays.push({
+        day,
+        isCurrentMonth: false,
+        isPrevMonth: true,
+        date: new Date(prevMonth.getFullYear(), prevMonth.getMonth(), day)
+      });
+    }
+    
+    // Current month's days
+    for (let day = 1; day <= daysInMonth; day++) {
+      calendarDays.push({
+        day,
+        isCurrentMonth: true,
+        isPrevMonth: false,
+        date: new Date(currentYear, currentMonth, day)
+      });
+    }
+    
+    // Next month's leading days
+    const remainingCells = totalCells - calendarDays.length;
+    for (let day = 1; day <= remainingCells; day++) {
+      calendarDays.push({
+        day,
+        isCurrentMonth: false,
+        isPrevMonth: false,
+        date: new Date(nextMonth.getFullYear(), nextMonth.getMonth(), day)
+      });
+    }
+    
     return (
       <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-white border-opacity-50 mb-8">
         <div className="flex justify-between items-center mb-6">
@@ -302,32 +342,28 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                 </div>
               ))}
               
-              {/* Empty cells for days before month starts */}
-              {Array.from({ length: startingDayOfWeek }, (_, i) => (
-                <div key={`empty-${i}`} className="p-3"></div>
-              ))}
-              
-              {/* Calendar days */}
-              {Array.from({ length: daysInMonth }, (_, i) => {
-                const day = i + 1;
-                const isToday = today.getDate() === day && 
-                               today.getMonth() === currentMonth && 
-                               today.getFullYear() === currentYear;
-                const hasBooking = bookingDates.includes(day);
+              {/* All calendar days */}
+              {calendarDays.map((dayInfo, index) => {
+                const isToday = today.getDate() === dayInfo.day && 
+                               today.getMonth() === dayInfo.date.getMonth() && 
+                               today.getFullYear() === dayInfo.date.getFullYear();
+                const hasBooking = dayInfo.isCurrentMonth && bookingDates.includes(dayInfo.day);
                 
                 return (
                   <div
-                    key={day}
+                    key={index}
                     className={`p-3 text-center rounded-lg cursor-pointer transition-colors font-sans relative ${
-                      isToday
+                      !dayInfo.isCurrentMonth
+                        ? 'text-gray-300'
+                      : isToday
                         ? 'bg-[#CB748E] text-white font-bold'
                         : hasBooking
                         ? 'bg-green-100 text-green-800 font-semibold hover:bg-green-200'
                         : 'hover:bg-gray-100'
                     }`}
                   >
-                    {day}
-                    {hasBooking && (
+                    {dayInfo.day}
+                    {hasBooking && dayInfo.isCurrentMonth && (
                       <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-green-600 rounded-full"></div>
                     )}
                   </div>
