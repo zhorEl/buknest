@@ -37,22 +37,32 @@
 }
 
 /* Additional size classes for pattern elements */
-.w-18 { width: 4.5rem; }
-.h-18 { height: 4.5rem; }
-.w-19 { width: 4.75rem; }
-.h-19 { height: 4.75rem; }
-.w-22 { width: 5.5rem; }
-.h-22 { height: 5.5rem; }
-.w-44 { width: 11rem; }
-.h-44 { height: 11rem; }
-.w-48 { width: 12rem; }
-.h-48 { height: 12rem; }
-.w-52 { width: 13rem; }
-.h-52 { height: 13rem; }
-.w-56 { width: 14rem; }
-.h-56 { height: 14rem; }
+.w-54 { width: 13.5rem; }
+.h-54 { height: 13.5rem; }
 .w-60 { width: 15rem; }
 .h-60 { height: 15rem; }
+.w-66 { width: 16.5rem; }
+.h-66 { height: 16.5rem; }
+.w-72 { width: 18rem; }
+.h-72 { height: 18rem; }
+.w-84 { width: 21rem; }
+.h-84 { height: 21rem; }
+.w-96 { width: 24rem; }
+.h-96 { height: 24rem; }
+.w-108 { width: 27rem; }
+.h-108 { height: 27rem; }
+.w-120 { width: 30rem; }
+.h-120 { height: 30rem; }
+.w-132 { width: 33rem; }
+.h-132 { height: 33rem; }
+.w-144 { width: 36rem; }
+.h-144 { height: 36rem; }
+.w-156 { width: 39rem; }
+.h-156 { height: 39rem; }
+.w-168 { width: 42rem; }
+.h-168 { height: 42rem; }
+.w-180 { width: 45rem; }
+.h-180 { height: 45rem; }
 
 /* Enhanced backdrop blur effects */
 .backdrop-blur-sm {

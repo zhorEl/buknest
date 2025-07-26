@@ -164,13 +164,13 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
         {/* Background floating elements for main content */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 opacity-20 animate-pulse">
-            <img src="/pattern/pattern pink.svg" alt="" className="w-180 h-180" />
+            <img src="/pattern/pattern pink.svg" alt="" className="w-60 h-60" />
           </div>
           <div className="absolute top-40 right-16 opacity-18 animate-bounce" style={{ animationDelay: '1.5s' }}>
-            <img src="/pattern/pattern light green.svg" alt="" className="w-168 h-168" />
+            <img src="/pattern/pattern light green.svg" alt="" className="w-56 h-56" />
           </div>
           <div className="absolute bottom-32 left-20 opacity-22 animate-float" style={{ animationDelay: '0.8s' }}>
-            <img src="/pattern/pattern dark green.svg" alt="" className="w-156 h-156" />
+            <img src="/pattern/pattern dark green.svg" alt="" className="w-52 h-52" />
           </div>
         </div>
 
@@ -334,10 +334,10 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
           <div className="text-center py-16">
             <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
               <div className="absolute -top-4 -right-4 opacity-25">
-                <img src="/pattern/pattern pink.svg" alt="" className="w-36 h-36" />
+                <img src="/pattern/pattern pink.svg" alt="" className="w-108 h-108" />
               </div>
               <div className="absolute -bottom-4 -left-4 opacity-20">
-                <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
+                <img src="/pattern/pattern light green.svg" alt="" className="w-96 h-96" />
               </div>
               <div className="text-green-400 mb-6">
                 <Filter className="h-16 w-16 mx-auto" />
