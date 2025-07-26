@@ -132,30 +132,30 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg overflow-hidden border border-white border-opacity-50">
           {/* Chat Messages */}
-          <div className="h-96 overflow-y-auto p-6 space-y-4">
+          <div className="h-[500px] overflow-y-auto p-8 space-y-6">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'} animate-fadeIn`}
               >
-                <div className={`flex items-start space-x-3 max-w-xs lg:max-w-md ${
+                <div className={`flex items-start space-x-4 max-w-sm lg:max-w-lg ${
                   message.type === 'user' ? 'flex-row-reverse space-x-reverse' : ''
                 }`}>
-                  <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
+                  <div className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center shadow-md ${
                     message.type === 'user' ? 'bg-blue-600' : 'bg-gray-200'
                   }`}>
                     {message.type === 'user' ? (
-                      <User className="h-4 w-4 text-white" />
+                      <User className="h-5 w-5 text-white" />
                     ) : (
-                      <Bot className="h-4 w-4 text-gray-600" />
+                      <Bot className="h-5 w-5 text-gray-600" />
                     )}
                   </div>
-                  <div className={`px-4 py-2 rounded-lg ${
+                  <div className={`px-5 py-4 rounded-2xl shadow-sm ${
                     message.type === 'user'
                       ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white'
-                      : 'bg-gradient-to-r from-pink-50 to-green-50 text-gray-900 border border-pink-200'
+                      : 'bg-white text-gray-900 border-2 border-pink-200'
                   }`}>
-                    <p className="text-sm">{message.content}</p>
+                    <p className="text-base leading-relaxed font-readable" style={{ fontFamily: 'Calibri, sans-serif' }}>{message.content}</p>
                   </div>
                 </div>
               </div>
@@ -163,15 +163,15 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
             
             {isTyping && (
               <div className="flex justify-start">
-                <div className="flex items-start space-x-3">
-                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-r from-pink-200 to-green-200 flex items-center justify-center">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-r from-pink-200 to-green-200 flex items-center justify-center shadow-md">
                     <Bot className="h-5 w-5 text-green-600" />
                   </div>
-                  <div className="px-4 py-2 rounded-lg bg-gray-100">
+                  <div className="px-5 py-4 rounded-2xl bg-white border-2 border-gray-200 shadow-sm">
                     <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                      <div className="w-3 h-3 bg-green-400 rounded-full animate-bounce"></div>
+                      <div className="w-3 h-3 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-3 h-3 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                     </div>
                   </div>
                 </div>
@@ -233,22 +233,23 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
 
           {/* Input Area */}
           {!assessmentComplete && (
-            <div className="border-t border-pink-200 p-4 bg-gradient-to-r from-pink-50 to-green-50">
-              <div className="flex space-x-4">
+            <div className="border-t border-pink-200 p-6 bg-gradient-to-r from-pink-50 to-green-50">
+              <div className="flex space-x-4 items-end">
                 <textarea
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={handleKeyPress}
                   placeholder="Share your thoughts with NESTY..."
-                  className="flex-1 border border-pink-300 rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent resize-none bg-white bg-opacity-80"
-                  rows={2}
+                  className="flex-1 border-2 border-pink-300 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:border-transparent resize-none bg-white bg-opacity-90 text-base font-readable shadow-sm"
+                  style={{ fontFamily: 'Calibri, sans-serif' }}
+                  rows={3}
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputMessage.trim() || isTyping}
-                  className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-2 rounded-2xl hover:from-pink-500 hover:to-green-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center font-handwritten"
+                  className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-8 py-4 rounded-2xl hover:from-pink-500 hover:to-green-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center font-handwritten shadow-lg transform hover:scale-105"
                 >
-                  <Send className="h-5 w-5" />
+                  <Send className="h-6 w-6" />
                 </button>
               </div>
             </div>

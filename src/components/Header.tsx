@@ -36,7 +36,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
           <nav className="hidden md:flex space-x-8">
             {!user && (
               <>
-                {navigation.slice(0, 3).map((item) => {
+                {navigation.slice(0, 4).map((item) => {
                   const Icon = item.icon;
                   return (
                     <button
