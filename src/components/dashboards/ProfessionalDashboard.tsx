@@ -10,6 +10,14 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
   const [selectedTimeframe, setSelectedTimeframe] = useState('week');
   const [showCalendar, setShowCalendar] = useState(false);
   const [rescheduleSession, setRescheduleSession] = useState<string | null>(null);
+  const [showClientModal, setShowClientModal] = useState(false);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [bookingActions, setBookingActions] = useState<{[key: string]: 'pending' | 'accepted' | 'confirmed'}>({
+    '1': 'pending',
+    '2': 'accepted', 
+    '3': 'pending',
+    '4': 'confirmed'
+  });
 
   const stats = {
     totalSessions: 156,
@@ -35,6 +43,19 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       parentPhone: '(555) 123-4567',
       address: '123 Main St, Bukidnon'
     },
+    clientDetails: {
+      childName: 'Emma Johnson',
+      age: 6,
+      conditions: ['Autism Spectrum Disorder', 'Speech Delay'],
+      parentName: 'Sarah Johnson',
+      parentEmail: 'sarah.johnson@email.com',
+      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+      progressScore: 85,
+      totalSessions: 24,
+      completedSessions: 18,
+      joinedDate: '2023-09-15',
+      notes: 'Shows excellent progress in articulation. Very responsive to visual cues.'
+    },
     {
       id: '2',
       childName: 'Michael Chen',
@@ -46,6 +67,19 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       notes: 'Continue with sensory integration activities',
       parentPhone: '(555) 987-6543',
       meetingLink: 'https://meet.buknest.com/session-456'
+    },
+    clientDetails: {
+      childName: 'Michael Chen',
+      age: 4,
+      conditions: ['Sensory Processing Disorder'],
+      parentName: 'Lisa Chen',
+      parentEmail: 'lisa.chen@email.com',
+      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+      progressScore: 72,
+      totalSessions: 16,
+      completedSessions: 12,
+      joinedDate: '2023-10-20',
+      notes: 'Responds well to sensory integration activities. Needs consistent routine.'
     },
     {
       id: '3',
@@ -59,6 +93,19 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       parentPhone: '(555) 456-7890',
       address: '456 Oak Ave, Bukidnon'
     },
+    clientDetails: {
+      childName: 'Sofia Rodriguez',
+      age: 5,
+      conditions: ['ADHD', 'Language Delay'],
+      parentName: 'Maria Rodriguez',
+      parentEmail: 'maria.rodriguez@email.com',
+      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+      progressScore: 68,
+      totalSessions: 20,
+      completedSessions: 15,
+      joinedDate: '2023-08-10',
+      notes: 'High energy child. Benefits from movement breaks during sessions.'
+    },
     {
       id: '4',
       childName: 'Alex Thompson',
@@ -70,6 +117,19 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       notes: 'Follow-up session for behavioral strategies',
       parentPhone: '(555) 321-0987',
       meetingLink: 'https://meet.buknest.com/session-789'
+    },
+    clientDetails: {
+      childName: 'Alex Thompson',
+      age: 4,
+      conditions: ['ADHD', 'Behavioral Issues'],
+      parentName: 'Jennifer Thompson',
+      parentEmail: 'jennifer.thompson@email.com',
+      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+      progressScore: 75,
+      totalSessions: 12,
+      completedSessions: 8,
+      joinedDate: '2023-11-05',
+      notes: 'Responds well to structured activities and clear expectations.'
     }
   ];
 
@@ -175,6 +235,34 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
 
   const handleReschedule = (sessionId: string) => {
     setRescheduleSession(sessionId);
+  };
+
+  const handleAcceptBooking = (sessionId: string) => {
+    setBookingActions(prev => ({ ...prev, [sessionId]: 'accepted' }));
+  };
+
+  const handleConfirmBooking = (sessionId: string) => {
+    setBookingActions(prev => ({ ...prev, [sessionId]: 'confirmed' }));
+  };
+
+  const handleViewClientDetails = (sessionId: string) => {
+    setSelectedClientId(sessionId);
+    setShowClientModal(true);
+  };
+
+  const getBookingStatus = (sessionId: string) => {
+    return bookingActions[sessionId] || 'pending';
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'accepted':
+        return 'bg-blue-100 text-blue-800';
+      case 'confirmed':
+        return 'bg-green-100 text-green-800';
+      default:
+        return 'bg-yellow-100 text-yellow-800';
+    }
   };
 
   const CalendarModal = () => (
@@ -479,6 +567,13 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                           Edit
                         </button>
                       </div>
+                     <button 
+                       onClick={() => handleViewClientDetails(session.id)}
+                       className="px-2 py-1 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition-colors font-semibold flex items-center font-sans"
+                     >
+                       <User className="h-3 w-3 mr-1" />
+                       Client
+                     </button>
                     </div>
                     
                     {session.notes && (
