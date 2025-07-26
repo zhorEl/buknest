@@ -1,6 +1,7 @@
 # BukNEST - Safe, Smart, Supportive
 
 ![BukNEST Logo](public/icon.svg)
+![BukNEST Logo](public/logo-name.svg)
 
 **A comprehensive platform connecting families with certified professionals for children with special needs through AI-powered guidance and compassionate care.**
 
@@ -512,8 +513,8 @@ Session Execution → Progress Documentation
 **BukNEST Team**
 - **Website**: https://buknest.com
 - **Email**: hello@buknest.com
-- **Phone**: +63 (02) 8123-4567
-- **Address**: Bukidnon, Philippines
+- **Phone**: +63 9913410186
+- **Address**: Valencia City, Bukidnon, Philippines
 
 **Social Media**
 - **Facebook**: @BukNESTOfficial
