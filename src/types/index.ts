@@ -26,53 +26,9 @@ export interface Child {
   id: string;
   name: string;
   age: number;
-  dateOfBirth: string;
-  gender: string;
   conditions: string[];
-  allergies: string[];
-  medications: string[];
-  emergencyContact: {
-    name: string;
-    relationship: string;
-    phone: string;
-    email: string;
-  };
-  pediatrician: {
-    name: string;
-    phone: string;
-    clinic: string;
-  };
-  insurance: {
-    provider: string;
-    policyNumber: string;
-    groupNumber: string;
-  };
-  schoolInfo: {
-    schoolName: string;
-    grade: string;
-    teacherName: string;
-    specialServices: string[];
-  };
-  developmentalHistory: {
-    birthWeight: string;
-    gestationalAge: string;
-    complications: string;
-    milestones: {
-      firstWords: string;
-      walking: string;
-      pottyTrained: string;
-    };
-  };
-  currentConcerns: string;
-  goals: string[];
-  notes: string;
-  avatar: string;
-  progressScore: number;
-  totalSessions: number;
-  completedSessions: number;
-  joinedDate: string;
   assessmentHistory: Assessment[];
-  sessionHistory: SessionRecord[];
+  sessions: Session[];
 }
 
 export interface Assessment {
