@@ -702,6 +702,13 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                           <CheckCircle className="h-4 w-4 mr-2" />
                           Mark as Done
                         </button>
+                        <button
+                          onClick={() => handleMarkAsDone(booking.id)}
+                          className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
+                        >
+                          <CheckCircle className="h-4 w-4 mr-2" />
+                          Mark as Done
+                        </button>
                       </div>
                     )}
                     
@@ -859,10 +866,10 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                 <div className="mb-6 p-4 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
                   <h3 className="text-lg font-bold text-gray-800 mb-2 font-handwritten">Session Details</h3>
                   {(() => {
-                    const session = upcomingSessions.find(s => s.id === selectedSessionId);
+                    const session = bookings.find(s => s.id === selectedSessionId);
                     return session ? (
                       <div className="text-sm text-gray-700 font-sans">
-                        <p><strong>Client:</strong> {session.childName}</p>
+                        <p><strong>Client:</strong> {session.child}</p>
                         <p><strong>Date:</strong> {new Date(session.date).toLocaleDateString()}</p>
                         <p><strong>Time:</strong> {session.time}</p>
                         <p><strong>Duration:</strong> {session.duration} minutes</p>
