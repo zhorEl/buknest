@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, User, Calendar, MessageCircle, LogIn, LogOut, Heart, Users } from 'lucide-react';
+import { Menu, X, User, Calendar, MessageCircle, LogIn, LogOut, Heart, Users, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
@@ -12,6 +12,7 @@ interface HeaderProps {
 
 export default function Header({ currentPage, onPageChange, user, onLogin, onSignup, onLogout }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
   const navigation = [
     { name: 'Assessment with NESTY', id: 'assessment', icon: MessageCircle },
@@ -79,26 +80,89 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
           {/* User Actions */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
-              <>
-                <div className="flex items-center space-x-3">
+              <div className="relative">
+                <button
+                  onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+                  className="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                >
                   <img
                     src={user.avatar || 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400'}
                     alt={user.name}
-                    className="w-8 h-8 rounded-full object-cover"
+                    className="w-10 h-10 rounded-full object-cover border-2 border-gray-200"
                   />
-                  <div className="text-sm">
-                    <p className="font-medium text-gray-900">{user.name}</p>
-                    <p className="text-gray-600 capitalize">{user.role}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={onLogout}
-                  className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 rounded-md transition-colors"
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Logout
+                  <ChevronDown className="h-4 w-4 text-gray-600" />
                 </button>
-              </>
+                
+                {/* Dropdown Menu */}
+                {isUserDropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-gray-200 py-2 z-50">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <div className="flex items-center space-x-3">
+                        <img
+                          src={user.avatar || 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400'}
+                          alt={user.name}
+                          className="w-12 h-12 rounded-full object-cover"
+                        />
+                        <div>
+                          <p className="font-semibold text-gray-900 font-sans">{user.name}</p>
+                          <p className="text-sm text-gray-600 capitalize font-sans">{user.role}</p>
+                          <p className="text-xs text-gray-500 font-sans">{user.email}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="py-2">
+                      <button
+                        onClick={() => {
+                          onPageChange(user.role === 'parent' ? 'parent-dashboard' : user.role === 'professional' ? 'professional-dashboard' : 'admin-dashboard');
+                          setIsUserDropdownOpen(false);
+                        }}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-sans"
+                      >
+                        <User className="h-4 w-4 mr-3" />
+                        Dashboard
+                      </button>
+                      
+                      {user.role === 'parent' && (
+                        <button
+                          onClick={() => {
+                            onPageChange('bookings');
+                            setIsUserDropdownOpen(false);
+                          }}
+                          className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-sans"
+                        >
+                          <Calendar className="h-4 w-4 mr-3" />
+                          My Bookings
+                        </button>
+                      )}
+                      
+                      <button
+                        onClick={() => {
+                          onPageChange('assessment');
+                          setIsUserDropdownOpen(false);
+                        }}
+                        className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-sans"
+                      >
+                        <MessageCircle className="h-4 w-4 mr-3" />
+                        Chat with NESTY
+                      </button>
+                    </div>
+                    
+                    <div className="border-t border-gray-100 pt-2">
+                      <button
+                        onClick={() => {
+                          onLogout();
+                          setIsUserDropdownOpen(false);
+                        }}
+                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 font-sans"
+                      >
+                        <LogOut className="h-4 w-4 mr-3" />
+                        Logout
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <div className="flex space-x-3">
                 <button
@@ -207,6 +271,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
                       onClick={() => {
                         onLogin();
                         setIsMenuOpen(false);
+                        setIsUserDropdownOpen(false);
                       }}
                       className="flex items-center w-full px-3 py-2 text-base font-bold text-white bg-gradient-to-r from-pink-400 to-green-500 hover:from-pink-500 hover:to-green-600 rounded-2xl font-handwritten"
                     >
@@ -217,6 +282,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
                       onClick={() => {
                         onSignup();
                         setIsMenuOpen(false);
+                        setIsUserDropdownOpen(false);
                       }}
                       className="flex items-center w-full px-3 py-2 text-base font-bold text-green-700 bg-white border-2 border-green-300 hover:bg-green-50 rounded-2xl font-handwritten"
                     >
@@ -230,6 +296,14 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
           </div>
         )}
       </div>
+      
+      {/* Overlay to close dropdown when clicking outside */}
+      {isUserDropdownOpen && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setIsUserDropdownOpen(false)}
+        />
+      )}
     </header>
   );
 }
