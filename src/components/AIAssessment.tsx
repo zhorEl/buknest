@@ -313,10 +313,10 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
 
         <div className="mt-6 text-center">
           <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl p-4 border border-white border-opacity-50 shadow-lg relative">
-            <div className="absolute -top-2 -right-2 opacity-30" style={{ transform: 'translateX(4.8rem)' }}>
+            <div className="absolute -top-2 -right-2 opacity-30" style={{ transform: 'translateX(4.8rem)', zIndex: -1 }}>
               <img src="/pattern/pattern dark green.svg" alt="" className="w-24 h-24" />
             </div>
-            <div className="absolute -bottom-2 -left-2 opacity-25" style={{ transform: 'translateX(-4rem)' }}>
+            <div className="absolute -bottom-2 -left-2 opacity-25" style={{ transform: 'translateX(-4rem)', zIndex: -1 }}>
               <img src="/pattern/pattern light pink with green.svg" alt="" className="w-20 h-20" />
             </div>
             <p className="text-sm text-green-700 font-readable">

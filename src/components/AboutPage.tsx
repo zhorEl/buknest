@@ -105,13 +105,13 @@ export default function AboutPage({ onPageChange }: AboutPageProps) {
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-15 -translate-x-40 translate-y-40"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-20 left-16 opacity-30 animate-float">
+        <div className="absolute top-20 left-16 opacity-30 animate-float" style={{ zIndex: -1 }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-22 h-22" />
         </div>
-        <div className="absolute bottom-32 right-20 opacity-25 animate-bounce" style={{ animationDelay: '1s' }}>
+        <div className="absolute bottom-32 right-20 opacity-25 animate-float-2" style={{ animationDelay: '1s', zIndex: -1 }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-18 h-18" />
         </div>
-        <div className="absolute top-40 right-32 opacity-35 animate-pulse" style={{ animationDelay: '2s' }}>
+        <div className="absolute top-40 right-32 opacity-35 animate-float-3" style={{ animationDelay: '2s', zIndex: -1 }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-16 h-16" />
         </div>
         
