@@ -40,6 +40,11 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
           <nav className="hidden md:flex space-x-8">
             {/* Main Navigation - Always visible */}
             {navigation.map((item) => {
+             // Hide About Us and Our Mission when user is signed in
+             if (user && (item.id === 'about' || item.id === 'mission')) {
+               return null;
+             }
+             
               const Icon = item.icon;
               return (
                 <button
@@ -200,6 +205,11 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
               {/* Main Navigation - Always visible */}
               {navigation.map((item) => {
+               // Hide About Us and Our Mission when user is signed in
+               if (user && (item.id === 'about' || item.id === 'mission')) {
+                 return null;
+               }
+               
                 const Icon = item.icon;
                 return (
                   <button

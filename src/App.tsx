@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
 import HomePage from './components/HomePage';
 import AIAssessment from './components/AIAssessment';
@@ -100,6 +101,7 @@ function App() {
         initialMode={loginModalMode}
       />
       {renderPage()}
+      <Footer onPageChange={setCurrentPage} />
     </div>
   );
 }
