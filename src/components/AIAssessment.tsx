@@ -130,8 +130,8 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
           <div className="flex justify-center items-center mb-4">
-            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-3xl px-8 py-4 mr-4">
-              <span className="text-4xl font-bold text-white font-handwritten">NESTY</span>
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
+              <Bot className="h-12 w-12 text-white" />
             </div>
             <div>
               <h1 className="text-4xl md:text-5xl font-bold font-handwritten">
