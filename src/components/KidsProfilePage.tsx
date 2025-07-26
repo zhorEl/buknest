@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Search, Calendar, TrendingUp, FileText, Phone, Mail, MapPin, Clock, Star, Filter, ChevronDown, User, Activity, Baby, Grid, List, X, Award, Heart, AlertCircle, Plus, Edit, Trash2 } from 'lucide-react';
+import { Users, Search, Calendar, TrendingUp, FileText, Phone, Mail, MapPin, Clock, Star, Filter, ChevronDown, User, Activity, Baby, Grid, List, X, Award, Heart, AlertCircle, Plus, Edit, Trash2, CheckCircle, ArrowRight, MessageCircle } from 'lucide-react';
 
 interface KidsProfilePageProps {
   user: any;
@@ -36,6 +36,12 @@ interface SessionRecord {
   progress: string;
   rating: number;
   professional: string;
+  status: 'completed' | 'scheduled' | 'cancelled';
+  goals: string[];
+  achievements: string[];
+  nextSteps: string[];
+  parentFeedback?: string;
+  professionalNotes?: string;
 }
 
 interface Milestone {
@@ -55,6 +61,9 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
   const [showChildModal, setShowChildModal] = useState(false);
   const [modalChild, setModalChild] = useState<Child | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showSessionModal, setShowSessionModal] = useState(false);
+  const [selectedSession, setSelectedSession] = useState<SessionRecord | null>(null);
+  const [selectedChildForSessions, setSelectedChildForSessions] = useState<string | null>(null);
   const [newChild, setNewChild] = useState({
     name: '',
     age: '',
@@ -106,7 +115,13 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
           notes: 'Great session focusing on /r/ sounds. Emma showed improvement.',
           progress: 'Improved articulation of target sounds',
           rating: 5,
-          professional: 'Dr. Sarah Johnson'
+          professional: 'Dr. Sarah Johnson',
+          status: 'completed',
+          goals: ['Improve /r/ sound articulation', 'Increase vocabulary by 5 words'],
+          achievements: ['Successfully pronounced /r/ in 3 words', 'Added 4 new words to vocabulary'],
+          nextSteps: ['Continue /r/ sound practice', 'Work on sentence formation'],
+          parentFeedback: 'Emma was very engaged and excited to show us what she learned.',
+          professionalNotes: 'Excellent progress. Emma is responding well to visual cues and repetition exercises.'
         },
         {
           id: '2',
@@ -116,7 +131,28 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
           notes: 'Worked on vocabulary expansion. Good engagement.',
           progress: 'Added 5 new words to active vocabulary',
           rating: 4,
-          professional: 'Dr. Sarah Johnson'
+          professional: 'Dr. Sarah Johnson',
+          status: 'completed',
+          goals: ['Expand vocabulary', 'Improve attention span'],
+          achievements: ['Learned 5 new words', 'Maintained focus for 40 minutes'],
+          nextSteps: ['Practice new words in sentences', 'Continue attention building activities'],
+          parentFeedback: 'Emma enjoyed the online session and was proud of her new words.',
+          professionalNotes: 'Good engagement throughout the session. Ready for more complex vocabulary.'
+        },
+        {
+          id: '3',
+          date: '2024-01-15',
+          type: 'home-visit',
+          duration: 60,
+          notes: 'Upcoming session - Focus on social communication',
+          progress: 'Scheduled',
+          rating: 0,
+          professional: 'Dr. Sarah Johnson',
+          status: 'scheduled',
+          goals: ['Practice social greetings', 'Work on turn-taking in conversation'],
+          achievements: [],
+          nextSteps: [],
+          professionalNotes: 'Plan to work on social communication skills and peer interaction.'
         }
       ]
     },
@@ -161,8 +197,29 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
           duration: 45,
           notes: 'Focus on attention and following directions. Good progress.',
           progress: 'Improved attention span by 5 minutes',
-          rating: 4,
-          professional: 'Dr. Michael Chen'
+          rating: 3,
+          professional: 'Dr. Michael Chen',
+          status: 'completed',
+          goals: ['Improve attention span', 'Follow 2-step instructions'],
+          achievements: ['Increased attention span to 15 minutes', 'Successfully followed 2-step instructions'],
+          nextSteps: ['Work on 3-step instructions', 'Practice sustained attention activities'],
+          parentFeedback: 'Alex was more focused than usual and seemed to enjoy the activities.',
+          professionalNotes: 'Significant improvement in attention. Ready for more complex tasks.'
+        },
+        {
+          id: '4',
+          date: '2024-01-18',
+          type: 'online',
+          duration: 45,
+          notes: 'Upcoming session - Continue attention building',
+          progress: 'Scheduled',
+          rating: 0,
+          professional: 'Dr. Michael Chen',
+          status: 'scheduled',
+          goals: ['Practice 3-step instructions', 'Improve impulse control'],
+          achievements: [],
+          nextSteps: [],
+          professionalNotes: 'Plan to build on previous attention improvements.'
         }
       ]
     }
@@ -217,6 +274,234 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
     });
     setShowAddForm(false);
     alert('Child profile added successfully!');
+  };
+
+  const handleViewSessionDetails = (session: SessionRecord, childId: string) => {
+    setSelectedSession(session);
+    setSelectedChildForSessions(childId);
+    setShowSessionModal(true);
+  };
+
+  const SessionDetailsModal = () => {
+    if (!showSessionModal || !selectedSession) return null;
+
+    const child = children.find(c => c.id === selectedChildForSessions);
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 className="text-3xl font-bold text-gray-900 font-handwritten">Session Details</h2>
+            <button
+              onClick={() => setShowSessionModal(false)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
+          
+          <div className="p-8">
+            {/* Session Header */}
+            <div className="flex items-center mb-8 p-6 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
+              <div className="flex-1">
+                <h3 className="text-3xl font-bold text-gray-900 font-handwritten mb-2">
+                  {child?.name} - Session #{selectedSession.id}
+                </h3>
+                <p className="text-xl text-[#CB748E] font-semibold font-sans mb-1">
+                  {new Date(selectedSession.date).toLocaleDateString()} at {selectedSession.date.includes('T') ? new Date(selectedSession.date).toLocaleTimeString() : 'TBD'}
+                </p>
+                <p className="text-lg text-gray-700 font-sans">
+                  {selectedSession.professional} • {selectedSession.duration} minutes • {selectedSession.type === 'home-visit' ? 'Home Visit' : 'Online Session'}
+                </p>
+                <div className="flex items-center mt-3">
+                  <div className={`px-4 py-2 rounded-full text-lg font-bold ${
+                    selectedSession.status === 'completed' ? 'bg-green-100 text-green-800' :
+                    selectedSession.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
+                    'bg-red-100 text-red-800'
+                  }`}>
+                    {selectedSession.status.charAt(0).toUpperCase() + selectedSession.status.slice(1)}
+                  </div>
+                  {selectedSession.status === 'completed' && (
+                    <div className="flex items-center ml-4">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`h-5 w-5 ${
+                            i < selectedSession.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                          }`}
+                        />
+                      ))}
+                      <span className="ml-2 text-gray-700 font-sans">({selectedSession.rating}/5)</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Left Column */}
+              <div className="space-y-6">
+                {/* Session Goals */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <Star className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Session Goals
+                  </h4>
+                  <div className="space-y-2">
+                    {selectedSession.goals.map((goal, index) => (
+                      <div key={index} className="flex items-start p-3 bg-blue-50 rounded-xl border border-blue-200">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></div>
+                        <span className="text-gray-700 font-sans">{goal}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Achievements */}
+                {selectedSession.status === 'completed' && selectedSession.achievements.length > 0 && (
+                  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                      <Award className="h-5 w-5 mr-2 text-[#CB748E]" />
+                      Achievements
+                    </h4>
+                    <div className="space-y-2">
+                      {selectedSession.achievements.map((achievement, index) => (
+                        <div key={index} className="flex items-start p-3 bg-green-50 rounded-xl border border-green-200">
+                          <CheckCircle className="h-4 w-4 text-green-600 mr-3 mt-0.5" />
+                          <span className="text-gray-700 font-sans">{achievement}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Next Steps */}
+                {selectedSession.status === 'completed' && selectedSession.nextSteps.length > 0 && (
+                  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                      <ArrowRight className="h-5 w-5 mr-2 text-[#CB748E]" />
+                      Next Steps
+                    </h4>
+                    <div className="space-y-2">
+                      {selectedSession.nextSteps.map((step, index) => (
+                        <div key={index} className="flex items-start p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+                          <div className="w-2 h-2 bg-yellow-500 rounded-full mr-3 mt-2"></div>
+                          <span className="text-gray-700 font-sans">{step}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-6">
+                {/* Session Notes */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <FileText className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Session Notes
+                  </h4>
+                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <p className="text-gray-700 leading-relaxed font-sans">{selectedSession.notes}</p>
+                  </div>
+                </div>
+
+                {/* Professional Notes */}
+                {selectedSession.professionalNotes && (
+                  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                      <User className="h-5 w-5 mr-2 text-[#CB748E]" />
+                      Professional Notes
+                    </h4>
+                    <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+                      <p className="text-gray-700 leading-relaxed font-sans">{selectedSession.professionalNotes}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Parent Feedback */}
+                {selectedSession.parentFeedback && (
+                  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                      <Heart className="h-5 w-5 mr-2 text-[#CB748E]" />
+                      Parent Feedback
+                    </h4>
+                    <div className="bg-pink-50 rounded-xl p-4 border border-pink-200">
+                      <p className="text-gray-700 leading-relaxed font-sans">{selectedSession.parentFeedback}</p>
+                    </div>
+                  </div>
+                )}
+
+                {/* Progress Summary */}
+                {selectedSession.status === 'completed' && (
+                  <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                      <TrendingUp className="h-5 w-5 mr-2 text-[#CB748E]" />
+                      Progress Summary
+                    </h4>
+                    <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-xl p-4 border border-pink-200">
+                      <p className="text-gray-700 leading-relaxed font-sans font-semibold">{selectedSession.progress}</p>
+                      <div className="flex items-center mt-3">
+                        <span className="text-sm text-gray-600 font-sans mr-2">Session Rating:</span>
+                        <div className="flex items-center">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              className={`h-4 w-4 ${
+                                i < selectedSession.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                              }`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
+              {selectedSession.status === 'scheduled' && (
+                <>
+                  <button
+                    onClick={() => onPageChange('bookings')}
+                    className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-sans"
+                  >
+                    <Edit className="h-5 w-5 mr-2" />
+                    Reschedule Session
+                  </button>
+                  <button className="px-6 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center justify-center font-sans">
+                    <MessageCircle className="h-5 w-5 mr-2" />
+                    Contact Professional
+                  </button>
+                </>
+              )}
+              {selectedSession.status === 'completed' && (
+                <>
+                  <button className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-sans">
+                    <FileText className="h-5 w-5 mr-2" />
+                    Download Report
+                  </button>
+                  <button className="px-6 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center justify-center font-sans">
+                    <Calendar className="h-5 w-5 mr-2" />
+                    Book Follow-up
+                  </button>
+                </>
+              )}
+              <button
+                onClick={() => setShowSessionModal(false)}
+                className="px-6 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center justify-center font-sans"
+              >
+                <X className="h-5 w-5 mr-2" />
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   const ChildDetailsModal = () => {
@@ -408,32 +693,55 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                 <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
                   <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
                     <Calendar className="h-5 w-5 mr-2 text-[#CB748E]" />
-                    Recent Sessions
+                    Session History & Progress
                   </h4>
-                  <div className="space-y-3">
-                    {modalChild.sessionHistory.slice(0, 3).map((session) => (
-                      <div key={session.id} className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                  <div className="space-y-4 max-h-96 overflow-y-auto">
+                    {modalChild.sessionHistory.map((session) => (
+                      <div 
+                        key={session.id} 
+                        className={`rounded-xl p-4 border cursor-pointer transition-all duration-300 hover:shadow-lg ${
+                          session.status === 'completed' ? 'bg-green-50 border-green-200 hover:bg-green-100' :
+                          session.status === 'scheduled' ? 'bg-blue-50 border-blue-200 hover:bg-blue-100' :
+                          'bg-red-50 border-red-200 hover:bg-red-100'
+                        }`}
+                        onClick={() => handleViewSessionDetails(session, modalChild.id)}
+                      >
                         <div className="flex justify-between items-start mb-2">
                           <div>
-                            <p className="font-semibold text-gray-800 font-sans text-sm">{new Date(session.date).toLocaleDateString()}</p>
-                            <p className="text-xs text-gray-600 font-sans">
+                            <p className="font-bold text-gray-800 font-sans">{new Date(session.date).toLocaleDateString()}</p>
+                            <p className="text-sm text-gray-600 font-sans">
                               {session.type === 'home-visit' ? 'Home Visit' : 'Online'} • {session.duration} min
                             </p>
-                            <p className="text-xs text-gray-600 font-sans">with {session.professional}</p>
+                            <p className="text-sm text-gray-600 font-sans">with {session.professional}</p>
                           </div>
-                          <div className="flex items-center">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                className={`h-3 w-3 ${
-                                  i < session.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                                }`}
-                              />
-                            ))}
+                          <div className="flex flex-col items-end">
+                            <span className={`px-2 py-1 rounded-full text-xs font-bold font-sans ${
+                              session.status === 'completed' ? 'bg-green-100 text-green-800' :
+                              session.status === 'scheduled' ? 'bg-blue-100 text-blue-800' :
+                              'bg-red-100 text-red-800'
+                            }`}>
+                              {session.status.charAt(0).toUpperCase() + session.status.slice(1)}
+                            </span>
+                            {session.status === 'completed' && (
+                              <div className="flex items-center mt-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <Star
+                                    key={i}
+                                    className={`h-3 w-3 ${
+                                      i < session.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                            )}
                           </div>
                         </div>
-                        <p className="text-xs text-gray-700 mb-1 font-sans"><strong>Progress:</strong> {session.progress}</p>
-                        <p className="text-xs text-gray-700 font-sans"><strong>Notes:</strong> {session.notes}</p>
+                        <p className="text-sm text-gray-700 mb-2 font-sans"><strong>Progress:</strong> {session.progress}</p>
+                        <p className="text-sm text-gray-700 mb-3 font-sans"><strong>Notes:</strong> {session.notes}</p>
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-gray-500 font-sans">Click to view details</span>
+                          <ArrowRight className="h-4 w-4 text-gray-400" />
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -950,6 +1258,9 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
       
       {/* Child Details Modal */}
       <ChildDetailsModal />
+      
+      {/* Session Details Modal */}
+      <SessionDetailsModal />
     </div>
   );
 }
