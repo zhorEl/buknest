@@ -347,10 +347,11 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
         {filteredProfessionals.length === 0 && (
           <div className="text-center py-16">
             <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
-              <div className="absolute -top-4 -right-4 opacity-20">
-                <svg width="35" height="35" viewBox="0 0 35 35" fill="none">
-                  <circle cx="17.5" cy="17.5" r="15" fill="#d698ab"/>
-                </svg>
+              <div className="absolute -top-4 -right-4 opacity-25">
+                <img src="/pattern/pattern pink.svg" alt="" className="w-14 h-14" />
+              </div>
+              <div className="absolute -bottom-4 -left-4 opacity-20">
+                <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
               </div>
               <div className="text-green-400 mb-6">
                 <Filter className="h-16 w-16 mx-auto" />

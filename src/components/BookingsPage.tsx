@@ -321,9 +321,14 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
                 ))
               ) : (
                 <div className="text-center py-12">
-                  <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No past sessions</h3>
-                  <p className="text-gray-600">Your completed sessions will appear here</p>
+                  <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
+                    <div className="absolute -top-4 -right-4 opacity-20">
+                      <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
+                    </div>
+                    <Clock className="h-16 w-16 text-green-400 mx-auto mb-6" />
+                    <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">No past sessions</h3>
+                    <p className="text-green-600 font-readable">Your completed sessions will appear here</p>
+                  </div>
                 </div>
               )}
             </div>

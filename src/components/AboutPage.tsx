@@ -111,6 +111,17 @@ export default function AboutPage({ onPageChange }: AboutPageProps) {
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-pink-200 to-green-200 rounded-full opacity-20 translate-x-32 -translate-y-32"></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-15 -translate-x-40 translate-y-40"></div>
         
+        {/* Floating Pattern Elements */}
+        <div className="absolute top-20 left-16 opacity-30 animate-float">
+          <img src="/pattern/pattern pink.svg" alt="" className="w-22 h-22" />
+        </div>
+        <div className="absolute bottom-32 right-20 opacity-25 animate-bounce" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-18 h-18" />
+        </div>
+        <div className="absolute top-40 right-32 opacity-35 animate-pulse" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-16 h-16" />
+        </div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 font-handwritten" style={{ color: '#CB748E' }}>Our Story</h2>

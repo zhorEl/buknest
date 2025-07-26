@@ -33,6 +33,19 @@
 
 /* Enhanced backdrop blur effects */
 .backdrop-blur-sm {
+  backdrop-filter: blur(12px);
+}
+
+/* Additional size classes for pattern elements */
+.w-18 { width: 4.5rem; }
+.h-18 { height: 4.5rem; }
+.w-19 { width: 4.75rem; }
+.h-19 { height: 4.75rem; }
+.w-22 { width: 5.5rem; }
+.h-22 { height: 5.5rem; }
+
+/* Enhanced backdrop blur effects */
+.backdrop-blur-sm {
   backdrop-filter: blur(8px);
 }
 

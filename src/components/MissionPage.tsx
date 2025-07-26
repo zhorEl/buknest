@@ -102,6 +102,20 @@ export default function MissionPage({ onPageChange }: MissionPageProps) {
         <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
         <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
         
+        {/* Floating Pattern Elements */}
+        <div className="absolute top-16 left-12 opacity-35 animate-pulse">
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-20 h-20" />
+        </div>
+        <div className="absolute top-24 right-20 opacity-30 animate-bounce" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-18 h-18" />
+        </div>
+        <div className="absolute bottom-16 left-24 opacity-40 animate-float" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-16 h-16" />
+        </div>
+        <div className="absolute top-32 right-8 opacity-25 animate-pulse" style={{ animationDelay: '1.5s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-14 h-14" />
+        </div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
           <div className="flex justify-center items-center mb-6">
             <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
@@ -131,6 +145,17 @@ export default function MissionPage({ onPageChange }: MissionPageProps) {
         {/* Background Decorations */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-pink-200 to-green-200 rounded-full opacity-20 translate-x-32 -translate-y-32"></div>
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-15 -translate-x-40 translate-y-40"></div>
+        
+        {/* Floating Pattern Elements */}
+        <div className="absolute top-20 left-16 opacity-30 animate-float">
+          <img src="/pattern/pattern pink.svg" alt="" className="w-22 h-22" />
+        </div>
+        <div className="absolute bottom-32 right-20 opacity-25 animate-bounce" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-18 h-18" />
+        </div>
+        <div className="absolute top-40 right-32 opacity-35 animate-pulse" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-16 h-16" />
+        </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center mb-16">

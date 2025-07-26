@@ -48,22 +48,18 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
         <div className="absolute bottom-1/4 right-1/3 w-12 h-12 bg-white bg-opacity-10 rounded-full"></div>
         
-        {/* Floating SVG Pattern Elements */}
-        <div className="absolute top-10 left-10 opacity-20 animate-pulse">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path d="M20 5L25 15H35L27.5 22.5L30 32.5L20 27.5L10 32.5L12.5 22.5L5 15H15L20 5Z" fill="white"/>
-          </svg>
+        {/* Floating Pattern Elements */}
+        <div className="absolute top-10 left-10 opacity-30 animate-float">
+          <img src="/pattern/pattern pink.svg" alt="" className="w-16 h-16" />
         </div>
-        <div className="absolute top-32 right-20 opacity-15 animate-bounce" style={{ animationDelay: '1s' }}>
-          <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-            <circle cx="15" cy="15" r="12" fill="none" stroke="white" strokeWidth="2"/>
-            <path d="M15 8V22M8 15H22" stroke="white" strokeWidth="2"/>
-          </svg>
+        <div className="absolute top-32 right-20 opacity-25 animate-bounce" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
         </div>
-        <div className="absolute bottom-20 left-32 opacity-25 animate-pulse" style={{ animationDelay: '2s' }}>
-          <svg width="35" height="35" viewBox="0 0 35 35" fill="none">
-            <path d="M17.5 2L22 12H32L24.5 18L27 28L17.5 23L8 28L10.5 18L3 12H13L17.5 2Z" fill="white"/>
-          </svg>
+        <div className="absolute bottom-20 left-32 opacity-35 animate-pulse" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-14 h-14" />
+        </div>
+        <div className="absolute top-1/2 right-16 opacity-20 animate-float" style={{ animationDelay: '3s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-10 h-10" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center min-h-[50vh]">
@@ -115,35 +111,21 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-gradient-to-br from-pink-200 to-green-200 rounded-full opacity-20 translate-y-32"></div>
         <div className="absolute bottom-20 right-1/4 w-48 h-48 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full opacity-25"></div>
         
-        {/* Decorative Elements */}
-        <div className="absolute top-32 left-20 w-4 h-4 bg-rose-300 rounded-full opacity-60"></div>
-        <div className="absolute top-40 left-32 w-3 h-3 bg-pink-300 rounded-full opacity-50"></div>
-        <div className="absolute top-28 left-40 w-2 h-2 bg-green-300 rounded-full opacity-70"></div>
-        <div className="absolute top-60 right-32 w-5 h-5 bg-pink-300 rounded-full opacity-40"></div>
-        <div className="absolute top-80 right-20 w-3 h-3 bg-green-300 rounded-full opacity-60"></div>
-        
-        {/* Enhanced Floating SVG Elements */}
-        <div className="absolute top-20 left-16 opacity-30 animate-float">
-          <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
-            <path d="M25 5C35 5 45 15 45 25C45 35 35 45 25 45C15 45 5 35 5 25C5 15 15 5 25 5Z" fill="url(#gradient1)"/>
-            <defs>
-              <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#d698ab"/>
-                <stop offset="100%" stopColor="#698a60"/>
-              </linearGradient>
-            </defs>
-          </svg>
+        {/* Floating Pattern Elements */}
+        <div className="absolute top-20 left-16 opacity-40 animate-float">
+          <img src="/pattern/pattern pink.svg" alt="" className="w-20 h-20" />
         </div>
-        <div className="absolute top-40 right-24 opacity-25 animate-bounce" style={{ animationDelay: '0.5s' }}>
-          <svg width="45" height="45" viewBox="0 0 45 45" fill="none">
-            <path d="M22.5 2L28 14H40L30.5 22L33 34L22.5 28L12 34L14.5 22L5 14H17L22.5 2Z" fill="#CB748E" opacity="0.7"/>
-          </svg>
+        <div className="absolute top-40 right-24 opacity-30 animate-bounce" style={{ animationDelay: '0.5s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-18 h-18" />
         </div>
-        <div className="absolute bottom-32 left-20 opacity-20 animate-pulse" style={{ animationDelay: '1.5s' }}>
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <rect x="5" y="5" width="30" height="30" rx="15" fill="#698a60" opacity="0.6"/>
-            <circle cx="20" cy="20" r="8" fill="white" opacity="0.8"/>
-          </svg>
+        <div className="absolute bottom-32 left-20 opacity-35 animate-pulse" style={{ animationDelay: '1.5s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-16 h-16" />
+        </div>
+        <div className="absolute top-60 right-32 opacity-25 animate-float" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-14 h-14" />
+        </div>
+        <div className="absolute bottom-60 left-40 opacity-30 animate-bounce" style={{ animationDelay: '2.5s' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-12 h-12" />
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -310,16 +292,17 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-20 right-0 w-64 h-64 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-15 translate-x-32"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-16 left-12 opacity-25 animate-float">
-          <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-            <path d="M30 10L35 25H50L38.5 35L43 50L30 42L17 50L21.5 35L10 25H25L30 10Z" fill="#d698ab" opacity="0.6"/>
-          </svg>
+        <div className="absolute top-16 left-12 opacity-35 animate-float">
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-24 h-24" />
         </div>
-        <div className="absolute top-32 right-16 opacity-20 animate-pulse" style={{ animationDelay: '1s' }}>
-          <svg width="55" height="55" viewBox="0 0 55 55" fill="none">
-            <circle cx="27.5" cy="27.5" r="20" fill="none" stroke="#CB748E" strokeWidth="3" opacity="0.7"/>
-            <circle cx="27.5" cy="27.5" r="10" fill="#698a60" opacity="0.5"/>
-          </svg>
+        <div className="absolute top-32 right-16 opacity-30 animate-pulse" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-22 h-22" />
+        </div>
+        <div className="absolute bottom-40 left-24 opacity-25 animate-bounce" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-18 h-18" />
+        </div>
+        <div className="absolute top-60 right-40 opacity-40 animate-float" style={{ animationDelay: '1.5s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-16 h-16" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -363,16 +346,18 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute top-0 left-1/4 w-32 h-32 bg-gradient-to-br from-pink-200 to-green-200 rounded-full opacity-25"></div>
         <div className="absolute bottom-0 right-1/4 w-40 h-40 bg-gradient-to-br from-green-200 to-pink-200 rounded-full opacity-20"></div>
         
-        {/* Trust Section Floating Elements */}
-        <div className="absolute top-24 left-8 opacity-30 animate-bounce" style={{ animationDelay: '0.8s' }}>
-          <svg width="35" height="35" viewBox="0 0 35 35" fill="none">
-            <path d="M17.5 5L20 12H27L21.5 16L23 23L17.5 20L12 23L13.5 16L8 12H15L17.5 5Z" fill="#d698ab"/>
-          </svg>
+        {/* Floating Pattern Elements */}
+        <div className="absolute top-24 left-8 opacity-35 animate-bounce" style={{ animationDelay: '0.8s' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-14 h-14" />
         </div>
-        <div className="absolute bottom-16 right-12 opacity-25 animate-pulse" style={{ animationDelay: '2s' }}>
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <rect x="8" y="8" width="24" height="24" rx="12" fill="#698a60" opacity="0.6"/>
-          </svg>
+        <div className="absolute bottom-16 right-12 opacity-30 animate-pulse" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-16 h-16" />
+        </div>
+        <div className="absolute top-40 right-20 opacity-25 animate-float" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
+        </div>
+        <div className="absolute bottom-32 left-16 opacity-40 animate-bounce" style={{ animationDelay: '3s' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-18 h-18" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
