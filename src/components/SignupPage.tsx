@@ -109,6 +109,49 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Floating Upload Elements */}
+        <div className="fixed top-1/4 left-4 z-10 hidden lg:block">
+          <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-green-200 max-w-xs">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-pink-200 to-green-200 rounded-full mx-auto mb-3 flex items-center justify-center">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                </svg>
+              </div>
+              <h4 className="text-sm font-bold text-green-800 mb-2 font-handwritten">Upload Documents</h4>
+              <p className="text-xs text-green-600 font-readable">Licenses, certifications, and credentials</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="fixed top-1/2 right-4 z-10 hidden lg:block">
+          <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-rose-200 max-w-xs">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full mx-auto mb-3 flex items-center justify-center">
+                <svg className="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <h4 className="text-sm font-bold text-green-800 mb-2 font-handwritten">Verification</h4>
+              <p className="text-xs text-green-600 font-readable">Background checks and professional verification</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="fixed bottom-1/4 left-8 z-10 hidden xl:block">
+          <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border border-green-200 max-w-xs">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full mx-auto mb-3 flex items-center justify-center">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </div>
+              <h4 className="text-sm font-bold text-green-800 mb-2 font-handwritten">Profile Photo</h4>
+              <p className="text-xs text-green-600 font-readable">Professional headshot for your profile</p>
+            </div>
+          </div>
+        </div>
+
         <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-8 border border-white border-opacity-50">
           {/* User Type Selection */}
           <div className="mb-8">
