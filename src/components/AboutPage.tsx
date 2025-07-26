@@ -8,25 +8,25 @@ interface AboutPageProps {
 export default function AboutPage({ onPageChange }: AboutPageProps) {
   const teamMembers = [
     {
-      name: 'Dr. Maria Santos',
-      role: 'Founder & CEO',
-      bio: 'Developmental pediatrician with 15+ years of experience in early childhood intervention.',
+      name: 'Gly Tabamo',
+      role: '',
+      bio: '',
       avatar: '/team/gly.png',
-      credentials: ['MD', 'PhD Developmental Psychology']
+      credentials: []
     },
     {
-      name: 'Sarah Chen',
-      role: 'Head of Technology',
-      bio: 'AI researcher specializing in conversational interfaces for healthcare applications.',
+      name: 'Angel Fortin',
+      role: '',
+      bio: '',
       avatar: '/team/angel.png',
-      credentials: ['MS Computer Science', 'AI Ethics Certified']
+      credentials: []
     },
     {
-      name: 'Dr. James Rodriguez',
-      role: 'Clinical Director',
-      bio: 'Speech-language pathologist with expertise in autism spectrum disorders and early intervention.',
+      name: 'Zhor Natinga',
+      role: '',
+      bio: '',
       avatar: '/team/zhor.png',
-      credentials: ['MS-SLP', 'BCBA', 'CCC-SLP']
+      credentials: []
     }
   ];
 
@@ -215,22 +215,9 @@ export default function AboutPage({ onPageChange }: AboutPageProps) {
                   <img
                     src={member.avatar}
                     alt={member.name}
-                    className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-4 border-white shadow-lg"
+                    className="w-32 h-32 rounded-full object-cover mx-auto mb-4 border-4 border-white shadow-lg"
                   />
                   <h3 className="text-xl font-bold mb-2 font-handwritten" style={{ color: '#CB748E' }}>{member.name}</h3>
-                  <p className="text-green-600 font-semibold mb-3 font-readable" style={{ fontFamily: 'Calibri, sans-serif' }}>{member.role}</p>
-                  <p className="text-sm text-green-700 mb-4 leading-relaxed font-readable" style={{ fontFamily: 'Calibri, sans-serif' }}>{member.bio}</p>
-                  <div className="space-y-1">
-                    {member.credentials.map((credential, credIndex) => (
-                      <span
-                        key={credIndex}
-                        className="inline-block px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full mr-1 mb-1 font-semibold font-readable"
-                        style={{ fontFamily: 'Calibri, sans-serif' }}
-                      >
-                        {credential}
-                      </span>
-                    ))}
-                  </div>
                 </div>
               </div>
             ))}
