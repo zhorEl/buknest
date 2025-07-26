@@ -286,11 +286,7 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
             <h3 className="text-2xl font-bold text-gray-800 font-handwritten">Calendar View</h3>
             <button
               onClick={() => setShowCalendar(!showCalendar)}
-              className={`px-4 py-2 rounded-2xl font-bold transition-all duration-300 flex items-center font-sans ${
-                showCalendar 
-                  ? 'bg-gradient-to-r from-pink-400 to-rose-400 text-white hover:from-pink-500 hover:to-rose-500' 
-                  : 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
-              }`}
+              className="px-4 py-2 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 flex items-center font-sans"
             >
               {showCalendar ? (
                 <>
@@ -312,21 +308,21 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => navigateMonth('prev')}
-                  className="p-3 bg-white hover:bg-gray-50 rounded-full transition-all duration-300 border border-gray-300"
+                  className="p-3 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600 rounded-full transition-all duration-300 border border-white"
                 >
-                  <ChevronLeft className="h-6 w-6 text-gray-600" />
+                  <ChevronLeft className="h-6 w-6 text-white" />
                 </button>
                 
-                <h3 className="text-2xl font-bold text-gray-800 font-sans">
+                <h3 className="text-2xl font-bold font-sans" style={{ color: '#CB748E' }}>
                   {['January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December'][currentDate.getMonth()]} {currentDate.getFullYear()}
                 </h3>
                 
                 <button
                   onClick={() => navigateMonth('next')}
-                  className="p-3 bg-white hover:bg-gray-50 rounded-full transition-all duration-300 border border-gray-300"
+                  className="p-3 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600 rounded-full transition-all duration-300 border border-white"
                 >
-                  <ChevronRight className="h-6 w-6 text-gray-600" />
+                  <ChevronRight className="h-6 w-6 text-white" />
                 </button>
               </div>
 
@@ -420,25 +416,25 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               </div>
               
               {/* Calendar Legend */}
-              <div className="bg-white rounded-lg p-6 border border-gray-200">
-                <h4 className="text-lg font-bold text-gray-800 mb-4 font-sans">Legend</h4>
+              <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-lg p-6 border border-pink-200">
+                <h4 className="text-lg font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>Legend</h4>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-blue-500 rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-[#CB748E] to-[#698a60] rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Today</span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Confirmed Sessions</span>
                   </div>
                   {user?.role === 'professional' && (
                     <div className="flex items-center">
-                      <div className="w-4 h-4 bg-blue-500 rounded-full mr-3"></div>
+                      <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mr-3"></div>
                       <span className="text-sm text-gray-700 font-sans">Accepted Sessions</span>
                     </div>
                   )}
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-yellow-500 rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Pending Requests</span>
                   </div>
                 </div>
