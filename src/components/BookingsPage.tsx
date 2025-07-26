@@ -19,6 +19,11 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
     '5': 'pending',
     '6': 'accepted'
   });
+  const [showMarkDoneModal, setShowMarkDoneModal] = useState(false);
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+  const [sessionNotes, setSessionNotes] = useState('');
+  const [progressRating, setProgressRating] = useState(5);
+  const [progressComments, setProgressComments] = useState('');
 
   // Sample bookings data - different for parents vs professionals
   const parentBookings = [
@@ -185,6 +190,43 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
     setBookingActions(prev => ({ ...prev, [bookingId]: 'confirmed' }));
   };
 
+  const handleMarkAsDone = (sessionId: string) => {
+    setSelectedSessionId(sessionId);
+    setShowMarkDoneModal(true);
+  };
+
+  const handleSaveSessionCompletion = () => {
+    if (!selectedSessionId) return;
+    
+    // Here you would typically save to database
+    console.log('Session completed:', {
+      sessionId: selectedSessionId,
+      notes: sessionNotes,
+      progressRating,
+      progressComments,
+      completedAt: new Date().toISOString()
+    });
+    
+    // Update session status to completed
+    setBookingActions(prev => ({ ...prev, [selectedSessionId]: 'completed' as any }));
+    
+    // Reset form and close modal
+    setSessionNotes('');
+    setProgressRating(5);
+    setProgressComments('');
+    setShowMarkDoneModal(false);
+    setSelectedSessionId(null);
+    
+    alert('Session marked as completed successfully!');
+  };
+
+  const handleCancelMarkDone = () => {
+    setSessionNotes('');
+    setProgressRating(5);
+    setProgressComments('');
+    setShowMarkDoneModal(false);
+    setSelectedSessionId(null);
+  };
   const getBookingStatus = (bookingId: string) => {
     return bookingActions[bookingId] || 'pending';
   };
@@ -653,6 +695,13 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                           <Edit className="h-4 w-4 mr-2" />
                           Reschedule
                         </button>
+                        <button
+                          onClick={() => handleMarkAsDone(session.id)}
+                          className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
+                        >
+                          <CheckCircle className="h-4 w-4 mr-2" />
+                          Mark as Done
+                        </button>
                       </div>
                     )}
                     
@@ -790,6 +839,126 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
       
       {/* Calendar Modal */}
       <CalendarModal />
+      
+      {/* Mark as Done Modal */}
+      {showMarkDoneModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center p-6 border-b border-gray-200">
+              <h2 className="text-3xl font-bold text-gray-900 font-handwritten">Complete Session</h2>
+              <button
+                onClick={handleCancelMarkDone}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <X className="h-6 w-6 text-gray-500" />
+              </button>
+            </div>
+            
+            <div className="p-8">
+              {selectedSessionId && (
+                <div className="mb-6 p-4 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
+                  <h3 className="text-lg font-bold text-gray-800 mb-2 font-handwritten">Session Details</h3>
+                  {(() => {
+                    const session = upcomingSessions.find(s => s.id === selectedSessionId);
+                    return session ? (
+                      <div className="text-sm text-gray-700 font-sans">
+                        <p><strong>Client:</strong> {session.childName}</p>
+                        <p><strong>Date:</strong> {new Date(session.date).toLocaleDateString()}</p>
+                        <p><strong>Time:</strong> {session.time}</p>
+                        <p><strong>Duration:</strong> {session.duration} minutes</p>
+                      </div>
+                    ) : null;
+                  })()}
+                </div>
+              )}
+              
+              <div className="space-y-6">
+                {/* Session Notes */}
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Session Notes</label>
+                  <textarea
+                    value={sessionNotes}
+                    onChange={(e) => setSessionNotes(e.target.value)}
+                    rows={4}
+                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                    placeholder="Describe what was accomplished during this session, activities performed, client's response, etc."
+                  />
+                  <div className="text-sm text-gray-500 mt-2 font-sans">
+                    {sessionNotes.length}/500 characters
+                  </div>
+                </div>
+                
+                {/* Progress Rating */}
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Progress Rating</label>
+                  <div className="flex items-center space-x-4 mb-4">
+                    <span className="text-sm font-semibold text-gray-600 font-sans">Poor</span>
+                    <div className="flex space-x-2">
+                      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((rating) => (
+                        <button
+                          key={rating}
+                          onClick={() => setProgressRating(rating)}
+                          className={`w-8 h-8 rounded-full border-2 font-bold text-sm transition-colors font-sans ${
+                            progressRating >= rating
+                              ? 'bg-[#698a60] border-[#698a60] text-white'
+                              : 'border-gray-300 text-gray-600 hover:border-[#698a60]'
+                          }`}
+                        >
+                          {rating}
+                        </button>
+                      ))}
+                    </div>
+                    <span className="text-sm font-semibold text-gray-600 font-sans">Excellent</span>
+                  </div>
+                  <div className="text-center">
+                    <span className="text-lg font-bold text-[#698a60] font-handwritten">
+                      Rating: {progressRating}/10
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Progress Comments */}
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Progress Comments</label>
+                  <textarea
+                    value={progressComments}
+                    onChange={(e) => setProgressComments(e.target.value)}
+                    rows={3}
+                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                    placeholder="Specific observations about the client's progress, improvements noted, areas for continued focus, etc."
+                  />
+                  <div className="text-sm text-gray-500 mt-2 font-sans">
+                    {progressComments.length}/300 characters
+                  </div>
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex space-x-4 pt-6 border-t border-gray-200">
+                  <button
+                    onClick={handleSaveSessionCompletion}
+                    disabled={!sessionNotes.trim()}
+                    className={`flex-1 px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten ${
+                      sessionNotes.trim()
+                        ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
+                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    }`}
+                  >
+                    <CheckCircle className="h-5 w-5 mr-2" />
+                    Complete Session
+                  </button>
+                  <button
+                    onClick={handleCancelMarkDone}
+                    className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 text-gray-700 flex items-center justify-center font-handwritten"
+                  >
+                    <X className="h-5 w-5 mr-2" />
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
