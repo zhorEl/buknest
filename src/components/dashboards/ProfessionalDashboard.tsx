@@ -560,41 +560,9 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                           </button>
                         )}
                         <button 
-                   <div className="flex flex-wrap gap-2">
-                     {getBookingStatus(session.id) === 'pending' && (
-                       <>
-                         <button 
-                           onClick={() => handleAcceptBooking(session.id)}
-                           className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition-colors font-semibold flex items-center font-sans"
-                         >
-                           <CheckCircle className="h-3 w-3 mr-1" />
-                           Accept
-                         </button>
-                       </>
-                     )}
-                     {getBookingStatus(session.id) === 'accepted' && (
-                       <button 
-                         onClick={() => handleConfirmBooking(session.id)}
-                         className="px-3 py-1 bg-green-600 text-white text-sm rounded-full hover:bg-green-700 transition-colors font-semibold flex items-center font-sans"
-                       >
-                         <CheckCircle className="h-3 w-3 mr-1" />
-                         Confirm
-                       </button>
-                     )}
+                          onClick={() => handleReschedule(session.id)}
                           className="px-2 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold flex items-center font-sans"
-                       <button 
-                         disabled={getBookingStatus(session.id) !== 'confirmed'}
-                         className={`px-3 py-1 text-sm rounded-full font-semibold flex items-center font-sans transition-colors ${
-                           getBookingStatus(session.id) === 'confirmed' 
-                             ? 'bg-[#CB748E] text-white hover:bg-[#d698ab]' 
-                             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                         disabled={getBookingStatus(session.id) !== 'confirmed'}
-                         className={`px-3 py-1 text-sm rounded-full font-semibold flex items-center font-sans transition-colors ${
-                           getBookingStatus(session.id) === 'confirmed' 
-                             ? 'bg-[#CB748E] text-white hover:bg-[#d698ab]' 
-                             : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                         }`}
-                       >
+                        >
                           <Edit className="h-3 w-3 mr-1" />
                           Edit
                         </button>
@@ -820,6 +788,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       {/* Modals */}
       {showCalendar && <CalendarModal />}
       {rescheduleSession && <RescheduleModal />}
+      <ClientDetailsModal />
     </div>
   );
 }
