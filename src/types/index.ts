@@ -26,9 +26,25 @@ export interface Child {
   id: string;
   name: string;
   age: number;
+  dateOfBirth: string;
+  gender?: string;
   conditions: string[];
+  favoriteActivities?: string[];
+  communicationStyle?: string;
+  behavioralTriggers?: string;
+  calmingStrategies?: string;
+  currentGoals?: string;
+  currentProfessionals?: string;
+  emergencyContact?: string;
+  schoolInfo?: string;
+  notes?: string;
   assessmentHistory: Assessment[];
   sessions: Session[];
+  avatar?: string;
+  progressScore?: number;
+  totalSessions?: number;
+  completedSessions?: number;
+  joinedDate?: string;
 }
 
 export interface Assessment {

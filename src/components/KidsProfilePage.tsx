@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Search, Calendar, TrendingUp, FileText, Phone, Mail, MapPin, Clock, Star, Filter, ChevronDown, User, Activity, Baby, Grid, List, X, Award, Heart, AlertCircle, Plus, Edit, Trash2, CheckCircle, ArrowRight, MessageCircle } from 'lucide-react';
+import { Users, Search, Calendar, TrendingUp, FileText, Phone, Mail, MapPin, Clock, Star, Filter, ChevronDown, User, Activity, Baby, Grid, List, X, Award, Heart, AlertCircle, Plus, Edit, Trash2, CheckCircle, ArrowRight, MessageCircle, Save, Target } from 'lucide-react';
 
 interface KidsProfilePageProps {
   user: any;
@@ -64,13 +64,9 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
   const [showSessionModal, setShowSessionModal] = useState(false);
   const [selectedSession, setSelectedSession] = useState<SessionRecord | null>(null);
   const [selectedChildForSessions, setSelectedChildForSessions] = useState<string | null>(null);
-  const [newChild, setNewChild] = useState({
-    name: '',
-    age: '',
-    dateOfBirth: '',
-    conditions: [] as string[],
-    notes: ''
-  });
+  const [newChild, setNewChild] = useState<Partial<Child>>({});
+  const [newCondition, setNewCondition] = useState('');
+  const [newActivity, setNewActivity] = useState('');
 
   const children: Child[] = [
     {
@@ -257,23 +253,61 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
   };
 
   const handleAddChild = () => {
-    if (!newChild.name || !newChild.age || !newChild.dateOfBirth) {
-      alert('Please fill in all required fields');
+    if (!newChild.name || !newChild.dateOfBirth) {
+      alert('Please fill in the required fields: name and date of birth');
       return;
     }
 
-    // Here you would typically save to database
-    console.log('Adding new child:', newChild);
-    
-    setNewChild({
-      name: '',
-      age: '',
-      dateOfBirth: '',
-      conditions: [],
-      notes: ''
-    });
+    const child: Child = {
+      id: Date.now().toString(),
+      name: newChild.name!,
+      age: newChild.age || 0,
+      dateOfBirth: newChild.dateOfBirth || '',
+      gender: newChild.gender || '',
+      conditions: newChild.conditions || [],
+      favoriteActivities: newChild.favoriteActivities || [],
+      communicationStyle: newChild.communicationStyle || '',
+      behavioralTriggers: newChild.behavioralTriggers || '',
+      calmingStrategies: newChild.calmingStrategies || '',
+      currentGoals: newChild.currentGoals || '',
+      currentProfessionals: newChild.currentProfessionals || '',
+      emergencyContact: newChild.emergencyContact || '',
+      schoolInfo: newChild.schoolInfo || '',
+      notes: newChild.notes || '',
+      assessmentHistory: [],
+      sessions: [],
+      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+      progressScore: 0,
+      totalSessions: 0,
+      completedSessions: 0,
+      joinedDate: new Date().toISOString().split('T')[0]
+    };
+
+    setChildren(prev => [...prev, child]);
+    setNewChild({});
+    setNewCondition('');
+    setNewActivity('');
     setShowAddForm(false);
-    alert('Child profile added successfully!');
+  };
+
+  const addCondition = () => {
+    if (newCondition.trim()) {
+      setNewChild(prev => ({
+        ...prev,
+        conditions: [...(prev.conditions || []), newCondition.trim()]
+      }));
+      setNewCondition('');
+    }
+  };
+
+  const addActivity = () => {
+    if (newActivity.trim()) {
+      setNewChild(prev => ({
+        ...prev,
+        favoriteActivities: [...(prev.favoriteActivities || []), newActivity.trim()]
+      }));
+      setNewActivity('');
+    }
   };
 
   const handleViewSessionDetails = (session: SessionRecord, childId: string) => {
@@ -1001,74 +1035,308 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
 
         {/* Add Child Form */}
         {showAddForm && (
-          <div className="bg-white rounded-3xl shadow-xl p-8 mb-8 border border-gray-200">
-            <h3 className="text-2xl font-bold text-gray-800 mb-6 font-handwritten">Add Child Profile</h3>
+          <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-10 border border-white border-opacity-50">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6 font-handwritten">Add New Child Profile</h3>
             
-            <div className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Child's Name *</label>
-                  <input
-                    type="text"
-                    value={newChild.name}
-                    onChange={(e) => setNewChild(prev => ({ ...prev, name: e.target.value }))}
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                    placeholder="Enter child's full name"
-                  />
+            <form onSubmit={(e) => { e.preventDefault(); handleAddChild(); }} className="space-y-8">
+              {/* Basic Information */}
+              <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200">
+                <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                  <Baby className="h-5 w-5 mr-2 text-[#CB748E]" />
+                  Basic Information
+                </h4>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Child's Full Name *</label>
+                    <input
+                      type="text"
+                      value={newChild.name || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, name: e.target.value }))}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      placeholder="Enter child's full name"
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Date of Birth *</label>
+                    <input
+                      type="date"
+                      value={newChild.dateOfBirth || ''}
+                      onChange={(e) => {
+                        const birthDate = new Date(e.target.value);
+                        const today = new Date();
+                        const age = Math.floor((today.getTime() - birthDate.getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+                        setNewChild(prev => ({ 
+                          ...prev, 
+                          dateOfBirth: e.target.value,
+                          age: age 
+                        }));
+                      }}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      max={new Date().toISOString().split('T')[0]}
+                      required
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Age</label>
+                    <input
+                      type="number"
+                      value={newChild.age || ''}
+                      readOnly
+                      className="w-full border-2 border-gray-200 rounded-xl px-4 py-3 bg-gray-50 font-sans"
+                      placeholder="Calculated from date of birth"
+                    />
+                    <p className="text-xs text-gray-500 mt-1 font-sans">Automatically calculated from date of birth</p>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Gender</label>
+                    <select
+                      value={newChild.gender || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, gender: e.target.value }))}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                    >
+                      <option value="">Select gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                      <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                  </div>
                 </div>
+              </div>
+
+              {/* Medical Information */}
+              <div className="bg-gradient-to-r from-green-50 to-pink-50 rounded-2xl p-6 border border-green-200">
+                <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                  <AlertCircle className="h-5 w-5 mr-2 text-[#698a60]" />
+                  Medical Information
+                </h4>
                 
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Age *</label>
-                  <input
-                    type="number"
-                    value={newChild.age}
-                    onChange={(e) => setNewChild(prev => ({ ...prev, age: e.target.value }))}
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                    placeholder="Age in years"
-                    min="0"
-                    max="18"
-                  />
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Conditions/Diagnosis</label>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {(newChild.conditions || []).map((condition, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-pink-100 text-[#CB748E] text-sm rounded-full font-semibold font-sans flex items-center"
+                        >
+                          {condition}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updatedConditions = (newChild.conditions || []).filter((_, i) => i !== index);
+                              setNewChild(prev => ({ ...prev, conditions: updatedConditions }));
+                            }}
+                            className="ml-2 text-red-500 hover:text-red-700"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex space-x-2">
+                      <input
+                        type="text"
+                        value={newCondition}
+                        onChange={(e) => setNewCondition(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && addCondition()}
+                        placeholder="Add condition (e.g., Autism Spectrum Disorder)"
+                        className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      />
+                      <button
+                        type="button"
+                        onClick={addCondition}
+                        className="px-4 py-2 bg-[#CB748E] text-white rounded-xl hover:bg-[#d698ab] transition-colors"
+                      >
+                        <Plus className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Current Professionals</label>
+                    <textarea
+                      value={newChild.currentProfessionals || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, currentProfessionals: e.target.value }))}
+                      rows={2}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                      placeholder="List current therapists, doctors, or specialists"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Emergency Contact</label>
+                    <input
+                      type="text"
+                      value={newChild.emergencyContact || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, emergencyContact: e.target.value }))}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      placeholder="Emergency contact name and phone number"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Preferences & Activities */}
+              <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200">
+                <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                  <Heart className="h-5 w-5 mr-2 text-[#CB748E]" />
+                  Preferences & Activities
+                </h4>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Favorite Activities</label>
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {(newChild.favoriteActivities || []).map((activity, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-green-100 text-[#698a60] text-sm rounded-full font-semibold font-sans flex items-center"
+                        >
+                          {activity}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const updatedActivities = (newChild.favoriteActivities || []).filter((_, i) => i !== index);
+                              setNewChild(prev => ({ ...prev, favoriteActivities: updatedActivities }));
+                            }}
+                            className="ml-2 text-red-500 hover:text-red-700"
+                          >
+                            <X className="h-3 w-3" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <div className="flex space-x-2">
+                      <input
+                        type="text"
+                        value={newActivity}
+                        onChange={(e) => setNewActivity(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && addActivity()}
+                        placeholder="Add favorite activity (e.g., Drawing, Music therapy)"
+                        className="flex-1 border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      />
+                      <button
+                        type="button"
+                        onClick={addActivity}
+                        className="px-4 py-2 bg-[#698a60] text-white rounded-xl hover:bg-green-700 transition-colors"
+                      >
+                        <Plus className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Communication Style</label>
+                    <select
+                      value={newChild.communicationStyle || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, communicationStyle: e.target.value }))}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                    >
+                      <option value="">Select communication style</option>
+                      <option value="verbal">Verbal</option>
+                      <option value="non-verbal">Non-verbal</option>
+                      <option value="mixed">Mixed (verbal and non-verbal)</option>
+                      <option value="assistive">Uses assistive technology</option>
+                      <option value="sign-language">Sign language</option>
+                    </select>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Behavioral Triggers</label>
+                    <textarea
+                      value={newChild.behavioralTriggers || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, behavioralTriggers: e.target.value }))}
+                      rows={2}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                      placeholder="Things that may cause distress or behavioral challenges"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Calming Strategies</label>
+                    <textarea
+                      value={newChild.calmingStrategies || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, calmingStrategies: e.target.value }))}
+                      rows={2}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                      placeholder="Effective ways to help your child calm down or feel comfortable"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Goals & Notes */}
+              <div className="bg-gradient-to-r from-green-50 to-pink-50 rounded-2xl p-6 border border-green-200">
+                <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                  <Target className="h-5 w-5 mr-2 text-[#698a60]" />
+                  Goals & Additional Notes
+                </h4>
+                
+                <div className="space-y-6">
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Current Goals</label>
+                    <textarea
+                      value={newChild.currentGoals || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, currentGoals: e.target.value }))}
+                      rows={3}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                      placeholder="What are you hoping to achieve through therapy? What skills would you like your child to develop?"
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Additional Notes</label>
+                    <textarea
+                      value={newChild.notes || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, notes: e.target.value }))}
+                      rows={4}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                      placeholder="Any additional information about your child that would be helpful for professionals to know..."
+                    />
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">School Information</label>
+                    <input
+                      type="text"
+                      value={newChild.schoolInfo || ''}
+                      onChange={(e) => setNewChild(prev => ({ ...prev, schoolInfo: e.target.value }))}
+                      className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                      placeholder="School name, grade level, special education services"
+                    />
+                  </div>
                 </div>
               </div>
               
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Date of Birth *</label>
-                <input
-                  type="date"
-                  value={newChild.dateOfBirth}
-                  onChange={(e) => setNewChild(prev => ({ ...prev, dateOfBirth: e.target.value }))}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                />
-              </div>
-              
-              <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Notes</label>
-                <textarea
-                  value={newChild.notes}
-                  onChange={(e) => setNewChild(prev => ({ ...prev, notes: e.target.value }))}
-                  rows={3}
-                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
-                  placeholder="Any additional notes about your child..."
-                />
-              </div>
-              
-              <div className="flex space-x-4">
+              {/* Action Buttons */}
+              <div className="flex space-x-4 pt-6">
                 <button
-                  onClick={handleAddChild}
-                  className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
+                  type="submit"
+                  className="flex-1 px-6 py-4 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten"
                 >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Child
+                  <Save className="h-5 w-5 mr-2" />
+                  Add Child Profile
                 </button>
                 <button
-                  onClick={() => setShowAddForm(false)}
-                  className="px-6 py-3 border border-gray-300 rounded-xl font-bold hover:bg-gray-50 transition-colors flex items-center font-sans"
+                  type="button"
+                  onClick={() => {
+                    setShowAddForm(false);
+                    setNewChild({});
+                    setNewCondition('');
+                    setNewActivity('');
+                  }}
+                  className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 text-gray-700 flex items-center justify-center font-handwritten"
                 >
-                  <X className="h-4 w-4 mr-2" />
+                  <X className="h-5 w-5 mr-2" />
                   Cancel
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         )}
 
