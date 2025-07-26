@@ -312,39 +312,42 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => navigateMonth('prev')}
-                  className="p-3 bg-gradient-to-r from-pink-100 to-green-100 hover:from-pink-200 hover:to-green-200 rounded-full transition-all duration-300 border border-pink-200"
+                  className="p-3 bg-white hover:bg-gray-50 rounded-full transition-all duration-300 border border-gray-300"
                 >
-                  <ChevronLeft className="h-6 w-6 text-[#CB748E]" />
+                  <ChevronLeft className="h-6 w-6 text-gray-600" />
                 </button>
                 
-                <h3 className="text-2xl font-bold text-gray-800 font-handwritten">
+                <h3 className="text-2xl font-bold text-gray-800 font-sans">
                   {['January', 'February', 'March', 'April', 'May', 'June',
                     'July', 'August', 'September', 'October', 'November', 'December'][currentDate.getMonth()]} {currentDate.getFullYear()}
                 </h3>
                 
                 <button
                   onClick={() => navigateMonth('next')}
-                  className="p-3 bg-gradient-to-r from-pink-100 to-green-100 hover:from-pink-200 hover:to-green-200 rounded-full transition-all duration-300 border border-pink-200"
+                  className="p-3 bg-white hover:bg-gray-50 rounded-full transition-all duration-300 border border-gray-300"
                 >
-                  <ChevronRight className="h-6 w-6 text-[#CB748E]" />
+                  <ChevronRight className="h-6 w-6 text-gray-600" />
                 </button>
               </div>
 
               {/* Calendar Grid */}
-              <div className="grid grid-cols-7 gap-2">
+              <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+                <div className="grid grid-cols-7">
                 {/* Day Headers */}
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                  <div key={day} className="text-center font-bold text-gray-600 p-3 font-sans bg-gradient-to-r from-pink-50 to-green-50 rounded-lg border border-pink-100">
+                  <div key={day} className="text-center font-bold text-gray-700 p-3 font-sans bg-gray-50 border-b border-r border-gray-200 last:border-r-0">
                     {day}
                   </div>
                 ))}
+                </div>
                 
+                <div className="grid grid-cols-7">
                 {/* Empty cells for days before month starts */}
                 {Array.from({ length: (() => {
                   const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
                   return firstDay;
                 })() }, (_, i) => (
-                  <div key={`empty-${i}`} className="p-3"></div>
+                  <div key={`empty-${i}`} className="h-24 border-b border-r border-gray-200 last:border-r-0"></div>
                 ))}
                 
                 {/* Calendar Days */}
@@ -370,77 +373,72 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                   return (
                     <div
                       key={day}
-                      className={`p-3 text-center rounded-xl cursor-pointer transition-all duration-300 font-sans min-h-[80px] flex flex-col border ${
+                      className={`p-2 text-center cursor-pointer transition-all duration-300 font-sans min-h-[96px] flex flex-col border-b border-r border-gray-200 last:border-r-0 ${
                         isToday
-                          ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white font-bold shadow-lg border-pink-300'
-                          : confirmedSessions.length > 0
-                          ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-800 font-semibold border-green-300 hover:from-green-100 hover:to-emerald-100'
-                          : acceptedSessions.length > 0
-                          ? 'bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-800 font-semibold border-blue-300 hover:from-blue-100 hover:to-cyan-100'
-                          : pendingSessions.length > 0
-                          ? 'bg-gradient-to-r from-yellow-50 to-amber-50 text-yellow-800 font-semibold border-yellow-300 hover:from-yellow-100 hover:to-amber-100'
-                          : 'hover:bg-gradient-to-r hover:from-pink-50 hover:to-green-50 border-gray-200 hover:border-pink-200'
+                          ? 'bg-blue-100 text-blue-800 font-bold'
+                          : 'bg-white hover:bg-gray-50'
                       }`}
                     >
-                      <div className="text-lg font-bold">{day}</div>
+                      <div className={`text-sm font-semibold mb-1 ${isToday ? 'text-blue-800' : 'text-gray-700'}`}>
+                        {day}
+                      </div>
                       {sessionsForDay.length > 0 && (
-                        <div className="flex-1 flex flex-col justify-center mt-1">
-                          <div className="text-xs space-y-1">
+                        <div className="flex-1 space-y-1">
                             {sessionsForDay.slice(0, 2).map((session, index) => (
                               <div
                                 key={index}
-                                className={`px-1 py-0.5 rounded text-xs font-bold truncate ${
+                                className={`px-1 py-0.5 rounded text-xs font-medium truncate ${
                                   user?.role === 'professional' 
                                     ? getBookingStatus(session.id) === 'confirmed' 
-                                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' 
+                                      ? 'bg-green-500 text-white' 
                                       : getBookingStatus(session.id) === 'accepted'
-                                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
+                                      ? 'bg-blue-500 text-white'
                                       : getBookingStatus(session.id) === 'pending'
-                                      ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white'
-                                      : 'bg-gradient-to-r from-gray-500 to-slate-500 text-white'
+                                      ? 'bg-yellow-500 text-white'
+                                      : 'bg-gray-500 text-white'
                                     : session.status === 'confirmed' 
-                                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' 
+                                      ? 'bg-green-500 text-white' 
                                       : session.status === 'pending'
-                                      ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white'
-                                      : 'bg-gradient-to-r from-gray-500 to-slate-500 text-white'
+                                      ? 'bg-yellow-500 text-white'
+                                      : 'bg-gray-500 text-white'
                                 }`}
                               >
                                 {user?.role === 'professional' ? session.child : session.professional} - {session.time}
                               </div>
                             ))}
                             {sessionsForDay.length > 2 && (
-                              <div className="text-xs font-bold text-gray-600">
+                              <div className="text-xs font-medium text-gray-600">
                                 +{sessionsForDay.length - 2} more
                               </div>
                             )}
-                          </div>
                         </div>
                       )}
                     </div>
                   );
                 })}
+                </div>
               </div>
               
               {/* Calendar Legend */}
-              <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200">
-                <h4 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Legend</h4>
+              <div className="bg-white rounded-lg p-6 border border-gray-200">
+                <h4 className="text-lg font-bold text-gray-800 mb-4 font-sans">Legend</h4>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-gradient-to-r from-[#CB748E] to-[#698a60] rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-blue-500 rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Today</span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-green-500 rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Confirmed Sessions</span>
                   </div>
                   {user?.role === 'professional' && (
                     <div className="flex items-center">
-                      <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mr-3"></div>
+                      <div className="w-4 h-4 bg-blue-500 rounded-full mr-3"></div>
                       <span className="text-sm text-gray-700 font-sans">Accepted Sessions</span>
                     </div>
                   )}
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-yellow-500 rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Pending Requests</span>
                   </div>
                 </div>
