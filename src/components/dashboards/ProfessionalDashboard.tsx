@@ -671,7 +671,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
               <div className="grid grid-cols-5 gap-6">
                 {weeklySchedule.map((day, index) => (
                   <div key={index} className="text-center">
-                    <div className={\`p-6 rounded-2xl ${
+                    <div className={`p-6 rounded-2xl ${
                       day.sessions > 0 
                         ? 'bg-pink-50 border border-pink-200' 
                         : 'bg-gray-100 border border-gray-200'
