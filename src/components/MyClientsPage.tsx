@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Users, Search, Calendar, TrendingUp, FileText, Phone, Mail, MapPin, Clock, Star, Filter, ChevronDown, User, Activity, Baby, Grid, List } from 'lucide-react';
+import { Users, Search, Calendar, TrendingUp, FileText, Phone, Mail, MapPin, Clock, Star, Filter, ChevronDown, User, Activity, Baby, Grid, List, X, Award, Heart, AlertCircle } from 'lucide-react';
 
 interface MyClientsPageProps {
   user: any;
@@ -42,6 +42,8 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
   const [sortBy, setSortBy] = useState('name');
   const [selectedClient, setSelectedClient] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'thumbnail' | 'table'>('thumbnail');
+  const [showClientModal, setShowClientModal] = useState(false);
+  const [modalClient, setModalClient] = useState<Client | null>(null);
 
   const clients: Client[] = [
     {
@@ -169,6 +171,222 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
     }
   });
 
+  const handleViewDetails = (client: Client) => {
+    setModalClient(client);
+    setShowClientModal(true);
+  };
+
+  const ClientDetailsModal = () => {
+    if (!showClientModal || !modalClient) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 className="text-3xl font-bold text-gray-900 font-handwritten">Client Details</h2>
+            <button
+              onClick={() => setShowClientModal(false)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
+          
+          <div className="p-8">
+            {/* Client Header */}
+            <div className="flex items-center mb-8 p-6 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
+              <img
+                src={modalClient.avatar}
+                alt={modalClient.childName}
+                className="w-24 h-24 rounded-full object-cover mr-6 border-4 border-white shadow-lg"
+              />
+              <div className="flex-1">
+                <h3 className="text-3xl font-bold text-gray-900 font-handwritten mb-2">{modalClient.childName}</h3>
+                <p className="text-xl text-[#CB748E] font-semibold font-sans mb-1">Age {modalClient.age}</p>
+                <p className="text-lg text-gray-700 font-sans">Parent: {modalClient.parentName}</p>
+                <div className="flex items-center mt-3">
+                  <div className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-4 py-2 rounded-full text-lg font-bold">
+                    {modalClient.progressScore}% Progress
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8">
+              {/* Left Column */}
+              <div className="space-y-6">
+                {/* Contact Information */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <Phone className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Contact Information
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center text-gray-700 font-sans">
+                      <Phone className="h-4 w-4 mr-3 text-gray-500" />
+                      <span>{modalClient.parentPhone}</span>
+                    </div>
+                    <div className="flex items-center text-gray-700 font-sans">
+                      <Mail className="h-4 w-4 mr-3 text-gray-500" />
+                      <span>{modalClient.parentEmail}</span>
+                    </div>
+                    <div className="flex items-start text-gray-700 font-sans">
+                      <MapPin className="h-4 w-4 mr-3 mt-0.5 text-gray-500 flex-shrink-0" />
+                      <span>{modalClient.address}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Conditions & Diagnosis */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <AlertCircle className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Conditions & Diagnosis
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {modalClient.conditions.map((condition, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-2 bg-pink-100 text-[#CB748E] text-sm rounded-full font-semibold font-sans border border-pink-200"
+                      >
+                        {condition}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Session Statistics */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <Activity className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Session Statistics
+                  </h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center p-4 bg-gradient-to-r from-pink-50 to-green-50 rounded-xl border border-pink-200">
+                      <div className="text-2xl font-bold text-gray-800 font-handwritten">{modalClient.completedSessions}</div>
+                      <div className="text-sm text-gray-600 font-sans">Completed</div>
+                    </div>
+                    <div className="text-center p-4 bg-gradient-to-r from-green-50 to-pink-50 rounded-xl border border-green-200">
+                      <div className="text-2xl font-bold text-gray-800 font-handwritten">{modalClient.totalSessions - modalClient.completedSessions}</div>
+                      <div className="text-sm text-gray-600 font-sans">Remaining</div>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <div className="flex justify-between items-center mb-2">
+                      <span className="text-sm font-semibold text-gray-600 font-sans">Progress</span>
+                      <span className="text-sm font-bold text-gray-800 font-sans">{modalClient.progressScore}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-4">
+                      <div 
+                        className="bg-gradient-to-r from-[#CB748E] to-[#698a60] h-4 rounded-full transition-all duration-500"
+                        style={{ width: `${modalClient.progressScore}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column */}
+              <div className="space-y-6">
+                {/* Timeline */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <Calendar className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Timeline
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-center text-gray-700 font-sans">
+                      <User className="h-4 w-4 mr-3 text-gray-500" />
+                      <span className="text-sm">
+                        <strong>Joined:</strong> {new Date(modalClient.joinedDate).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-gray-700 font-sans">
+                      <Clock className="h-4 w-4 mr-3 text-gray-500" />
+                      <span className="text-sm">
+                        <strong>Last Session:</strong> {modalClient.lastSession ? new Date(modalClient.lastSession).toLocaleDateString() : 'No sessions yet'}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-gray-700 font-sans">
+                      <Calendar className="h-4 w-4 mr-3 text-gray-500" />
+                      <span className="text-sm">
+                        <strong>Next Session:</strong> {modalClient.nextSession ? new Date(modalClient.nextSession).toLocaleDateString() : 'Not scheduled'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Notes */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <FileText className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Clinical Notes
+                  </h4>
+                  <div className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                    <p className="text-gray-700 leading-relaxed font-sans">{modalClient.notes}</p>
+                  </div>
+                </div>
+
+                {/* Recent Session History */}
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-lg">
+                  <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
+                    <Star className="h-5 w-5 mr-2 text-[#CB748E]" />
+                    Recent Sessions
+                  </h4>
+                  <div className="space-y-3">
+                    {modalClient.sessionHistory.slice(0, 3).map((session) => (
+                      <div key={session.id} className="bg-gray-50 rounded-xl p-4 border border-gray-200">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <p className="font-semibold text-gray-800 font-sans text-sm">{new Date(session.date).toLocaleDateString()}</p>
+                            <p className="text-xs text-gray-600 font-sans">
+                              {session.type === 'home-visit' ? 'Home Visit' : 'Online'} • {session.duration} min
+                            </p>
+                          </div>
+                          <div className="flex items-center">
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                className={`h-3 w-3 ${
+                                  i < session.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                                }`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                        <p className="text-xs text-gray-700 mb-1 font-sans"><strong>Progress:</strong> {session.progress}</p>
+                        <p className="text-xs text-gray-700 font-sans"><strong>Notes:</strong> {session.notes}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
+              <button
+                onClick={() => onPageChange('bookings')}
+                className="flex-1 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-sans"
+              >
+                <Calendar className="h-5 w-5 mr-2" />
+                Schedule Session
+              </button>
+              <button className="px-6 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center justify-center font-sans">
+                <FileText className="h-5 w-5 mr-2" />
+                View Reports
+              </button>
+              <button className="px-6 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center justify-center font-sans">
+                <Phone className="h-5 w-5 mr-2" />
+                Contact Parent
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const ClientCard = ({ client }: { client: Client }) => (
     <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-lg border border-white border-opacity-50 p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden">
       <div className="absolute -top-4 -right-4 opacity-5 animate-float">
@@ -262,11 +480,11 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
 
         <div className="flex space-x-3">
           <button
-            onClick={() => setSelectedClient(selectedClient === client.id ? null : client.id)}
+            onClick={() => handleViewDetails(client)}
             className="flex-1 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-sans"
           >
             <FileText className="h-4 w-4 mr-2" />
-            {selectedClient === client.id ? 'Hide Details' : 'View Details'}
+            View Details
           </button>
           <button
             onClick={() => onPageChange('bookings')}
@@ -276,65 +494,6 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
             Schedule
           </button>
         </div>
-
-        {/* Expanded Details */}
-        {selectedClient === client.id && (
-          <div className="mt-6 p-6 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
-            <h4 className="font-bold text-gray-800 mb-4 font-handwritten">Recent Session History</h4>
-            <div className="space-y-4">
-              {client.sessionHistory.map((session) => (
-                <div key={session.id} className="bg-white rounded-xl p-4 border border-gray-200">
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <p className="font-semibold text-gray-800 font-sans">{new Date(session.date).toLocaleDateString()}</p>
-                      <p className="text-sm text-gray-600 font-sans">
-                        {session.type === 'home-visit' ? 'Home Visit' : 'Online'} • {session.duration} min
-                      </p>
-                    </div>
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < session.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                          }`}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                  <p className="text-sm text-gray-700 mb-2 font-sans"><strong>Progress:</strong> {session.progress}</p>
-                  <p className="text-sm text-gray-700 font-sans"><strong>Notes:</strong> {session.notes}</p>
-                </div>
-              ))}
-              
-              <div className="flex items-center space-x-2">
-                <span className="text-sm text-gray-600 font-sans mr-2">View:</span>
-                <div className="flex bg-gray-100 rounded-lg p-1">
-                  <button
-                    onClick={() => setViewMode('thumbnail')}
-                    className={`p-2 rounded-md transition-colors ${
-                      viewMode === 'thumbnail' 
-                        ? 'bg-[#CB748E] text-white shadow-sm' 
-                        : 'text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    <Grid className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => setViewMode('table')}
-                    className={`p-2 rounded-md transition-colors ${
-                      viewMode === 'table' 
-                        ? 'bg-[#CB748E] text-white shadow-sm' 
-                        : 'text-gray-600 hover:bg-gray-200'
-                    }`}
-                  >
-                    <List className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -575,10 +734,10 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
                       <td className="px-6 py-6">
                         <div className="flex space-x-2 justify-center">
                           <button
-                            onClick={() => setSelectedClient(selectedClient === client.id ? null : client.id)}
+                            onClick={() => handleViewDetails(client)}
                             className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-4 py-2 rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 text-xs font-sans"
                           >
-                            {selectedClient === client.id ? 'Hide' : 'View'}
+                            View
                           </button>
                           <button 
                             onClick={() => onPageChange('bookings')}
@@ -617,6 +776,9 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
           </div>
         )}
       </div>
+      
+      {/* Client Details Modal */}
+      <ClientDetailsModal />
     </div>
   );
 }
