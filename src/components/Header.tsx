@@ -18,9 +18,11 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
     { name: 'Find Professionals', id: 'professionals', icon: User },
     { name: 'About Us', id: 'about', icon: Users },
     { name: 'Our Mission', id: 'mission', icon: Heart },
-    { name: 'My Bookings', id: 'bookings', icon: Calendar },
   ];
 
+  const loggedInNavigation = [
+    { name: 'My Bookings', id: 'bookings', icon: Calendar },
+  ];
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,49 +37,43 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            {!user && (
-              <>
-                {navigation.slice(0, 5).map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => onPageChange(item.id)}
-                      className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        currentPage === item.id
-                          ? 'text-green-600 bg-green-50'
-                          : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 mr-2" />
-                      {item.name}
-                    </button>
-                  );
-                })}
-              </>
-            )}
+            {/* Main Navigation - Always visible */}
+            {navigation.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onPageChange(item.id)}
+                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    currentPage === item.id
+                      ? 'text-green-600 bg-green-50'
+                      : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
+                  }`}
+                >
+                  <Icon className="h-4 w-4 mr-2" />
+                  {item.name}
+                </button>
+              );
+            })}
             
-            {user && (
-              <>
-                {navigation.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <button
-                      key={item.id}
-                      onClick={() => onPageChange(item.id)}
-                      className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                        currentPage === item.id
-                          ? 'text-green-600 bg-green-50'
-                          : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
-                      }`}
-                    >
-                      <Icon className="h-4 w-4 mr-2" />
-                      {item.name}
-                    </button>
-                  );
-                })}
-              </>
-            )}
+            {/* Logged-in only navigation */}
+            {user && loggedInNavigation.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => onPageChange(item.id)}
+                  className={`flex items-center px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                    currentPage === item.id
+                      ? 'text-green-600 bg-green-50'
+                      : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
+                  }`}
+                >
+                  <Icon className="h-4 w-4 mr-2" />
+                  {item.name}
+                </button>
+              );
+            })}
           </nav>
 
           {/* User Actions */}
@@ -104,13 +100,22 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
                 </button>
               </>
             ) : (
-              <button
-                onClick={onLogin}
-                className="flex items-center px-4 py-2 bg-gradient-to-r from-pink-400 to-green-500 text-white rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
-              >
-                <LogIn className="h-4 w-4 mr-2" />
-                Login
-              </button>
+              <div className="flex space-x-3">
+                <button
+                  onClick={onLogin}
+                  className="flex items-center px-4 py-2 bg-gradient-to-r from-pink-400 to-green-500 text-white rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+                >
+                  <LogIn className="h-4 w-4 mr-2" />
+                  Login
+                </button>
+                <button
+                  onClick={onSignup}
+                  className="flex items-center px-4 py-2 bg-white bg-opacity-80 border-2 border-green-300 text-green-700 rounded-2xl font-bold hover:bg-green-50 transition-all duration-300 transform hover:scale-105 font-handwritten"
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  Sign Up
+                </button>
+              </div>
             )}
           </div>
 
@@ -129,7 +134,30 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+              {/* Main Navigation - Always visible */}
               {navigation.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => {
+                      onPageChange(item.id);
+                      setIsMenuOpen(false);
+                    }}
+                    className={`flex items-center w-full px-3 py-2 rounded-md text-base font-medium transition-colors ${
+                      currentPage === item.id
+                        ? 'text-green-600 bg-green-50'
+                        : 'text-gray-700 hover:text-green-600 hover:bg-gray-50'
+                    }`}
+                  >
+                    <Icon className="h-5 w-5 mr-3" />
+                    {item.name}
+                  </button>
+                );
+              })}
+              
+              {/* Logged-in only navigation */}
+              {user && loggedInNavigation.map((item) => {
                 const Icon = item.icon;
                 return (
                   <button
@@ -174,16 +202,28 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
                     </button>
                   </>
                 ) : (
-                  <button
-                    onClick={() => {
-                      onLogin();
-                      setIsMenuOpen(false);
-                    }}
-                    className="flex items-center w-full px-3 py-2 text-base font-bold text-white bg-gradient-to-r from-pink-400 to-green-500 hover:from-pink-500 hover:to-green-600 rounded-2xl font-handwritten"
-                  >
-                    <LogIn className="h-5 w-5 mr-3" />
-                    Login
-                  </button>
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => {
+                        onLogin();
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex items-center w-full px-3 py-2 text-base font-bold text-white bg-gradient-to-r from-pink-400 to-green-500 hover:from-pink-500 hover:to-green-600 rounded-2xl font-handwritten"
+                    >
+                      <LogIn className="h-5 w-5 mr-3" />
+                      Login
+                    </button>
+                    <button
+                      onClick={() => {
+                        onSignup();
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex items-center w-full px-3 py-2 text-base font-bold text-green-700 bg-white border-2 border-green-300 hover:bg-green-50 rounded-2xl font-handwritten"
+                    >
+                      <User className="h-5 w-5 mr-3" />
+                      Sign Up
+                    </button>
+                  </div>
                 )}
               </div>
             </div>

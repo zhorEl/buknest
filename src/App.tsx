@@ -8,6 +8,7 @@ import AboutPage from './components/AboutPage';
 import MissionPage from './components/MissionPage';
 import ProfessionalsPage from './components/ProfessionalsPage';
 import BookingsPage from './components/BookingsPage';
+import SignupPage from './components/SignupPage';
 import ParentDashboard from './components/dashboards/ParentDashboard';
 import ProfessionalDashboard from './components/dashboards/ProfessionalDashboard';
 import AdminDashboard from './components/dashboards/AdminDashboard';
@@ -41,8 +42,7 @@ function App() {
   };
 
   const handleShowSignup = () => {
-    setLoginModalMode('signup');
-    setShowLoginModal(true);
+    setCurrentPage('signup');
   };
 
   const renderPage = () => {
@@ -70,6 +70,8 @@ function App() {
         return <ProfessionalsPage onPageChange={setCurrentPage} />;
       case 'bookings':
         return <BookingsPage onPageChange={setCurrentPage} />;
+      case 'signup':
+        return <SignupPage onPageChange={setCurrentPage} onSignup={handleLogin} />;
       case 'parent-dashboard':
         return <ParentDashboard user={user} onPageChange={setCurrentPage} />;
       case 'professional-dashboard':
