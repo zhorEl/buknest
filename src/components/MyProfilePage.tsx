@@ -52,6 +52,16 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
   const [newAchievement, setNewAchievement] = useState('');
   const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [verificationData, setVerificationData] = useState({
+    governmentId: null as File | null,
+    professionalLicense: null as File | null,
+    certifications: [] as File[],
+    selfieWithId: null as File | null,
+    additionalDocuments: [] as File[]
+  });
+  const [verificationStatus, setVerificationStatus] = useState<'pending' | 'submitted' | 'verified' | 'rejected'>('pending');
+  const [uploadProgress, setUploadProgress] = useState<{[key: string]: number}>({});
 
   const handleInputChange = (field: string, value: any) => {
     // Clear error when user starts typing
@@ -209,6 +219,69 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
         ? prev.sessionTypes.filter(t => t !== type)
         : [...prev.sessionTypes, type]
     }));
+  };
+
+  const handleFileUpload = (field: string, file: File) => {
+    // Simulate upload progress
+    setUploadProgress(prev => ({ ...prev, [field]: 0 }));
+    
+    const interval = setInterval(() => {
+      setUploadProgress(prev => {
+        const currentProgress = prev[field] || 0;
+        if (currentProgress >= 100) {
+          clearInterval(interval);
+          return prev;
+        }
+        return { ...prev, [field]: currentProgress + 10 };
+      });
+    }, 100);
+
+    if (field === 'certifications' || field === 'additionalDocuments') {
+      setVerificationData(prev => ({
+        ...prev,
+        [field]: [...(prev[field] as File[]), file]
+      }));
+    } else {
+      setVerificationData(prev => ({
+        ...prev,
+        [field]: file
+      }));
+    }
+  };
+
+  const removeFile = (field: string, index?: number) => {
+    if (field === 'certifications' || field === 'additionalDocuments') {
+      setVerificationData(prev => ({
+        ...prev,
+        [field]: (prev[field] as File[]).filter((_, i) => i !== index)
+      }));
+    } else {
+      setVerificationData(prev => ({
+        ...prev,
+        [field]: null
+      }));
+    }
+    setUploadProgress(prev => {
+      const newProgress = { ...prev };
+      delete newProgress[field];
+      return newProgress;
+    });
+  };
+
+  const handleSubmitVerification = () => {
+    if (!verificationData.governmentId || !verificationData.professionalLicense || !verificationData.selfieWithId) {
+      alert('Please upload all required documents');
+      return;
+    }
+
+    setVerificationStatus('submitted');
+    
+    // Simulate verification process
+    setTimeout(() => {
+      console.log('Verification submitted:', verificationData);
+      setShowVerificationModal(false);
+      alert('Verification documents submitted successfully! We will review your credentials within 2-3 business days.');
+    }, 1500);
   };
 
   const handleSave = () => {

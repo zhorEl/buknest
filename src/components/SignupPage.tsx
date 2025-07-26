@@ -72,6 +72,13 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
     };
 
     onSignup(userData);
+    
+    // Redirect professionals to profile page for verification
+    if (userType === 'professional') {
+      setTimeout(() => {
+        onPageChange('my-profile');
+      }, 100);
+    }
   };
 
   return (
