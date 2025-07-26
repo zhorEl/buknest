@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { User, Mail, Phone, MapPin, Edit, Save, X, Camera, Award, CheckCircle, AlertCircle, Clock, Star, Shield, FileText } from 'lucide-react';
-import { User, MapPin, Clock, Star, Award, Edit, Save, X, Phone, Mail, Calendar, DollarSign, BookOpen, Users, Shield, Camera, Plus, Trash2, AlertCircle, CheckCircle } from 'lucide-react';
+import { Calendar, DollarSign, BookOpen, Users, Plus, Trash2 } from 'lucide-react';
 
 interface MyProfilePageProps {
   user: any;
