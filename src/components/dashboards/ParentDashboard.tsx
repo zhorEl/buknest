@@ -259,6 +259,10 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
             onClick={() => onPageChange('kids-profile')}
             className="p-6 rounded-2xl border-2 border-dashed border-gray-300 hover:border-gray-500 hover:bg-gray-50 transition-all duration-300 flex items-center justify-center"
           >
+            <Plus className="h-6 w-6 text-gray-400 mr-2" />
+            <span className="text-gray-600 font-semibold font-sans">Manage Profiles</span>
+          </button>
+        </div>
 
         {/* Filter Status */}
         {filterByChild && (
