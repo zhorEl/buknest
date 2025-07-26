@@ -49,17 +49,17 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-1/4 right-1/3 w-12 h-12 bg-white bg-opacity-10 rounded-full"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-10 left-10 opacity-30 animate-float">
-          <img src="/pattern/pattern pink.svg" alt="" className="w-16 h-16" />
+        <div className="absolute top-10 left-10 opacity-40 animate-float">
+          <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
         </div>
-        <div className="absolute top-32 right-20 opacity-25 animate-bounce" style={{ animationDelay: '1s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
+        <div className="absolute top-32 right-20 opacity-35 animate-bounce" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-28 h-28" />
         </div>
-        <div className="absolute bottom-20 left-32 opacity-35 animate-pulse" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-14 h-14" />
+        <div className="absolute bottom-20 left-32 opacity-45 animate-pulse" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-36 h-36" />
         </div>
-        <div className="absolute top-1/2 right-16 opacity-20 animate-float" style={{ animationDelay: '3s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-10 h-10" />
+        <div className="absolute top-1/2 right-16 opacity-30 animate-float" style={{ animationDelay: '3s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-24 h-24" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center min-h-[50vh]">
@@ -112,20 +112,20 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-20 right-1/4 w-48 h-48 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full opacity-25"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-20 left-16 opacity-40 animate-float">
-          <img src="/pattern/pattern pink.svg" alt="" className="w-20 h-20" />
+        <div className="absolute top-20 left-16 opacity-50 animate-float">
+          <img src="/pattern/pattern pink.svg" alt="" className="w-40 h-40" />
         </div>
-        <div className="absolute top-40 right-24 opacity-30 animate-bounce" style={{ animationDelay: '0.5s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-18 h-18" />
+        <div className="absolute top-40 right-24 opacity-40 animate-bounce" style={{ animationDelay: '0.5s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-44 h-44" />
         </div>
-        <div className="absolute bottom-32 left-20 opacity-35 animate-pulse" style={{ animationDelay: '1.5s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-16 h-16" />
+        <div className="absolute bottom-32 left-20 opacity-45 animate-pulse" style={{ animationDelay: '1.5s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-40 h-40" />
         </div>
-        <div className="absolute top-60 right-32 opacity-25 animate-float" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-14 h-14" />
+        <div className="absolute top-60 right-32 opacity-35 animate-float" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-36 h-36" />
         </div>
-        <div className="absolute bottom-60 left-40 opacity-30 animate-bounce" style={{ animationDelay: '2.5s' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-12 h-12" />
+        <div className="absolute bottom-60 left-40 opacity-40 animate-bounce" style={{ animationDelay: '2.5s' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -292,17 +292,17 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-20 right-0 w-64 h-64 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-15 translate-x-32"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-16 left-12 opacity-35 animate-float">
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-24 h-24" />
+        <div className="absolute top-16 left-12 opacity-45 animate-float">
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-48 h-48" />
         </div>
-        <div className="absolute top-32 right-16 opacity-30 animate-pulse" style={{ animationDelay: '1s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-22 h-22" />
+        <div className="absolute top-32 right-16 opacity-40 animate-pulse" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-52 h-52" />
         </div>
-        <div className="absolute bottom-40 left-24 opacity-25 animate-bounce" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-18 h-18" />
+        <div className="absolute bottom-40 left-24 opacity-35 animate-bounce" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-44 h-44" />
         </div>
-        <div className="absolute top-60 right-40 opacity-40 animate-float" style={{ animationDelay: '1.5s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-16 h-16" />
+        <div className="absolute top-60 right-40 opacity-50 animate-float" style={{ animationDelay: '1.5s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-40 h-40" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -347,17 +347,17 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-0 right-1/4 w-40 h-40 bg-gradient-to-br from-green-200 to-pink-200 rounded-full opacity-20"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-24 left-8 opacity-35 animate-bounce" style={{ animationDelay: '0.8s' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-14 h-14" />
+        <div className="absolute top-24 left-8 opacity-45 animate-bounce" style={{ animationDelay: '0.8s' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-36 h-36" />
         </div>
-        <div className="absolute bottom-16 right-12 opacity-30 animate-pulse" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-16 h-16" />
+        <div className="absolute bottom-16 right-12 opacity-40 animate-pulse" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-40 h-40" />
         </div>
-        <div className="absolute top-40 right-20 opacity-25 animate-float" style={{ animationDelay: '1s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
+        <div className="absolute top-40 right-20 opacity-35 animate-float" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
         </div>
-        <div className="absolute bottom-32 left-16 opacity-40 animate-bounce" style={{ animationDelay: '3s' }}>
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-18 h-18" />
+        <div className="absolute bottom-32 left-16 opacity-50 animate-bounce" style={{ animationDelay: '3s' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-44 h-44" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

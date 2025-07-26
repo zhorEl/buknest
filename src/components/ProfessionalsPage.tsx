@@ -163,35 +163,25 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Background floating elements for main content */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 opacity-10 animate-pulse">
-            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
-              <circle cx="30" cy="30" r="25" fill="#d698ab"/>
-            </svg>
+          <div className="absolute top-20 left-10 opacity-20 animate-pulse">
+            <img src="/pattern/pattern pink.svg" alt="" className="w-60 h-60" />
           </div>
-          <div className="absolute top-40 right-16 opacity-8 animate-bounce" style={{ animationDelay: '1.5s' }}>
-            <svg width="55" height="55" viewBox="0 0 55 55" fill="none">
-              <path d="M27.5 5L32 18H45L35 26L39 39L27.5 33L16 39L20 26L10 18H23L27.5 5Z" fill="#698a60"/>
-            </svg>
+          <div className="absolute top-40 right-16 opacity-18 animate-bounce" style={{ animationDelay: '1.5s' }}>
+            <img src="/pattern/pattern light green.svg" alt="" className="w-56 h-56" />
           </div>
-          <div className="absolute bottom-32 left-20 opacity-12 animate-float" style={{ animationDelay: '0.8s' }}>
-            <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
-              <rect x="10" y="10" width="30" height="30" rx="15" fill="#CB748E"/>
-            </svg>
+          <div className="absolute bottom-32 left-20 opacity-22 animate-float" style={{ animationDelay: '0.8s' }}>
+            <img src="/pattern/pattern dark green.svg" alt="" className="w-52 h-52" />
           </div>
         </div>
 
         {/* Filters */}
         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-8 border border-white border-opacity-50 font-handwritten relative">
           {/* Filter section decorative elements */}
-          <div className="absolute -top-3 -right-3 opacity-20">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-              <circle cx="15" cy="15" r="12" fill="#d698ab"/>
-            </svg>
+          <div className="absolute -top-3 -right-3 opacity-30">
+            <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
           </div>
-          <div className="absolute -bottom-3 -left-3 opacity-15">
-            <svg width="35" height="35" viewBox="0 0 35 35" fill="none">
-              <path d="M17.5 5L20 12H27L21.5 16L23 23L17.5 20L12 23L13.5 16L8 12H15L17.5 5Z" fill="#698a60"/>
-            </svg>
+          <div className="absolute -bottom-3 -left-3 opacity-25">
+            <img src="/pattern/pattern light green.svg" alt="" className="w-36 h-36" />
           </div>
           
           <div className="flex items-center mb-4">
@@ -252,15 +242,11 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
           {filteredProfessionals.map((professional) => (
             <div key={professional.id} className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border border-white border-opacity-50 font-handwritten relative group">
               {/* Card floating elements */}
-              <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
-                <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
-                  <circle cx="12.5" cy="12.5" r="10" fill="#d698ab"/>
-                </svg>
+              <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-30 transition-opacity duration-300">
+                <img src="/pattern/pattern pink.svg" alt="" className="w-28 h-28" />
               </div>
-              <div className="absolute -bottom-2 -left-2 opacity-0 group-hover:opacity-15 transition-opacity duration-300">
-                <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
-                  <path d="M15 3L17.5 10H25L19 14.5L21.5 21.5L15 17.5L8.5 21.5L11 14.5L5 10H12.5L15 3Z" fill="#698a60"/>
-                </svg>
+              <div className="absolute -bottom-2 -left-2 opacity-0 group-hover:opacity-25 transition-opacity duration-300">
+                <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
               </div>
               
               <div className="p-8">
