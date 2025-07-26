@@ -708,17 +708,20 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                       <MessageCircle className="h-4 w-4 mr-2" />
                       Contact Parent
                     </button>
-                    
-                    {getBookingStatus(booking.id) === 'confirmed' && (
+                  </div>
+                  
+                  {/* Mark as Done button - aligned to right */}
+                  {getBookingStatus(booking.id) === 'confirmed' && (
+                    <div className="flex justify-end mt-4 pt-4 border-t border-gray-200">
                       <button
                         onClick={() => handleMarkAsDone(booking.id)}
-                        className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
+                        className="px-6 py-3 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white rounded-xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center font-sans"
                       >
                         <CheckCircle className="h-4 w-4 mr-2" />
                         Mark as Done
                       </button>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
               ) : (
                 // Parent View (existing code)
