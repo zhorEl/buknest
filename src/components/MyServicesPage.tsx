@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, DollarSign, Clock, Users, Plus, Edit, Trash2, Save, X } from 'lucide-react';
+import { Settings, DollarSign, Clock, Users, Plus, Edit, Trash2, Save, X, Grid, List } from 'lucide-react';
 
 interface MyServicesPageProps {
   user: any;
@@ -53,6 +53,7 @@ export default function MyServicesPage({ user, onPageChange }: MyServicesPagePro
 
   const [editingService, setEditingService] = useState<string | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [viewMode, setViewMode] = useState<'thumbnail' | 'table'>('thumbnail');
   const [newService, setNewService] = useState<Partial<Service>>({
     name: '',
     description: '',
@@ -293,7 +294,7 @@ export default function MyServicesPage({ user, onPageChange }: MyServicesPagePro
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Add Service Button */}
-        <div className="mb-8">
+        <div className="mb-8 flex justify-between items-center">
           <button
             onClick={() => setShowAddForm(true)}
             className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-8 py-4 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center font-handwritten"
@@ -301,6 +302,29 @@ export default function MyServicesPage({ user, onPageChange }: MyServicesPagePro
             <Plus className="h-5 w-5 mr-2" />
             Add New Service
           </button>
+          
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setViewMode('thumbnail')}
+              className={`p-2 rounded-lg transition-colors ${
+                viewMode === 'thumbnail' 
+                  ? 'bg-[#CB748E] text-white' 
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              }`}
+            >
+              <Grid className="h-4 w-4" />
+            </button>
+            <button
+              onClick={() => setViewMode('table')}
+              className={`p-2 rounded-lg transition-colors ${
+                viewMode === 'table' 
+                  ? 'bg-[#CB748E] text-white' 
+                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+              }`}
+            >
+              <List className="h-4 w-4" />
+            </button>
+          </div>
         </div>
 
         {/* Add Service Form */}
@@ -398,11 +422,78 @@ export default function MyServicesPage({ user, onPageChange }: MyServicesPagePro
         )}
 
         {/* Services Grid */}
-        <div className="grid lg:grid-cols-2 gap-8">
-          {services.map((service) => (
-            <ServiceCard key={service.id} service={service} />
-          ))}
-        </div>
+        {viewMode === 'thumbnail' ? (
+          <div className="grid lg:grid-cols-2 gap-8">
+            {services.map((service) => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white rounded-3xl shadow-xl border border-gray-200 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gradient-to-r from-pink-100 to-green-100">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Service</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Rate</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Duration</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Type</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Max Sessions</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Status</th>
+                    <th className="px-6 py-4 text-center text-sm font-bold text-green-800 font-handwritten">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {services.map((service) => (
+                    <tr key={service.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4">
+                        <div>
+                          <div className="text-sm font-bold text-gray-900 font-handwritten">{service.name}</div>
+                          <div className="text-sm text-gray-600 font-sans max-w-xs truncate">{service.description}</div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm font-bold text-gray-900 font-sans">₱{service.rate}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm text-gray-900 font-sans">{service.duration} min</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm text-gray-900 font-sans capitalize">{service.sessionType.replace('-', ' ')}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm text-gray-900 font-sans">{service.maxSessions}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`px-2 py-1 rounded-full text-xs font-bold font-sans ${
+                          service.isActive ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'
+                        }`}>
+                          {service.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex space-x-2 justify-center">
+                          <button
+                            onClick={() => handleEditService(service.id)}
+                            className="p-2 bg-[#CB748E] text-white rounded-lg hover:bg-[#d698ab] transition-colors"
+                          >
+                            <Edit className="h-3 w-3" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteService(service.id)}
+                            className="p-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
 
         {services.length === 0 && (
           <div className="text-center py-16">

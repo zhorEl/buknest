@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Clock, Filter, Calendar, MessageCircle, Award, User } from 'lucide-react';
+import { Star, MapPin, Clock, Filter, Calendar, MessageCircle, Award, User, Grid, List } from 'lucide-react';
 import { Professional } from '../types';
 
 interface ProfessionalsPageProps {
@@ -12,6 +12,7 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
   const [selectedSpecialization, setSelectedSpecialization] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [selectedAvailability, setSelectedAvailability] = useState('all');
+  const [viewMode, setViewMode] = useState<'thumbnail' | 'table'>('thumbnail');
 
   const professionals: Professional[] = [
     {
@@ -197,9 +198,34 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
             <img src="/pattern/pattern light green.svg" alt="" className="w-36 h-36" />
           </div>
           
-          <div className="flex items-center mb-4">
-            <Filter className="h-6 w-6 text-green-600 mr-3" />
-            <h3 className="text-2xl font-bold text-green-800">Find Your Perfect Match</h3>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center">
+              <Filter className="h-6 w-6 text-green-600 mr-3" />
+              <h3 className="text-2xl font-bold text-green-800">Find Your Perfect Match</h3>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setViewMode('thumbnail')}
+                className={`p-2 rounded-lg transition-colors ${
+                  viewMode === 'thumbnail' 
+                    ? 'bg-[#CB748E] text-white' 
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
+              >
+                <Grid className="h-4 w-4" />
+              </button>
+              <button
+                onClick={() => setViewMode('table')}
+                className={`p-2 rounded-lg transition-colors ${
+                  viewMode === 'table' 
+                    ? 'bg-[#CB748E] text-white' 
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                }`}
+              >
+                <List className="h-4 w-4" />
+              </button>
+            </div>
           </div>
           
           <div className="grid md:grid-cols-3 gap-6">
@@ -251,97 +277,182 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
         </div>
 
         {/* Professionals Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProfessionals.map((professional) => (
-            <div key={professional.id} className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border border-white border-opacity-50 font-handwritten relative group">
-              {/* Card floating elements */}
-              <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-30 transition-opacity duration-300">
-                <img src="/pattern/pattern pink.svg" alt="" className="w-28 h-28" />
+        {viewMode === 'thumbnail' ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProfessionals.map((professional) => (
+              <div key={professional.id} className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border border-white border-opacity-50 font-handwritten relative group">
+                {/* Card floating elements */}
+                <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-30 transition-opacity duration-300">
+                  <img src="/pattern/pattern pink.svg" alt="" className="w-28 h-28" />
+                </div>
+                <div className="absolute -bottom-2 -left-2 opacity-0 group-hover:opacity-25 transition-opacity duration-300">
+                  <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
+                </div>
+                
+                <div className="p-8">
+                  <div className="flex items-center mb-4">
+                    <img
+                      src={professional.avatar}
+                      alt={professional.name}
+                      className="w-20 h-20 rounded-full object-cover mr-4 border-4 border-white shadow-xl ring-2 ring-pink-200"
+                    />
+                    <div>
+                      <h3 className="text-xl font-bold text-green-800">{professional.name}</h3>
+                      <p className="text-green-600 text-sm font-bold font-readable">{professional.title}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center mb-3">
+                    <div className="flex items-center">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span className="ml-1 text-sm font-bold text-green-800 font-readable">{professional.rating}</span>
+                      <span className="ml-1 text-sm text-green-600 font-readable">({professional.reviewCount} reviews)</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center text-sm text-green-700 mb-3 font-readable">
+                    <MapPin className="h-4 w-4 mr-1" />
+                    {professional.location}
+                  </div>
+
+                  <div className="flex items-center text-sm text-green-700 mb-4 font-readable">
+                    <Clock className="h-4 w-4 mr-1" />
+                    {professional.experience} years experience
+                  </div>
+
+                  <div className="mb-4">
+                    <h4 className="text-sm font-bold text-green-800 mb-3 font-readable">Specializations:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {professional.specialization.slice(0, 2).map((spec, index) => (
+                        <span
+                          key={index}
+                          className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold font-readable"
+                        >
+                          {spec}
+                        </span>
+                      ))}
+                      {professional.specialization.length > 2 && (
+                        <span className="px-3 py-1 bg-pink-100 text-pink-800 text-xs rounded-full font-semibold font-readable">
+                          +{professional.specialization.length - 2} more
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-green-600 font-readable">Starting from</span>
+                      <span className="text-xl font-bold text-green-800">₱{professional.hourlyRate}/hr</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center mb-4">
+                    <Award className="h-4 w-4 text-green-600 mr-2" />
+                    <span className="text-sm text-gray-600">
+                      {professional.credentials.slice(0, 2).join(', ')}
+                    </span>
+                  </div>
+
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={handleBookSession}
+                      className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center border border-white border-opacity-20"
+                    >
+                      <Calendar className="h-4 w-4 mr-2" />
+                      {user ? 'Book Session' : 'Sign In to Book'}
+                    </button>
+                    <button className="px-4 py-3 border-2 border-green-300 rounded-2xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-lg bg-white bg-opacity-80 backdrop-blur-sm">
+                      <MessageCircle className="h-4 w-4 text-green-600" />
+                    </button>
+                  </div>
+                </div>
               </div>
-              <div className="absolute -bottom-2 -left-2 opacity-0 group-hover:opacity-25 transition-opacity duration-300">
-                <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
-              </div>
-              
-              <div className="p-8">
-                <div className="flex items-center mb-4">
-                  <img
-                    src={professional.avatar}
-                    alt={professional.name}
-                    className="w-20 h-20 rounded-full object-cover mr-4 border-4 border-white shadow-xl ring-2 ring-pink-200"
-                  />
-                  <div>
-                    <h3 className="text-xl font-bold text-green-800">{professional.name}</h3>
-                    <p className="text-green-600 text-sm font-bold font-readable">{professional.title}</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center mb-3">
-                  <div className="flex items-center">
-                    <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="ml-1 text-sm font-bold text-green-800 font-readable">{professional.rating}</span>
-                    <span className="ml-1 text-sm text-green-600 font-readable">({professional.reviewCount} reviews)</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center text-sm text-green-700 mb-3 font-readable">
-                  <MapPin className="h-4 w-4 mr-1" />
-                  {professional.location}
-                </div>
-
-                <div className="flex items-center text-sm text-green-700 mb-4 font-readable">
-                  <Clock className="h-4 w-4 mr-1" />
-                  {professional.experience} years experience
-                </div>
-
-                <div className="mb-4">
-                  <h4 className="text-sm font-bold text-green-800 mb-3 font-readable">Specializations:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {professional.specialization.slice(0, 2).map((spec, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold font-readable"
-                      >
-                        {spec}
-                      </span>
-                    ))}
-                    {professional.specialization.length > 2 && (
-                      <span className="px-3 py-1 bg-pink-100 text-pink-800 text-xs rounded-full font-semibold font-readable">
-                        +{professional.specialization.length - 2} more
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <div className="mb-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-green-600 font-readable">Starting from</span>
-                    <span className="text-xl font-bold text-green-800">₱{professional.hourlyRate}/hr</span>
-                  </div>
-                </div>
-
-                <div className="flex items-center mb-4">
-                  <Award className="h-4 w-4 text-green-600 mr-2" />
-                  <span className="text-sm text-gray-600">
-                    {professional.credentials.slice(0, 2).join(', ')}
-                  </span>
-                </div>
-
-                <div className="flex space-x-2">
-                  <button
-                    onClick={handleBookSession}
-                    className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center border border-white border-opacity-20"
-                  >
-                    <Calendar className="h-4 w-4 mr-2" />
-                    {user ? 'Book Session' : 'Sign In to Book'}
-                  </button>
-                  <button className="px-4 py-3 border-2 border-green-300 rounded-2xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-lg bg-white bg-opacity-80 backdrop-blur-sm">
-                    <MessageCircle className="h-4 w-4 text-green-600" />
-                  </button>
-                </div>
-              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl border border-white border-opacity-50 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gradient-to-r from-pink-100 to-green-100">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Professional</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Specialization</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Rating</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Experience</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Rate</th>
+                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Location</th>
+                    <th className="px-6 py-4 text-center text-sm font-bold text-green-800 font-handwritten">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {filteredProfessionals.map((professional) => (
+                    <tr key={professional.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <img
+                            src={professional.avatar}
+                            alt={professional.name}
+                            className="w-12 h-12 rounded-full object-cover mr-3 border-2 border-white shadow-lg"
+                          />
+                          <div>
+                            <div className="text-sm font-bold text-gray-900 font-handwritten">{professional.name}</div>
+                            <div className="text-sm text-gray-600 font-sans">{professional.title}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex flex-wrap gap-1">
+                          {professional.specialization.slice(0, 2).map((spec, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold font-sans"
+                            >
+                              {spec}
+                            </span>
+                          ))}
+                          {professional.specialization.length > 2 && (
+                            <span className="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded-full font-semibold font-sans">
+                              +{professional.specialization.length - 2}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center">
+                          <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
+                          <span className="text-sm font-bold text-gray-900 font-sans">{professional.rating}</span>
+                          <span className="text-sm text-gray-600 ml-1 font-sans">({professional.reviewCount})</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm text-gray-900 font-sans">{professional.experience} years</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm font-bold text-gray-900 font-sans">₱{professional.hourlyRate}/hr</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className="text-sm text-gray-900 font-sans">{professional.location}</span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex space-x-2 justify-center">
+                          <button
+                            onClick={handleBookSession}
+                            className="bg-gradient-to-r from-pink-400 to-green-500 text-white px-3 py-2 rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 text-xs font-sans"
+                          >
+                            {user ? 'Book' : 'Sign In'}
+                          </button>
+                          <button className="p-2 border border-green-300 rounded-lg hover:bg-green-50 transition-colors">
+                            <MessageCircle className="h-4 w-4 text-green-600" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
 
         {filteredProfessionals.length === 0 && (
           <div className="text-center py-16">

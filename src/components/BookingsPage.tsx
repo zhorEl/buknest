@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Video, Home, User, CheckCircle, XCircle, AlertCircle, Plus, Filter, Search, Phone, Mail, Star, ChevronDown, Edit, Trash2, ChevronUp, Users } from 'lucide-react';
+import { Calendar, Clock, MapPin, Video, Home, User, CheckCircle, XCircle, AlertCircle, Plus, Filter, Search, Phone, Mail, Star, ChevronDown, Edit, Trash2, ChevronUp, Users, Grid, List } from 'lucide-react';
 
 interface BookingsPageProps {
   onPageChange: (page: string) => void;
@@ -13,6 +13,7 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
   const [selectedChild, setSelectedChild] = useState('all');
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [viewMode, setViewMode] = useState<'thumbnail' | 'table'>('thumbnail');
 
   const children = [
     { id: 'emma', name: 'Emma', age: 6 },
@@ -806,6 +807,29 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                   </div>
                 )}
               </div>
+              
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setViewMode('thumbnail')}
+                  className={`p-2 rounded-lg transition-colors ${
+                    viewMode === 'thumbnail' 
+                      ? 'bg-[#CB748E] text-white' 
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                >
+                  <Grid className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setViewMode('table')}
+                  className={`p-2 rounded-lg transition-colors ${
+                    viewMode === 'table' 
+                      ? 'bg-[#CB748E] text-white' 
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                >
+                  <List className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
             {/* Tabs */}
@@ -842,13 +866,98 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
         {/* Content */}
         <div className="relative">
           {activeTab === 'upcoming' && (
-            <div className="space-y-8">
+            <>
               {filteredUpcoming.length > 0 ? (
-                filteredUpcoming.map((booking) => (
-                  <BookingCard key={booking.id} booking={booking} showActions={true} isProfessional={user?.role === 'professional'} />
-                ))
-              ) : (
-                <div className="text-center py-16">
+                viewMode === 'thumbnail' ? (
+                  <div className="space-y-8">
+                    {filteredUpcoming.map((booking) => (
+                      <BookingCard key={booking.id} booking={booking} showActions={true} isProfessional={user?.role === 'professional'} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl border border-white border-opacity-50 overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead className="bg-gradient-to-r from-pink-100 to-green-100">
+                          <tr>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">
+                              {user?.role === 'professional' ? 'Client' : 'Professional'}
+                            </th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Date & Time</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Type</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Status</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Price</th>
+                            <th className="px-6 py-4 text-center text-sm font-bold text-green-800 font-handwritten">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                          {filteredUpcoming.map((booking) => (
+                            <tr key={booking.id} className="hover:bg-gray-50 transition-colors">
+                              <td className="px-6 py-4">
+                                <div className="flex items-center">
+                                  <img
+                                    src={user?.role === 'professional' ? booking.parentAvatar : booking.professionalAvatar}
+                                    alt={user?.role === 'professional' ? booking.parentName : booking.professionalName}
+                                    className="w-10 h-10 rounded-full object-cover mr-3 border-2 border-white shadow-lg"
+                                  />
+                                  <div>
+                                    <div className="text-sm font-bold text-gray-900 font-handwritten">
+                                      {user?.role === 'professional' ? booking.childName : booking.professionalName}
+                                    </div>
+                                    <div className="text-sm text-gray-600 font-sans">
+                                      {user?.role === 'professional' ? `Parent: ${booking.parentName}` : booking.professionalTitle}
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className="text-sm font-bold text-gray-900 font-sans">
+                                  {new Date(booking.date).toLocaleDateString()}
+                                </div>
+                                <div className="text-sm text-gray-600 font-sans">{booking.time}</div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className={`px-2 py-1 text-xs rounded-full font-semibold font-sans ${
+                                  booking.type === 'home-visit' 
+                                    ? 'bg-pink-100 text-[#CB748E]' 
+                                    : 'bg-gray-100 text-gray-800'
+                                }`}>
+                                  {booking.type === 'home-visit' ? 'Home Visit' : 'Online'}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className={`flex items-center px-2 py-1 rounded-full text-xs font-bold border ${getStatusColor(booking.status)} font-sans`}>
+                                  {getStatusIcon(booking.status)}
+                                  <span className="ml-1 capitalize">{booking.status}</span>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="text-sm font-bold text-gray-900 font-sans">₱{booking.price}</span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className="flex space-x-2 justify-center">
+                                  {booking.type === 'online' && booking.status === 'confirmed' && (
+                                    <button className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-3 py-1 rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 text-xs font-sans">
+                                      Join
+                                    </button>
+                                  )}
+                                  <button className="p-1 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <Edit className="h-3 w-3 text-gray-700" />
+                                  </button>
+                                  <button className="p-1 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors">
+                                    <Trash2 className="h-3 w-3" />
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )
+              )}
+            </>
                   <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative overflow-hidden">
                     <div className="absolute -top-4 -right-4 opacity-10 animate-float">
                       <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
@@ -878,11 +987,95 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
           )}
 
           {activeTab === 'past' && (
-            <div className="space-y-8">
+            <>
               {filteredPast.length > 0 ? (
-                filteredPast.map((booking) => (
-                  <BookingCard key={booking.id} booking={booking} isPast={true} isProfessional={user?.role === 'professional'} />
-                ))
+                viewMode === 'thumbnail' ? (
+                  <div className="space-y-8">
+                    {filteredPast.map((booking) => (
+                      <BookingCard key={booking.id} booking={booking} isPast={true} isProfessional={user?.role === 'professional'} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl border border-white border-opacity-50 overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead className="bg-gradient-to-r from-pink-100 to-green-100">
+                          <tr>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">
+                              {user?.role === 'professional' ? 'Client' : 'Professional'}
+                            </th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Date & Time</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Type</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Rating</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Price</th>
+                            <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Feedback</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                          {filteredPast.map((booking) => (
+                            <tr key={booking.id} className="hover:bg-gray-50 transition-colors">
+                              <td className="px-6 py-4">
+                                <div className="flex items-center">
+                                  <img
+                                    src={user?.role === 'professional' ? booking.parentAvatar : booking.professionalAvatar}
+                                    alt={user?.role === 'professional' ? booking.parentName : booking.professionalName}
+                                    className="w-10 h-10 rounded-full object-cover mr-3 border-2 border-white shadow-lg"
+                                  />
+                                  <div>
+                                    <div className="text-sm font-bold text-gray-900 font-handwritten">
+                                      {user?.role === 'professional' ? booking.childName : booking.professionalName}
+                                    </div>
+                                    <div className="text-sm text-gray-600 font-sans">
+                                      {user?.role === 'professional' ? `Parent: ${booking.parentName}` : booking.professionalTitle}
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className="text-sm font-bold text-gray-900 font-sans">
+                                  {new Date(booking.date).toLocaleDateString()}
+                                </div>
+                                <div className="text-sm text-gray-600 font-sans">{booking.time}</div>
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className={`px-2 py-1 text-xs rounded-full font-semibold font-sans ${
+                                  booking.type === 'home-visit' 
+                                    ? 'bg-pink-100 text-[#CB748E]' 
+                                    : 'bg-gray-100 text-gray-800'
+                                }`}>
+                                  {booking.type === 'home-visit' ? 'Home Visit' : 'Online'}
+                                </span>
+                              </td>
+                              <td className="px-6 py-4">
+                                {booking.rating && (
+                                  <div className="flex items-center">
+                                    {[...Array(5)].map((_, i) => (
+                                      <Star
+                                        key={i}
+                                        className={`h-3 w-3 ${
+                                          i < booking.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                                        }`}
+                                      />
+                                    ))}
+                                    <span className="ml-1 text-xs text-gray-600 font-sans">({booking.rating})</span>
+                                  </div>
+                                )}
+                              </td>
+                              <td className="px-6 py-4">
+                                <span className="text-sm font-bold text-gray-900 font-sans">₱{booking.price}</span>
+                              </td>
+                              <td className="px-6 py-4">
+                                <div className="text-xs text-gray-600 font-sans max-w-xs truncate">
+                                  {booking.feedback || 'No feedback provided'}
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )
               ) : (
                 <div className="text-center py-16">
                   <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative overflow-hidden">
@@ -902,7 +1095,7 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                   </div>
                 </div>
               )}
-            </div>
+            </>
           )}
 
           {activeTab === 'book' && user?.role !== 'professional' && <BookingForm />}
