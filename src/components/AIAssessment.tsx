@@ -28,11 +28,20 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'end',
+      inline: 'nearest'
+    });
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Delay scroll to ensure DOM is updated
+    const timer = setTimeout(() => {
+      scrollToBottom();
+    }, 100);
+    
+    return () => clearTimeout(timer);
   }, [messages]);
 
   const simulateAIResponse = (userMessage: string) => {
@@ -157,7 +166,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
           </div>
           
           {/* Chat Messages */}
-          <div className="h-[60vh] max-h-[500px] overflow-y-auto p-8 space-y-6 relative">
+          <div className="h-[70vh] min-h-[600px] max-h-[800px] overflow-y-auto p-8 space-y-6 relative scroll-smooth">
             {/* Subtle background pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-10 left-10" style={{ transform: 'translateX(-14.4rem)' }}>
@@ -223,7 +232,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
 
           {/* Assessment Results */}
           {assessmentComplete && assessmentResults && (
-            <div className="border-t border-pink-200 p-6 bg-gradient-to-r from-pink-50 to-green-50 max-h-[40vh] overflow-y-auto">
+            <div className="border-t border-pink-200 p-6 bg-gradient-to-r from-pink-50 to-green-50 max-h-[35vh] overflow-y-auto scroll-smooth">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Assessment Summary</h3>
               
               <div className="grid md:grid-cols-2 gap-6 mb-6">
