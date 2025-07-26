@@ -20,6 +20,35 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [specialRequests, setSpecialRequests] = useState('');
+  const [selectedChild, setSelectedChild] = useState('');
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('');
+  const [paymentDetails, setPaymentDetails] = useState({
+    cardNumber: '4111 1111 1111 1111',
+    expiryDate: '12/25',
+    cvv: '123',
+    cardName: 'John Doe',
+    gcashNumber: '09123456789',
+    mayaNumber: '09123456789'
+  });
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+  // Sample children data for parent
+  const parentChildren = [
+    {
+      id: '1',
+      name: 'Emma Johnson',
+      age: 6,
+      conditions: ['Autism Spectrum Disorder', 'Speech Delay']
+    },
+    {
+      id: '2',
+      name: 'Alex Johnson',
+      age: 4,
+      conditions: ['ADHD', 'Language Delay']
+    }
+  ];
 
   const professionals: Professional[] = [
     {
@@ -253,32 +282,13 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
   };
 
   const handleBookingSubmit = () => {
-    if (!selectedProfessional || selectedServices.length === 0 || !selectedSessionType || !selectedDate || !selectedTime) {
-      alert('Please fill in all required fields');
+    if (!selectedProfessional || selectedServices.length === 0 || !selectedSessionType || !selectedDate || !selectedTime || !selectedChild) {
+      alert('Please fill in all required fields including child selection');
       return;
     }
 
-    // Here you would typically submit the booking to your backend
-    console.log('Booking submitted:', {
-      professional: selectedProfessional.name,
-      services: selectedServices,
-      sessionType: selectedSessionType,
-      date: selectedDate,
-      time: selectedTime,
-      specialRequests,
-      total: calculateTotal()
-    });
-
-    // Reset form and close modal
-    setSelectedServices([]);
-    setSelectedSessionType('');
-    setSelectedDate('');
-    setSelectedTime('');
-    setSpecialRequests('');
-    setShowBookingModal(false);
-    setSelectedProfessional(null);
-    
-    alert('Booking request submitted successfully! The professional will review and confirm your appointment.');
+    // Show payment modal
+    setShowPaymentModal(true);
   };
 
   const handleCloseModal = () => {
@@ -287,8 +297,47 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
     setSelectedDate('');
     setSelectedTime('');
     setSpecialRequests('');
+    setSelectedChild('');
     setShowBookingModal(false);
     setSelectedProfessional(null);
+    setShowPaymentModal(false);
+    setPaymentMethod('');
+    setIsProcessingPayment(false);
+    setPaymentSuccess(false);
+  };
+
+  const handlePaymentSubmit = () => {
+    if (!paymentMethod) {
+      alert('Please select a payment method');
+      return;
+    }
+
+    setIsProcessingPayment(true);
+
+    // Simulate payment processing
+    setTimeout(() => {
+      setIsProcessingPayment(false);
+      setPaymentSuccess(true);
+      
+      // Show success for 2 seconds then close
+      setTimeout(() => {
+        // Here you would typically submit the booking to your backend
+        console.log('Booking submitted:', {
+          professional: selectedProfessional?.name,
+          child: parentChildren.find(c => c.id === selectedChild)?.name,
+          services: selectedServices,
+          sessionType: selectedSessionType,
+          date: selectedDate,
+          time: selectedTime,
+          specialRequests,
+          paymentMethod,
+          total: calculateTotal()
+        });
+
+        handleCloseModal();
+        alert('Booking confirmed! Payment successful. The professional will contact you to confirm the session details.');
+      }, 2000);
+    }, 3000);
   };
 
   const BookingModal = () => {
@@ -531,6 +580,47 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
                     </div>
                   </div>
                 )}
+              </div>
+            </div>
+
+            {/* Child Selection */}
+            <div className="space-y-6">
+              <div>
+                <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Select Child *</label>
+                <div className="space-y-3">
+                  {parentChildren.map((child) => (
+                    <div
+                      key={child.id}
+                      className={`border-2 rounded-2xl p-4 cursor-pointer transition-all duration-300 ${
+                        selectedChild === child.id
+                          ? 'border-[#CB748E] bg-pink-50'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      }`}
+                      onClick={() => setSelectedChild(child.id)}
+                    >
+                      <div className="flex items-center">
+                        <input
+                          type="radio"
+                          name="selectedChild"
+                          checked={selectedChild === child.id}
+                          onChange={() => setSelectedChild(child.id)}
+                          className="mr-3 h-4 w-4 text-[#CB748E] focus:ring-[#CB748E] border-gray-300"
+                        />
+                        <div className="flex-1">
+                          <h5 className="font-bold text-gray-800 font-sans">{child.name}</h5>
+                          <p className="text-sm text-gray-600 font-sans">Age {child.age}</p>
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {child.conditions.map((condition, index) => (
+                              <span key={index} className="px-2 py-1 bg-pink-100 text-[#CB748E] text-xs rounded-full font-semibold font-sans">
+                                {condition}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
