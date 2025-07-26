@@ -467,8 +467,8 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               onClick={() => setShowCalendar(!showCalendar)}
               className={`px-4 py-2 rounded-2xl font-bold transition-all duration-300 flex items-center font-sans ${
                 showCalendar 
-                  ? 'bg-red-500 text-white hover:bg-red-600' 
-                  : 'bg-[#CB748E] text-white hover:bg-[#d698ab]'
+                  ? 'bg-gradient-to-r from-pink-400 to-rose-400 text-white hover:from-pink-500 hover:to-rose-500' 
+                  : 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
               }`}
             >
               {showCalendar ? (
@@ -491,9 +491,9 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               <div className="flex justify-between items-center">
                 <button
                   onClick={() => navigateMonth('prev')}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  className="p-3 bg-gradient-to-r from-pink-100 to-green-100 hover:from-pink-200 hover:to-green-200 rounded-full transition-all duration-300 border border-pink-200"
                 >
-                  <ChevronLeft className="h-6 w-6 text-gray-600" />
+                  <ChevronLeft className="h-6 w-6 text-[#CB748E]" />
                 </button>
                 
                 <h3 className="text-2xl font-bold text-gray-800 font-handwritten">
@@ -503,9 +503,9 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                 
                 <button
                   onClick={() => navigateMonth('next')}
-                  className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                  className="p-3 bg-gradient-to-r from-pink-100 to-green-100 hover:from-pink-200 hover:to-green-200 rounded-full transition-all duration-300 border border-pink-200"
                 >
-                  <ChevronRight className="h-6 w-6 text-gray-600" />
+                  <ChevronRight className="h-6 w-6 text-[#CB748E]" />
                 </button>
               </div>
 
@@ -513,7 +513,7 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               <div className="grid grid-cols-7 gap-2">
                 {/* Day Headers */}
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                  <div key={day} className="text-center font-bold text-gray-600 p-3 font-sans">
+                  <div key={day} className="text-center font-bold text-gray-600 p-3 font-sans bg-gradient-to-r from-pink-50 to-green-50 rounded-lg border border-pink-100">
                     {day}
                   </div>
                 ))}
@@ -549,16 +549,16 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                   return (
                     <div
                       key={day}
-                      className={`p-3 text-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-gray-100 font-sans min-h-[80px] flex flex-col ${
+                      className={`p-3 text-center rounded-xl cursor-pointer transition-all duration-300 font-sans min-h-[80px] flex flex-col border ${
                         isToday
-                          ? 'bg-[#CB748E] text-white font-bold shadow-lg'
+                          ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white font-bold shadow-lg border-pink-300'
                           : confirmedSessions.length > 0
-                          ? 'bg-green-100 text-green-800 font-semibold border-2 border-green-300'
+                          ? 'bg-gradient-to-r from-green-50 to-emerald-50 text-green-800 font-semibold border-green-300 hover:from-green-100 hover:to-emerald-100'
                           : acceptedSessions.length > 0
-                          ? 'bg-blue-100 text-blue-800 font-semibold border-2 border-blue-300'
+                          ? 'bg-gradient-to-r from-blue-50 to-cyan-50 text-blue-800 font-semibold border-blue-300 hover:from-blue-100 hover:to-cyan-100'
                           : pendingSessions.length > 0
-                          ? 'bg-yellow-100 text-yellow-800 font-semibold border-2 border-yellow-300'
-                          : 'hover:bg-gray-50'
+                          ? 'bg-gradient-to-r from-yellow-50 to-amber-50 text-yellow-800 font-semibold border-yellow-300 hover:from-yellow-100 hover:to-amber-100'
+                          : 'hover:bg-gradient-to-r hover:from-pink-50 hover:to-green-50 border-gray-200 hover:border-pink-200'
                       }`}
                     >
                       <div className="text-lg font-bold">{day}</div>
@@ -571,17 +571,17 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                                 className={`px-1 py-0.5 rounded text-xs font-bold truncate ${
                                   user?.role === 'professional' 
                                     ? getBookingStatus(session.id) === 'confirmed' 
-                                      ? 'bg-green-600 text-white' 
+                                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' 
                                       : getBookingStatus(session.id) === 'accepted'
-                                      ? 'bg-blue-600 text-white'
+                                      ? 'bg-gradient-to-r from-blue-500 to-cyan-500 text-white'
                                       : getBookingStatus(session.id) === 'pending'
-                                      ? 'bg-yellow-600 text-white'
-                                      : 'bg-gray-600 text-white'
+                                      ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white'
+                                      : 'bg-gradient-to-r from-gray-500 to-slate-500 text-white'
                                     : session.status === 'confirmed' 
-                                      ? 'bg-green-600 text-white' 
+                                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' 
                                       : session.status === 'pending'
-                                      ? 'bg-yellow-600 text-white'
-                                      : 'bg-gray-600 text-white'
+                                      ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white'
+                                      : 'bg-gradient-to-r from-gray-500 to-slate-500 text-white'
                                 }`}
                               >
                                 {user?.role === 'professional' ? session.child : session.professional} - {session.time}
@@ -601,25 +601,25 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               </div>
               
               {/* Calendar Legend */}
-              <div className="bg-gray-50 rounded-2xl p-6">
+              <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200">
                 <h4 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Legend</h4>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-[#CB748E] rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-[#CB748E] to-[#698a60] rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Today</span>
                   </div>
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-green-400 rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Confirmed Sessions</span>
                   </div>
                   {user?.role === 'professional' && (
                     <div className="flex items-center">
-                      <div className="w-4 h-4 bg-blue-400 rounded-full mr-3"></div>
+                      <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full mr-3"></div>
                       <span className="text-sm text-gray-700 font-sans">Accepted Sessions</span>
                     </div>
                   )}
                   <div className="flex items-center">
-                    <div className="w-4 h-4 bg-yellow-400 rounded-full mr-3"></div>
+                    <div className="w-4 h-4 bg-gradient-to-r from-yellow-400 to-amber-400 rounded-full mr-3"></div>
                     <span className="text-sm text-gray-700 font-sans">Pending Requests</span>
                   </div>
                 </div>
