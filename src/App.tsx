@@ -13,6 +13,8 @@ import SignupPage from './components/SignupPage';
 import ParentDashboard from './components/dashboards/ParentDashboard';
 import ProfessionalDashboard from './components/dashboards/ProfessionalDashboard';
 import AdminDashboard from './components/dashboards/AdminDashboard';
+import MyServicesPage from './components/MyServicesPage';
+import MyClientsPage from './components/MyClientsPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -79,6 +81,10 @@ function App() {
         return <ProfessionalDashboard user={user} onPageChange={setCurrentPage} />;
       case 'admin-dashboard':
         return <AdminDashboard user={user} onPageChange={setCurrentPage} />;
+      case 'my-services':
+        return <MyServicesPage user={user} onPageChange={setCurrentPage} />;
+      case 'my-clients':
+        return <MyClientsPage user={user} onPageChange={setCurrentPage} />;
       default:
         return <HomePage onPageChange={setCurrentPage} />;
     }

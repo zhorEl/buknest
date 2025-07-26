@@ -230,6 +230,18 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
           {/* Today's Sessions */}
           <div className="bg-gray-50 rounded-2xl p-6">
             <h3 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Today's Sessions</h3>
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-sm text-gray-600 font-sans">Quick overview</span>
+              <button
+                onClick={() => {
+                  setShowCalendar(false);
+                  onPageChange('bookings');
+                }}
+                className="text-[#CB748E] hover:text-[#d698ab] font-bold text-sm font-sans"
+              >
+                View All Bookings
+              </button>
+            </div>
             <div className="space-y-3">
               {upcomingSessions.slice(0, 2).map((session) => (
                 <div key={session.id} className="flex justify-between items-center p-3 bg-white rounded-lg">
@@ -461,10 +473,10 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                         )}
                         <button 
                           onClick={() => handleReschedule(session.id)}
-                          className="px-3 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold font-sans"
+                          className="px-2 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold flex items-center font-sans"
                         >
                           <Edit className="h-3 w-3 mr-1" />
-                          Reschedule
+                          Edit
                         </button>
                       </div>
                     </div>

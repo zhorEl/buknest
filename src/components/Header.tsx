@@ -23,6 +23,10 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
 
   const loggedInNavigation = [
     { name: 'My Bookings', id: 'bookings', icon: Calendar },
+    ...(user?.role === 'professional' ? [
+      { name: 'My Services', id: 'my-services', icon: User },
+      { name: 'My Clients', id: 'my-clients', icon: Users }
+    ] : [])
   ];
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
