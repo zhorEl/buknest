@@ -4,6 +4,8 @@ import Header from './components/Header';
 import LoginModal from './components/LoginModal';
 import HomePage from './components/HomePage';
 import AIAssessment from './components/AIAssessment';
+import AboutPage from './components/AboutPage';
+import MissionPage from './components/MissionPage';
 import ProfessionalsPage from './components/ProfessionalsPage';
 import BookingsPage from './components/BookingsPage';
 import ParentDashboard from './components/dashboards/ParentDashboard';
@@ -49,6 +51,10 @@ function App() {
         return <HomePage onPageChange={setCurrentPage} />;
       case 'assessment':
         return <AIAssessment onPageChange={setCurrentPage} />;
+      case 'about':
+        return <AboutPage onPageChange={setCurrentPage} />;
+      case 'mission':
+        return <MissionPage onPageChange={setCurrentPage} />;
       case 'professionals':
         return <ProfessionalsPage onPageChange={setCurrentPage} />;
       case 'bookings':
