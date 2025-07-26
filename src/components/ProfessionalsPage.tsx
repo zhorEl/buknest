@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Clock, Filter, Calendar, MessageCircle, Award } from 'lucide-react';
+import { Star, MapPin, Clock, Filter, Calendar, MessageCircle, Award, User } from 'lucide-react';
 import { Professional } from '../types';
 
 interface ProfessionalsPageProps {
