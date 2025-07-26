@@ -308,26 +308,29 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
               ))}
               
               <div className="flex items-center space-x-2">
-                <button
-                  onClick={() => setViewMode('thumbnail')}
-                  className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'thumbnail' 
-                      ? 'bg-[#CB748E] text-white' 
-                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                  }`}
-                >
-                  <Grid className="h-4 w-4" />
-                </button>
-                <button
-                  onClick={() => setViewMode('table')}
-                  className={`p-2 rounded-lg transition-colors ${
-                    viewMode === 'table' 
-                      ? 'bg-[#CB748E] text-white' 
-                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                  }`}
-                >
-                  <List className="h-4 w-4" />
-                </button>
+                <span className="text-sm text-gray-600 font-sans mr-2">View:</span>
+                <div className="flex bg-gray-100 rounded-lg p-1">
+                  <button
+                    onClick={() => setViewMode('thumbnail')}
+                    className={`p-2 rounded-md transition-colors ${
+                      viewMode === 'thumbnail' 
+                        ? 'bg-[#CB748E] text-white shadow-sm' 
+                        : 'text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <Grid className="h-4 w-4" />
+                  </button>
+                  <button
+                    onClick={() => setViewMode('table')}
+                    className={`p-2 rounded-md transition-colors ${
+                      viewMode === 'table' 
+                        ? 'bg-[#CB748E] text-white shadow-sm' 
+                        : 'text-gray-600 hover:bg-gray-200'
+                    }`}
+                  >
+                    <List className="h-4 w-4" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -384,7 +387,30 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
               </div>
             </div>
             
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-4 items-center">
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={() => setViewMode('thumbnail')}
+                  className={`p-2 rounded-lg transition-colors ${
+                    viewMode === 'thumbnail' 
+                      ? 'bg-[#CB748E] text-white' 
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                >
+                  <Grid className="h-4 w-4" />
+                </button>
+                <button
+                  onClick={() => setViewMode('table')}
+                  className={`p-2 rounded-lg transition-colors ${
+                    viewMode === 'table' 
+                      ? 'bg-[#CB748E] text-white' 
+                      : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                  }`}
+                >
+                  <List className="h-4 w-4" />
+                </button>
+              </div>
+              
               <div className="relative">
                 <select
                   value={filterCondition}
@@ -479,24 +505,24 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
               <table className="w-full">
                 <thead className="bg-gradient-to-r from-pink-100 to-green-100">
                   <tr>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Client</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Parent</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Conditions</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Progress</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Sessions</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Next Session</th>
-                    <th className="px-6 py-4 text-center text-sm font-bold text-green-800 font-handwritten">Actions</th>
+                    <th className="px-6 py-5 text-left text-sm font-bold text-green-800 font-handwritten">Client</th>
+                    <th className="px-6 py-5 text-left text-sm font-bold text-green-800 font-handwritten">Parent</th>
+                    <th className="px-6 py-5 text-left text-sm font-bold text-green-800 font-handwritten">Conditions</th>
+                    <th className="px-6 py-5 text-left text-sm font-bold text-green-800 font-handwritten">Progress</th>
+                    <th className="px-6 py-5 text-left text-sm font-bold text-green-800 font-handwritten">Sessions</th>
+                    <th className="px-6 py-5 text-left text-sm font-bold text-green-800 font-handwritten">Next Session</th>
+                    <th className="px-6 py-5 text-center text-sm font-bold text-green-800 font-handwritten">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {sortedClients.map((client) => (
                     <tr key={client.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-6">
                         <div className="flex items-center">
                           <img
                             src={client.avatar}
                             alt={client.childName}
-                            className="w-10 h-10 rounded-full object-cover mr-3 border-2 border-white shadow-lg"
+                            className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-white shadow-lg"
                           />
                           <div>
                             <div className="text-sm font-bold text-gray-900 font-handwritten">{client.childName}</div>
@@ -504,13 +530,13 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-6">
                         <div>
                           <div className="text-sm font-bold text-gray-900 font-sans">{client.parentName}</div>
                           <div className="text-sm text-gray-600 font-sans">{client.parentPhone}</div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-6">
                         <div className="flex flex-wrap gap-1">
                           {client.conditions.slice(0, 2).map((condition, index) => (
                             <span
@@ -527,35 +553,38 @@ export default function MyClientsPage({ user, onPageChange }: MyClientsPageProps
                           )}
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-6">
                         <div className="flex items-center">
-                          <div className="w-12 h-2 bg-gray-200 rounded-full mr-2">
+                          <div className="w-16 h-3 bg-gray-200 rounded-full mr-3">
                             <div 
-                              className="bg-gradient-to-r from-[#CB748E] to-[#698a60] h-2 rounded-full transition-all duration-500"
+                              className="bg-gradient-to-r from-[#CB748E] to-[#698a60] h-3 rounded-full transition-all duration-500"
                               style={{ width: `${client.progressScore}%` }}
                             ></div>
                           </div>
                           <span className="text-sm font-bold text-gray-800 font-sans">{client.progressScore}%</span>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-6">
                         <span className="text-sm text-gray-900 font-sans">{client.completedSessions}/{client.totalSessions}</span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-6">
                         <span className="text-sm text-gray-900 font-sans">
                           {client.nextSession ? new Date(client.nextSession).toLocaleDateString() : 'Not scheduled'}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-6 py-6">
                         <div className="flex space-x-2 justify-center">
                           <button
                             onClick={() => setSelectedClient(selectedClient === client.id ? null : client.id)}
-                            className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-3 py-1 rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 text-xs font-sans"
+                            className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-4 py-2 rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 text-xs font-sans"
                           >
                             {selectedClient === client.id ? 'Hide' : 'View'}
                           </button>
-                          <button className="p-1 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                            <Calendar className="h-3 w-3 text-gray-700" />
+                          <button 
+                            onClick={() => onPageChange('bookings')}
+                            className="p-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                          >
+                            <Calendar className="h-4 w-4 text-gray-700" />
                           </button>
                         </div>
                       </td>
