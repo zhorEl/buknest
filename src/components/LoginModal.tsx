@@ -5,10 +5,10 @@ interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
   onLogin: (user: any) => void;
+  initialMode?: 'login' | 'signup';
 }
-
-export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps) {
-  const [isLogin, setIsLogin] = useState(true);
+export default function LoginModal({ isOpen, onClose, onLogin, initialMode = 'login' }: LoginModalProps) {
+  const [isLogin, setIsLogin] = useState(initialMode === 'login');
   const [userType, setUserType] = useState<'parent' | 'professional' | 'admin'>('parent');
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -115,13 +115,14 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
 
         <div className="p-6">
           {/* User Type Selection */}
-          <div className="mb-6">
+          {!isLogin && (
+            <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-3">I am a:</label>
             <div className="grid grid-cols-3 gap-2">
               {[
                 { value: 'parent', label: 'Parent', icon: '👨‍👩‍👧‍👦' },
                 { value: 'professional', label: 'Professional', icon: '👩‍⚕️' },
-                { value: 'admin', label: 'Admin', icon: '⚙️' }
+                ...(isLogin ? [{ value: 'admin', label: 'Admin', icon: '⚙️' }] : [])
               ].map((type) => (
                 <button
                   key={type.value}
@@ -138,10 +139,12 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                 </button>
               ))}
             </div>
-          </div>
+            </div>
+          )}
 
           {/* Sample Credentials Helper */}
-          <div className="mb-4 p-3 bg-green-50 rounded-lg border border-green-200">
+          {isLogin && (
+            <div className="mb-4 p-3 bg-green-50 rounded-lg border border-green-200">
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-sm font-medium text-green-800">Demo Credentials</p>
@@ -157,7 +160,8 @@ export default function LoginModal({ isOpen, onClose, onLogin }: LoginModalProps
                 Use Demo
               </button>
             </div>
-          </div>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {!isLogin && (

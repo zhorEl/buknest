@@ -6,17 +6,17 @@ interface HeaderProps {
   onPageChange: (page: string) => void;
   user?: any;
   onLogin: () => void;
+  onSignup: () => void;
   onLogout: () => void;
 }
-
-export default function Header({ currentPage, onPageChange, user, onLogin, onLogout }: HeaderProps) {
+export default function Header({ currentPage, onPageChange, user, onLogin, onSignup, onLogout }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navigation = [
     { name: 'Assessment with NESTY', id: 'assessment', icon: MessageCircle },
+    { name: 'Find Professionals', id: 'professionals', icon: User },
     { name: 'About Us', id: 'about', icon: Users },
     { name: 'Our Mission', id: 'mission', icon: Heart },
-    { name: 'Professionals', id: 'professionals', icon: User },
     { name: 'My Bookings', id: 'bookings', icon: Calendar },
   ];
 
@@ -36,7 +36,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
           <nav className="hidden md:flex space-x-8">
             {!user && (
               <>
-                {navigation.slice(0, 4).map((item) => {
+                {navigation.slice(0, 5).map((item) => {
                   const Icon = item.icon;
                   return (
                     <button
@@ -103,13 +103,21 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
                 </button>
               </>
             ) : (
-              <button
+              <div className="flex space-x-3">
+                <button
+                  onClick={onSignup}
+                  className="flex items-center px-4 py-2 bg-white bg-opacity-20 backdrop-blur-sm border-2 border-white text-white rounded-2xl font-bold hover:bg-white hover:text-green-700 transition-all duration-300 font-handwritten"
+                >
+                  Sign Up
+                </button>
+                <button
                 onClick={onLogin}
-                className="flex items-center px-4 py-2 bg-green-700 text-white rounded-md font-medium hover:bg-green-800 transition-colors"
+                className="flex items-center px-4 py-2 bg-gradient-to-r from-pink-400 to-green-500 text-white rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
               >
                 <LogIn className="h-4 w-4 mr-2" />
                 Login
               </button>
+              </div>
             )}
           </div>
 
@@ -173,16 +181,27 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onLog
                     </button>
                   </>
                 ) : (
-                  <button
+                  <div className="space-y-2">
+                    <button
+                      onClick={() => {
+                        onSignup();
+                        setIsMenuOpen(false);
+                      }}
+                      className="flex items-center w-full px-3 py-2 text-base font-bold text-green-700 bg-white border-2 border-green-300 hover:bg-green-50 rounded-2xl font-handwritten"
+                    >
+                      Sign Up
+                    </button>
+                    <button
                     onClick={() => {
                       onLogin();
                       setIsMenuOpen(false);
                     }}
-                    className="flex items-center w-full px-3 py-2 text-base font-medium text-white bg-green-700 hover:bg-green-800 rounded-md"
+                    className="flex items-center w-full px-3 py-2 text-base font-bold text-white bg-gradient-to-r from-pink-400 to-green-500 hover:from-pink-500 hover:to-green-600 rounded-2xl font-handwritten"
                   >
                     <LogIn className="h-5 w-5 mr-3" />
                     Login
                   </button>
+                  </div>
                 )}
               </div>
             </div>

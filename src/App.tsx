@@ -16,6 +16,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [user, setUser] = useState<any>(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [loginModalMode, setLoginModalMode] = useState<'login' | 'signup'>('login');
 
   const handleLogin = (userData: any) => {
     setUser(userData);
@@ -32,6 +33,16 @@ function App() {
   const handleLogout = () => {
     setUser(null);
     setCurrentPage('home');
+  };
+
+  const handleShowLogin = () => {
+    setLoginModalMode('login');
+    setShowLoginModal(true);
+  };
+
+  const handleShowSignup = () => {
+    setLoginModalMode('signup');
+    setShowLoginModal(true);
   };
 
   const renderPage = () => {
@@ -76,13 +87,15 @@ function App() {
         currentPage={currentPage} 
         onPageChange={setCurrentPage}
         user={user}
-        onLogin={() => setShowLoginModal(true)}
+        onLogin={handleShowLogin}
+        onSignup={handleShowSignup}
         onLogout={handleLogout}
       />
       <LoginModal
         isOpen={showLoginModal}
         onClose={() => setShowLoginModal(false)}
         onLogin={handleLogin}
+        initialMode={loginModalMode}
       />
       {renderPage()}
     </div>

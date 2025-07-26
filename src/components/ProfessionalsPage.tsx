@@ -9,6 +9,7 @@ interface ProfessionalsPageProps {
 export default function ProfessionalsPage({ onPageChange }: ProfessionalsPageProps) {
   const [selectedSpecialization, setSelectedSpecialization] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
+  const [selectedAvailability, setSelectedAvailability] = useState('all');
 
   const professionals: Professional[] = [
     {
@@ -89,6 +90,13 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
     'Houston, TX'
   ];
 
+  const availabilityOptions = [
+    'all',
+    'Today',
+    'This Week',
+    'Weekends'
+  ];
+
   const filteredProfessionals = professionals.filter(professional => {
     const matchesSpecialization = selectedSpecialization === 'all' || 
       professional.title.toLowerCase().includes(selectedSpecialization.toLowerCase()) ||
@@ -100,27 +108,55 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
   });
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Find the Right Professional</h1>
-          <p className="text-gray-600">Connect with certified experts who understand your child's unique needs</p>
-        </div>
-
-        {/* Filters */}
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <div className="flex items-center mb-4">
-            <Filter className="h-5 w-5 text-gray-600 mr-2" />
-            <h3 className="font-semibold text-gray-900">Filter Professionals</h3>
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-green-50">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-20 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
+        <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
+        <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+          <div className="flex justify-center items-center mb-6">
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
+              <User className="h-12 w-12 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl md:text-6xl font-bold font-handwritten">
+                <span className="text-white">Find </span><span className="text-yellow-300">Professionals</span>
+              </h1>
+            </div>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
+              Connect with certified experts who understand your child's unique needs
+            </p>
+            <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
+              Browse our network of verified professionals including speech therapists, occupational therapists, 
+              developmental pediatricians, and special education teachers ready to support your family's journey.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        {/* Filters */}
+        <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-8 mb-8 border border-white border-opacity-50 font-handwritten">
+          <div className="flex items-center mb-4">
+            <Filter className="h-6 w-6 text-green-600 mr-3" />
+            <h3 className="text-2xl font-bold text-green-800">Find Your Perfect Match</h3>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Specialization</label>
+              <label className="block text-sm font-bold text-green-600 mb-3 font-readable">Specialization</label>
               <select
                 value={selectedSpecialization}
                 onChange={(e) => setSelectedSpecialization(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white shadow-sm font-readable"
               >
                 {specializations.map(spec => (
                   <option key={spec} value={spec}>
@@ -131,11 +167,11 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+              <label className="block text-sm font-bold text-green-600 mb-3 font-readable">Location</label>
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white shadow-sm font-readable"
               >
                 {locations.map(location => (
                   <option key={location} value={location}>
@@ -144,57 +180,72 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
                 ))}
               </select>
             </div>
+            
+            <div>
+              <label className="block text-sm font-bold text-green-600 mb-3 font-readable">Availability</label>
+              <select
+                value={selectedAvailability}
+                onChange={(e) => setSelectedAvailability(e.target.value)}
+                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white shadow-sm font-readable"
+              >
+                {availabilityOptions.map(option => (
+                  <option key={option} value={option}>
+                    {option === 'all' ? 'Any Time' : option}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
         </div>
 
         {/* Professionals Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProfessionals.map((professional) => (
-            <div key={professional.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-              <div className="p-6">
+            <div key={professional.id} className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white border-opacity-50 font-handwritten">
+              <div className="p-8">
                 <div className="flex items-center mb-4">
                   <img
                     src={professional.avatar}
                     alt={professional.name}
-                    className="w-16 h-16 rounded-full object-cover mr-4"
+                    className="w-20 h-20 rounded-full object-cover mr-4 border-4 border-white shadow-lg"
                   />
                   <div>
-                    <h3 className="font-semibold text-gray-900">{professional.name}</h3>
-                    <p className="text-blue-600 text-sm font-medium">{professional.title}</p>
+                    <h3 className="text-xl font-bold text-green-800">{professional.name}</h3>
+                    <p className="text-green-600 text-sm font-bold font-readable">{professional.title}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center mb-3">
                   <div className="flex items-center">
                     <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                    <span className="ml-1 text-sm font-medium text-gray-900">{professional.rating}</span>
-                    <span className="ml-1 text-sm text-gray-500">({professional.reviewCount} reviews)</span>
+                    <span className="ml-1 text-sm font-bold text-green-800 font-readable">{professional.rating}</span>
+                    <span className="ml-1 text-sm text-green-600 font-readable">({professional.reviewCount} reviews)</span>
                   </div>
                 </div>
 
-                <div className="flex items-center text-sm text-gray-600 mb-3">
+                <div className="flex items-center text-sm text-green-700 mb-3 font-readable">
                   <MapPin className="h-4 w-4 mr-1" />
                   {professional.location}
                 </div>
 
-                <div className="flex items-center text-sm text-gray-600 mb-4">
+                <div className="flex items-center text-sm text-green-700 mb-4 font-readable">
                   <Clock className="h-4 w-4 mr-1" />
                   {professional.experience} years experience
                 </div>
 
                 <div className="mb-4">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">Specializations:</h4>
+                  <h4 className="text-sm font-bold text-green-800 mb-3 font-readable">Specializations:</h4>
                   <div className="flex flex-wrap gap-2">
                     {professional.specialization.slice(0, 2).map((spec, index) => (
                       <span
                         key={index}
-                        className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                        className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold font-readable"
                       >
                         {spec}
                       </span>
                     ))}
                     {professional.specialization.length > 2 && (
-                      <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                      <span className="px-3 py-1 bg-pink-100 text-pink-800 text-xs rounded-full font-semibold font-readable">
                         +{professional.specialization.length - 2} more
                       </span>
                     )}
@@ -203,8 +254,8 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
 
                 <div className="mb-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">Starting from</span>
-                    <span className="text-lg font-bold text-gray-900">${professional.hourlyRate}/hr</span>
+                    <span className="text-sm text-green-600 font-readable">Starting from</span>
+                    <span className="text-xl font-bold text-green-800">₱{professional.hourlyRate}/hr</span>
                   </div>
                 </div>
 
@@ -218,13 +269,13 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
                 <div className="flex space-x-2">
                   <button
                     onClick={() => onPageChange('bookings')}
-                    className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
+                    className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center"
                   >
                     <Calendar className="h-4 w-4 mr-2" />
                     Book Session
                   </button>
-                  <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
-                    <MessageCircle className="h-4 w-4 text-gray-600" />
+                  <button className="px-4 py-3 border-2 border-green-300 rounded-2xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+                    <MessageCircle className="h-4 w-4 text-green-600" />
                   </button>
                 </div>
               </div>
@@ -233,12 +284,24 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
         </div>
 
         {filteredProfessionals.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
-              <Filter className="h-12 w-12 mx-auto" />
+          <div className="text-center py-16">
+            <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50">
+              <div className="text-green-400 mb-6">
+                <Filter className="h-16 w-16 mx-auto" />
+              </div>
+              <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">No professionals found</h3>
+              <p className="text-green-600 mb-6 font-readable">Try adjusting your filters to see more results.</p>
+              <button
+                onClick={() => {
+                  setSelectedSpecialization('all');
+                  setSelectedLocation('all');
+                  setSelectedAvailability('all');
+                }}
+                className="bg-gradient-to-r from-pink-400 to-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+              >
+                Clear Filters
+              </button>
             </div>
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No professionals found</h3>
-            <p className="text-gray-600">Try adjusting your filters to see more results.</p>
           </div>
         )}
       </div>
