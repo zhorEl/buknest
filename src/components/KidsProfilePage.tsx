@@ -1481,6 +1481,13 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                           />
                           <button
                             onClick={() => addToArray('allergies', newAllergy, setNewAllergy)}
+                            className="px-4 py-2 bg-[#698a60] text-white rounded-xl hover:bg-green-700 transition-colors"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+
                       {/* Medications */}
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Current Medications</label>
@@ -1516,7 +1523,7 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                       </div>
                     </div>
                   </div>
-                            className="px-4 py-2 bg-[#698a60] text-white rounded-xl hover:bg-green-700 transition-colors"
+
                   {/* Emergency Contact */}
                   <div className="bg-white border border-gray-200 rounded-2xl p-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-6 font-handwritten flex items-center">
@@ -1586,7 +1593,7 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                     </div>
                   </div>
                 </div>
-                          >
+
                 {/* Right Column */}
                 <div className="space-y-8">
                   {/* Pediatrician Information */}
@@ -1631,7 +1638,7 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                       </div>
                     </div>
                   </div>
-                            <Plus className="h-4 w-4" />
+
                   {/* School Information */}
                   <div className="bg-white border border-gray-200 rounded-2xl p-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-6 font-handwritten flex items-center">
@@ -1711,7 +1718,7 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                       </div>
                     </div>
                   </div>
-                          </button>
+
                   {/* Developmental History */}
                   <div className="bg-white border border-gray-200 rounded-2xl p-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-6 font-handwritten flex items-center">
@@ -1794,7 +1801,7 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                       </div>
                     </div>
                   </div>
-                        </div>
+
                   {/* Goals and Concerns */}
                   <div className="bg-white border border-gray-200 rounded-2xl p-6">
                     <h3 className="text-xl font-bold text-gray-800 mb-6 font-handwritten flex items-center">
@@ -1861,7 +1868,7 @@ export default function KidsProfilePage({ user, onPageChange }: KidsProfilePageP
                   </div>
                 </div>
               </div>
-                      </div>
+
               {/* Action Buttons */}
               <div className="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
                 <button
