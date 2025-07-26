@@ -737,7 +737,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
               
               <div className="space-y-4">
                 {recentMessages.map((message) => (
-                  <div key={message.id} className={\`p-4 rounded-2xl border ${
+                  <div key={message.id} className={`p-4 rounded-2xl border ${
                     message.unread
                       ? 'bg-pink-50 border-pink-200'
                       : 'bg-gray-50 border-gray-200'
