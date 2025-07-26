@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Video, Home, User, CheckCircle, XCircle, AlertCircle, Plus, Filter, Search, Phone, Mail, Star, ChevronDown, Edit, Trash2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, Video, Home, User, CheckCircle, XCircle, AlertCircle, Plus, Filter, Search, Phone, Mail, Star, ChevronDown, Edit, Trash2, ChevronUp, Users } from 'lucide-react';
 
 interface BookingsPageProps {
   onPageChange: (page: string) => void;
+  user?: any;
 }
 
-export default function BookingsPage({ onPageChange }: BookingsPageProps) {
+export default function BookingsPage({ onPageChange, user }: BookingsPageProps) {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'book'>('upcoming');
   const [searchTerm, setSearchTerm] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [selectedChild, setSelectedChild] = useState('all');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const children = [
     { id: 'emma', name: 'Emma', age: 6 },
@@ -109,6 +112,99 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
     }
   ];
 
+  // Professional bookings data
+  const professionalUpcomingBookings = [
+    {
+      id: '1',
+      childName: 'Emma Johnson',
+      parentName: 'Sarah Johnson',
+      parentAvatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+      date: '2024-01-15',
+      time: '10:00 AM',
+      duration: 60,
+      type: 'home-visit',
+      status: 'scheduled',
+      address: '123 Main St, Bukidnon, Philippines',
+      notes: 'Focus on articulation exercises and vocabulary building',
+      parentPhone: '(555) 123-4567',
+      parentEmail: 'sarah.johnson@email.com',
+      price: 1200,
+      sessionType: 'Speech Therapy'
+    },
+    {
+      id: '2',
+      childName: 'Michael Chen',
+      parentName: 'Lisa Chen',
+      parentAvatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
+      date: '2024-01-18',
+      time: '2:00 PM',
+      duration: 45,
+      type: 'online',
+      status: 'confirmed',
+      meetingLink: 'https://meet.buknest.com/session-123',
+      notes: 'Sensory integration activities and fine motor skills development',
+      parentPhone: '(555) 987-6543',
+      parentEmail: 'lisa.chen@email.com',
+      price: 900,
+      sessionType: 'Occupational Therapy'
+    },
+    {
+      id: '3',
+      childName: 'Sofia Rodriguez',
+      parentName: 'Maria Rodriguez',
+      parentAvatar: 'https://images.pexels.com/photos/5327647/pexels-photo-5327647.jpeg?auto=compress&cs=tinysrgb&w=400',
+      date: '2024-01-20',
+      time: '11:00 AM',
+      duration: 90,
+      type: 'home-visit',
+      status: 'scheduled',
+      address: '456 Oak Ave, Bukidnon, Philippines',
+      notes: 'Comprehensive developmental assessment and behavioral evaluation',
+      parentPhone: '(555) 456-7890',
+      parentEmail: 'maria.rodriguez@email.com',
+      price: 2500,
+      sessionType: 'Developmental Assessment'
+    }
+  ];
+
+  const professionalPastBookings = [
+    {
+      id: '4',
+      childName: 'Alex Thompson',
+      parentName: 'Jennifer Thompson',
+      parentAvatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
+      date: '2024-01-08',
+      time: '4:00 PM',
+      duration: 30,
+      type: 'online',
+      status: 'completed',
+      notes: 'Follow-up session for behavioral strategies. Great progress shown.',
+      parentPhone: '(555) 321-0987',
+      parentEmail: 'jennifer.thompson@email.com',
+      price: 600,
+      sessionType: 'Behavioral Therapy',
+      feedback: 'Excellent session with clear improvement in focus and attention'
+    },
+    {
+      id: '5',
+      childName: 'Emma Johnson',
+      parentName: 'Sarah Johnson',
+      parentAvatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+      date: '2024-01-05',
+      time: '10:00 AM',
+      duration: 60,
+      type: 'home-visit',
+      status: 'completed',
+      address: '123 Main St, Bukidnon, Philippines',
+      notes: 'Initial speech therapy session. Baseline assessment completed.',
+      parentPhone: '(555) 123-4567',
+      parentEmail: 'sarah.johnson@email.com',
+      price: 1200,
+      sessionType: 'Speech Therapy',
+      feedback: 'Very thorough assessment and clear recommendations provided'
+    }
+  ];
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'scheduled':
@@ -139,7 +235,124 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
     }
   };
 
-  const BookingCard = ({ booking, showActions = false, isPast = false }: { booking: any; showActions?: boolean; isPast?: boolean }) => (
+  // Calendar component
+  const CalendarView = () => {
+    const today = new Date();
+    const currentMonth = selectedDate.getMonth();
+    const currentYear = selectedDate.getFullYear();
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentYear, currentMonth + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
+    
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    
+    // Get bookings for current month
+    const currentBookings = user?.role === 'professional' ? professionalUpcomingBookings : upcomingBookings;
+    const bookingDates = currentBookings.map(booking => new Date(booking.date).getDate());
+    
+    const navigateMonth = (direction: number) => {
+      setSelectedDate(new Date(currentYear, currentMonth + direction, 1));
+    };
+    
+    return (
+      <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-6 border border-white border-opacity-50 mb-8">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-2xl font-bold text-gray-800 font-handwritten">Calendar View</h3>
+          <button
+            onClick={() => setShowCalendar(!showCalendar)}
+            className="flex items-center text-[#CB748E] hover:text-[#d698ab] font-bold font-sans"
+          >
+            {showCalendar ? 'Hide Calendar' : 'Show Calendar'}
+            {showCalendar ? <ChevronUp className="ml-2 h-4 w-4" /> : <ChevronDown className="ml-2 h-4 w-4" />}
+          </button>
+        </div>
+        
+        {showCalendar && (
+          <div className="space-y-4">
+            {/* Calendar Header */}
+            <div className="flex justify-between items-center">
+              <button
+                onClick={() => navigateMonth(-1)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                ←
+              </button>
+              <h4 className="text-xl font-bold text-gray-800 font-handwritten">
+                {monthNames[currentMonth]} {currentYear}
+              </h4>
+              <button
+                onClick={() => navigateMonth(1)}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                →
+              </button>
+            </div>
+            
+            {/* Calendar Grid */}
+            <div className="grid grid-cols-7 gap-2">
+              {daysOfWeek.map(day => (
+                <div key={day} className="text-center font-bold text-gray-600 p-2 font-sans">
+                  {day}
+                </div>
+              ))}
+              
+              {/* Empty cells for days before month starts */}
+              {Array.from({ length: startingDayOfWeek }, (_, i) => (
+                <div key={`empty-${i}`} className="p-3"></div>
+              ))}
+              
+              {/* Calendar days */}
+              {Array.from({ length: daysInMonth }, (_, i) => {
+                const day = i + 1;
+                const isToday = today.getDate() === day && 
+                               today.getMonth() === currentMonth && 
+                               today.getFullYear() === currentYear;
+                const hasBooking = bookingDates.includes(day);
+                
+                return (
+                  <div
+                    key={day}
+                    className={`p-3 text-center rounded-lg cursor-pointer transition-colors font-sans relative ${
+                      isToday
+                        ? 'bg-[#CB748E] text-white font-bold'
+                        : hasBooking
+                        ? 'bg-green-100 text-green-800 font-semibold hover:bg-green-200'
+                        : 'hover:bg-gray-100'
+                    }`}
+                  >
+                    {day}
+                    {hasBooking && (
+                      <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-green-600 rounded-full"></div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Legend */}
+            <div className="flex justify-center space-x-6 text-sm font-sans">
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-[#CB748E] rounded-full mr-2"></div>
+                <span className="text-gray-600">Today</span>
+              </div>
+              <div className="flex items-center">
+                <div className="w-3 h-3 bg-green-600 rounded-full mr-2"></div>
+                <span className="text-gray-600">Has Sessions</span>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const BookingCard = ({ booking, showActions = false, isPast = false, isProfessional = false }: { booking: any; showActions?: boolean; isPast?: boolean; isProfessional?: boolean }) => (
     <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-lg border border-white border-opacity-50 p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute -top-4 -right-4 opacity-5 animate-float">
@@ -153,21 +366,38 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
         {/* Header */}
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-center space-x-4">
-            <img
-              src={booking.professionalAvatar}
-              alt={booking.professionalName}
-              className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
-            />
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 font-handwritten">{booking.professionalName}</h3>
-              <p className="text-[#CB748E] font-semibold font-sans">{booking.professionalTitle}</p>
-              {booking.rating && (
-                <div className="flex items-center mt-1">
-                  <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                  <span className="ml-1 text-sm font-bold text-gray-700 font-sans">{booking.rating}</span>
+            {isProfessional ? (
+              <>
+                <img
+                  src={booking.parentAvatar}
+                  alt={booking.parentName}
+                  className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
+                />
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 font-handwritten">{booking.childName}</h3>
+                  <p className="text-[#CB748E] font-semibold font-sans">Parent: {booking.parentName}</p>
+                  <p className="text-sm text-gray-600 font-sans">{booking.sessionType}</p>
                 </div>
-              )}
-            </div>
+              </>
+            ) : (
+              <>
+                <img
+                  src={booking.professionalAvatar}
+                  alt={booking.professionalName}
+                  className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
+                />
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900 font-handwritten">{booking.professionalName}</h3>
+                  <p className="text-[#CB748E] font-semibold font-sans">{booking.professionalTitle}</p>
+                  {booking.rating && (
+                    <div className="flex items-center mt-1">
+                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                      <span className="ml-1 text-sm font-bold text-gray-700 font-sans">{booking.rating}</span>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
           <div className="text-right">
             <div className={`flex items-center px-3 py-2 rounded-full text-sm font-bold border ${getStatusColor(booking.status)} font-sans`}>
@@ -216,7 +446,7 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
 
             <div className="flex items-center text-gray-700 font-sans">
               <User className="h-5 w-5 mr-3 text-gray-500" />
-              <span className="font-semibold">Child: {booking.childName}</span>
+              <span className="font-semibold">{isProfessional ? `Child: ${booking.childName}` : `Child: ${booking.childName}`}</span>
             </div>
           </div>
 
@@ -228,17 +458,17 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
               </div>
             )}
 
-            {booking.professionalPhone && (
+            {(isProfessional ? booking.parentPhone : booking.professionalPhone) && (
               <div className="flex items-center text-gray-700 font-sans">
                 <Phone className="h-5 w-5 mr-3 text-[#698a60]" />
-                <span className="font-semibold">{booking.professionalPhone}</span>
+                <span className="font-semibold">{isProfessional ? booking.parentPhone : booking.professionalPhone}</span>
               </div>
             )}
 
-            {booking.professionalEmail && (
+            {(isProfessional ? booking.parentEmail : booking.professionalEmail) && (
               <div className="flex items-center text-gray-700 font-sans">
                 <Mail className="h-5 w-5 mr-3 text-gray-500" />
-                <span className="font-semibold">{booking.professionalEmail}</span>
+                <span className="font-semibold">{isProfessional ? booking.parentEmail : booking.professionalEmail}</span>
               </div>
             )}
           </div>
@@ -284,6 +514,10 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
       </div>
     </div>
   );
+
+  // Determine which bookings to show based on user role
+  const currentUpcomingBookings = user?.role === 'professional' ? professionalUpcomingBookings : upcomingBookings;
+  const currentPastBookings = user?.role === 'professional' ? professionalPastBookings : pastBookings;
 
   const BookingForm = () => (
     <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl border border-white border-opacity-50 p-8 relative overflow-hidden">
@@ -405,18 +639,22 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
     </div>
   );
 
-  const filteredUpcoming = upcomingBookings.filter(booking => {
-    const matchesSearch = booking.professionalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         booking.professionalTitle.toLowerCase().includes(searchTerm.toLowerCase());
+  const filteredUpcoming = currentUpcomingBookings.filter(booking => {
+    const searchField = user?.role === 'professional' 
+      ? `${booking.childName} ${booking.parentName} ${booking.sessionType}`.toLowerCase()
+      : `${booking.professionalName} ${booking.professionalTitle}`.toLowerCase();
+    const matchesSearch = searchField.includes(searchTerm.toLowerCase());
     const matchesStatus = filterStatus === 'all' || booking.status === filterStatus;
-    const matchesChild = selectedChild === 'all' || booking.childName.toLowerCase() === selectedChild.toLowerCase();
+    const matchesChild = user?.role === 'professional' || selectedChild === 'all' || booking.childName.toLowerCase() === selectedChild.toLowerCase();
     return matchesSearch && matchesStatus && matchesChild;
   });
 
-  const filteredPast = pastBookings.filter(booking => {
-    const matchesSearch = booking.professionalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         booking.professionalTitle.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesChild = selectedChild === 'all' || booking.childName.toLowerCase() === selectedChild.toLowerCase();
+  const filteredPast = currentPastBookings.filter(booking => {
+    const searchField = user?.role === 'professional' 
+      ? `${booking.childName} ${booking.parentName} ${booking.sessionType}`.toLowerCase()
+      : `${booking.professionalName} ${booking.professionalTitle}`.toLowerCase();
+    const matchesSearch = searchField.includes(searchTerm.toLowerCase());
+    const matchesChild = user?.role === 'professional' || selectedChild === 'all' || booking.childName.toLowerCase() === selectedChild.toLowerCase();
     return matchesSearch && matchesChild;
   });
 
@@ -453,24 +691,33 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
             </div>
             <div>
               <h1 className="text-4xl md:text-6xl font-bold font-handwritten">
-                <span className="text-white">My </span><span className="text-yellow-300">Bookings</span>
+                <span className="text-white">{user?.role === 'professional' ? 'My ' : 'My '}</span>
+                <span className="text-yellow-300">{user?.role === 'professional' ? 'Sessions' : 'Bookings'}</span>
               </h1>
             </div>
           </div>
           
           <div className="max-w-4xl mx-auto">
             <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4 font-sans">
-              Manage your therapy sessions and appointments
+              {user?.role === 'professional' 
+                ? 'Manage your client sessions and schedule'
+                : 'Manage your therapy sessions and appointments'
+              }
             </p>
             <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed font-sans">
-              Keep track of your upcoming sessions, review past appointments, and book new consultations 
-              with our certified professionals.
+              {user?.role === 'professional'
+                ? 'Keep track of your client sessions, manage your schedule, and review session history with families you support.'
+                : 'Keep track of your upcoming sessions, review past appointments, and book new consultations with our certified professionals.'
+              }
             </p>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+        {/* Calendar View */}
+        <CalendarView />
+        
         {/* Header with Search and Filters */}
         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-10 border border-white border-opacity-50 relative overflow-hidden">
           <div className="absolute -top-3 -right-3 opacity-5 animate-float">
@@ -484,7 +731,7 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
                   <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Search professionals..."
+                    placeholder={user?.role === 'professional' ? 'Search clients...' : 'Search professionals...'}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans"
@@ -507,28 +754,30 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
                   <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
                 </div>
                 
-                <div className="relative">
-                  <select
-                    value={selectedChild}
-                    onChange={(e) => setSelectedChild(e.target.value)}
-                    className="border-2 border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none pr-10"
-                  >
-                    <option value="all">All Children</option>
-                    {children.map(child => (
-                      <option key={child.id} value={child.name}>{child.name}</option>
-                    ))}
-                  </select>
-                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
-                </div>
+                {user?.role !== 'professional' && (
+                  <div className="relative">
+                    <select
+                      value={selectedChild}
+                      onChange={(e) => setSelectedChild(e.target.value)}
+                      className="border-2 border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none pr-10"
+                    >
+                      <option value="all">All Children</option>
+                      {children.map(child => (
+                        <option key={child.id} value={child.name}>{child.name}</option>
+                      ))}
+                    </select>
+                    <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Tabs */}
             <div className="flex space-x-2 bg-gray-100 p-2 rounded-2xl max-w-md mx-auto">
               {[
-                { id: 'upcoming', label: 'Upcoming', count: filteredUpcoming.length },
-                { id: 'past', label: 'Past Sessions', count: filteredPast.length },
-                { id: 'book', label: 'Book New', icon: Plus }
+                { id: 'upcoming', label: user?.role === 'professional' ? 'Upcoming' : 'Upcoming', count: filteredUpcoming.length },
+                { id: 'past', label: user?.role === 'professional' ? 'Completed' : 'Past Sessions', count: filteredPast.length },
+                ...(user?.role !== 'professional' ? [{ id: 'book', label: 'Book New', icon: Plus }] : [])
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -560,7 +809,7 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
             <div className="space-y-8">
               {filteredUpcoming.length > 0 ? (
                 filteredUpcoming.map((booking) => (
-                  <BookingCard key={booking.id} booking={booking} showActions={true} />
+                  <BookingCard key={booking.id} booking={booking} showActions={true} isProfessional={user?.role === 'professional'} />
                 ))
               ) : (
                 <div className="text-center py-16">
@@ -569,14 +818,23 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
                       <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
                     </div>
                     <Calendar className="h-20 w-20 text-[#CB748E] mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">No upcoming sessions</h3>
-                    <p className="text-gray-600 mb-6 font-sans">Book your next session to continue your child's development journey</p>
-                    <button
-                      onClick={() => setActiveTab('book')}
-                      className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-8 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
-                    >
-                      Book Session
-                    </button>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">
+                      {user?.role === 'professional' ? 'No upcoming sessions' : 'No upcoming sessions'}
+                    </h3>
+                    <p className="text-gray-600 mb-6 font-sans">
+                      {user?.role === 'professional' 
+                        ? 'Your upcoming client sessions will appear here'
+                        : 'Book your next session to continue your child\'s development journey'
+                      }
+                    </p>
+                    {user?.role !== 'professional' && (
+                      <button
+                        onClick={() => setActiveTab('book')}
+                        className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-8 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+                      >
+                        Book Session
+                      </button>
+                    )}
                   </div>
                 </div>
               )}
@@ -587,7 +845,7 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
             <div className="space-y-8">
               {filteredPast.length > 0 ? (
                 filteredPast.map((booking) => (
-                  <BookingCard key={booking.id} booking={booking} isPast={true} />
+                  <BookingCard key={booking.id} booking={booking} isPast={true} isProfessional={user?.role === 'professional'} />
                 ))
               ) : (
                 <div className="text-center py-16">
@@ -596,15 +854,22 @@ export default function BookingsPage({ onPageChange }: BookingsPageProps) {
                       <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
                     </div>
                     <Clock className="h-20 w-20 text-[#698a60] mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">No past sessions</h3>
-                    <p className="text-gray-600 font-sans">Your completed sessions will appear here</p>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">
+                      {user?.role === 'professional' ? 'No completed sessions' : 'No past sessions'}
+                    </h3>
+                    <p className="text-gray-600 font-sans">
+                      {user?.role === 'professional' 
+                        ? 'Your completed client sessions will appear here'
+                        : 'Your completed sessions will appear here'
+                      }
+                    </p>
                   </div>
                 </div>
               )}
             </div>
           )}
 
-          {activeTab === 'book' && <BookingForm />}
+          {activeTab === 'book' && user?.role !== 'professional' && <BookingForm />}
         </div>
       </div>
     </div>

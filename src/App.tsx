@@ -70,7 +70,7 @@ function App() {
       case 'professionals':
         return <ProfessionalsPage onPageChange={setCurrentPage} user={user} onLogin={handleShowLogin} />;
       case 'bookings':
-        return <BookingsPage onPageChange={setCurrentPage} />;
+        return <BookingsPage onPageChange={setCurrentPage} user={user} />;
       case 'signup':
         return <SignupPage onPageChange={setCurrentPage} onSignup={handleLogin} />;
       case 'parent-dashboard':
