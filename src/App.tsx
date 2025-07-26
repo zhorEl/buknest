@@ -14,7 +14,7 @@ import ParentDashboard from './components/dashboards/ParentDashboard';
 import ProfessionalDashboard from './components/dashboards/ProfessionalDashboard';
 import AdminDashboard from './components/dashboards/AdminDashboard';
 import MyServicesPage from './components/MyServicesPage';
-import MyClientsPage from './components/MyClientsPage';
+import MyClientsPage from './components/MyClientsPage.tsx';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
