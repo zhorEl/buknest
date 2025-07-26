@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Heart, Shield, Award, Target, Globe, Lightbulb, HandHeart } from 'lucide-react';
+import { Users, Heart, Shield, Award, Target, Globe, Lightbulb, Heart as HandHeart } from 'lucide-react';
 
 interface AboutPageProps {
   onPageChange: (page: string) => void;
