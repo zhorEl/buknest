@@ -39,70 +39,6 @@ export default function HomePage({ onPageChange }: HomePageProps) {
 
   return (
     <div className="min-h-screen">
-      {/* NESTY Jumbotron */}
-      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-20 relative overflow-hidden min-h-[60vh]">
-        {/* Decorative Elements */}
-        <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
-        <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
-        <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-12 h-12 bg-white bg-opacity-10 rounded-full"></div>
-        
-        {/* Floating Pattern Elements */}
-        <div className="absolute top-10 left-10 opacity-40 animate-float" style={{ transform: 'translateX(-19.2rem)' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
-        </div>
-        <div className="absolute top-32 right-20 opacity-35 animate-float" style={{ animationDelay: '1s', transform: 'translateX(16.8rem)' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-84 h-84" />
-        </div>
-        <div className="absolute bottom-20 left-32 opacity-45 animate-float" style={{ animationDelay: '2s', transform: 'translateX(-21.6rem)' }}>
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-108 h-108" />
-        </div>
-        <div className="absolute top-1/2 right-16 opacity-30 animate-float" style={{ animationDelay: '3s', transform: 'translateX(14.4rem)' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-72 h-72" />
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center min-h-[50vh]">
-          <div className="text-center w-full">
-            <div className="flex justify-center items-center mb-4">
-              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
-                <MessageCircle className="h-12 w-12 text-white" />
-              </div>
-              <div>
-                <h1 className="text-4xl md:text-6xl font-bold font-handwritten" style={{ color: '#CB748E' }}>
-                <span className="text-white">TALK with </span><span className="text-yellow-300">NESTY!</span>
-                </h1>
-              </div>
-            </div>
-            
-            <div className="max-w-4xl mx-auto mb-8">
-              <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
-                Your friendly AI-powered companion for early assessment
-              </p>
-              <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
-                NESTY creates a safe, welcoming space where you can share your concerns about your child's development. 
-                Through gentle conversation, NESTY helps identify early signs and provides personalized guidance to support 
-                your child's unique journey. No judgment, just understanding and support.
-              </p>
-            </div>
-            
-            <div className="mt-6">
-              <button
-                onClick={() => onPageChange('assessment')}
-                className="bg-white text-[#CB748E] px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto font-handwritten"
-              >
-                <MessageCircle className="h-6 w-6 mr-3" />
-                Start Chatting with NESTY
-                <ArrowRight className="ml-3 h-6 w-6" />
-              </button>
-              <p className="text-sm text-white text-opacity-80 mt-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
-                Free • Confidential • No registration required
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Organic Hero Section */}
       <div className="relative bg-gradient-to-br from-pink-50 via-rose-50 to-green-50 overflow-hidden min-h-screen">
         {/* Organic Background Shapes */}
@@ -210,6 +146,70 @@ export default function HomePage({ onPageChange }: HomePageProps) {
                   <div className="text-green-600 text-sm md:text-base font-handwritten">{stat.label}</div>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* NESTY Jumbotron */}
+      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-20 relative overflow-hidden min-h-[60vh]">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
+        <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
+        <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
+        <div className="absolute bottom-1/4 right-1/3 w-12 h-12 bg-white bg-opacity-10 rounded-full"></div>
+        
+        {/* Floating Pattern Elements */}
+        <div className="absolute top-10 left-10 opacity-40 animate-float" style={{ transform: 'translateX(-19.2rem)' }}>
+          <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
+        </div>
+        <div className="absolute top-32 right-20 opacity-35 animate-float" style={{ animationDelay: '1s', transform: 'translateX(16.8rem)' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-84 h-84" />
+        </div>
+        <div className="absolute bottom-20 left-32 opacity-45 animate-float" style={{ animationDelay: '2s', transform: 'translateX(-21.6rem)' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-108 h-108" />
+        </div>
+        <div className="absolute top-1/2 right-16 opacity-30 animate-float" style={{ animationDelay: '3s', transform: 'translateX(14.4rem)' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-72 h-72" />
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center min-h-[50vh]">
+          <div className="text-center w-full">
+            <div className="flex justify-center items-center mb-4">
+              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
+                <MessageCircle className="h-12 w-12 text-white" />
+              </div>
+              <div>
+                <h1 className="text-4xl md:text-6xl font-bold font-handwritten" style={{ color: '#CB748E' }}>
+                <span className="text-white">TALK with </span><span className="text-yellow-300">NESTY!</span>
+                </h1>
+              </div>
+            </div>
+            
+            <div className="max-w-4xl mx-auto mb-8">
+              <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
+                Your friendly AI-powered companion for early assessment
+              </p>
+              <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
+                NESTY creates a safe, welcoming space where you can share your concerns about your child's development. 
+                Through gentle conversation, NESTY helps identify early signs and provides personalized guidance to support 
+                your child's unique journey. No judgment, just understanding and support.
+              </p>
+            </div>
+            
+            <div className="mt-6">
+              <button
+                onClick={() => onPageChange('assessment')}
+                className="bg-white text-[#CB748E] px-10 py-5 rounded-2xl font-bold text-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center mx-auto font-handwritten"
+              >
+                <MessageCircle className="h-6 w-6 mr-3" />
+                Start Chatting with NESTY
+                <ArrowRight className="ml-3 h-6 w-6" />
+              </button>
+              <p className="text-sm text-white text-opacity-80 mt-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
+                Free • Confidential • No registration required
+              </p>
             </div>
           </div>
         </div>
