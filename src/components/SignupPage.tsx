@@ -386,11 +386,11 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
 
           <div className="mt-6 text-center">
             <div className="bg-green-50 bg-opacity-80 backdrop-blur-sm rounded-2xl p-4 border border-green-200 shadow-lg relative">
-              <div className="absolute -top-1 -right-1 opacity-20">
-                <img src="/pattern/pattern dark green.svg" alt="" className="w-8 h-8" />
+              <div className="absolute -top-1 -right-1 opacity-30">
+                <img src="/pattern/pattern dark green.svg" alt="" className="w-24 h-24" />
               </div>
-              <div className="absolute -bottom-1 -left-1 opacity-15">
-                <img src="/pattern/pattern light green.svg" alt="" className="w-6 h-6" />
+              <div className="absolute -bottom-1 -left-1 opacity-25">
+                <img src="/pattern/pattern light green.svg" alt="" className="w-20 h-20" />
               </div>
               <p className="text-sm text-green-700 font-readable" style={{ fontFamily: 'Calibri, sans-serif' }}>
                 By creating an account, you agree to our Terms of Service and Privacy Policy. 

@@ -334,10 +334,10 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
           <div className="text-center py-16">
             <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
               <div className="absolute -top-4 -right-4 opacity-25">
-                <img src="/pattern/pattern pink.svg" alt="" className="w-14 h-14" />
+                <img src="/pattern/pattern pink.svg" alt="" className="w-36 h-36" />
               </div>
               <div className="absolute -bottom-4 -left-4 opacity-20">
-                <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
+                <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
               </div>
               <div className="text-green-400 mb-6">
                 <Filter className="h-16 w-16 mx-auto" />
