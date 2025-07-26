@@ -16,8 +16,25 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
     confirmPassword: '',
     fullName: '',
     phoneNumber: '',
-    address: ''
+    address: '',
+    profession: ''
   });
+
+  const professions = [
+    'Special Education Teacher (SPED)',
+    'Occupational Therapist',
+    'Speech-Language Pathologist',
+    'Physical Therapist',
+    'Behavioral Therapist',
+    'Developmental Pediatrician',
+    'Child Psychologist',
+    'Applied Behavior Analysis (ABA) Therapist',
+    'Music Therapist',
+    'Art Therapist',
+    'Social Worker',
+    'Early Intervention Specialist',
+    'Other'
+  ];
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData(prev => ({
@@ -34,6 +51,11 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
       return;
     }
 
+    if (userType === 'professional' && !formData.profession) {
+      alert('Please select your profession!');
+      return;
+    }
+
     const userData = {
       id: Date.now().toString(),
       email: formData.email,
@@ -41,6 +63,7 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
       role: userType,
       phoneNumber: formData.phoneNumber,
       address: formData.address,
+      profession: userType === 'professional' ? formData.profession : undefined,
       avatar: userType === 'parent' 
         ? 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400'
         : 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -238,6 +261,26 @@ export default function SignupPage({ onPageChange, onSignup }: SignupPageProps) 
                 </div>
               </div>
             </div>
+
+            {userType === 'professional' && (
+              <div>
+                <label className="block text-sm font-bold text-green-600 mb-3 font-readable">Profession *</label>
+                <select
+                  name="profession"
+                  value={formData.profession}
+                  onChange={(e) => setFormData(prev => ({ ...prev, profession: e.target.value }))}
+                  className="w-full px-4 py-3 border-2 border-green-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white shadow-sm font-readable"
+                  required
+                >
+                  <option value="">Select your profession...</option>
+                  {professions.map((profession) => (
+                    <option key={profession} value={profession}>
+                      {profession}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             {/* Optional Fields */}
             <div className="bg-green-50 bg-opacity-50 rounded-2xl p-6 border border-green-200">
