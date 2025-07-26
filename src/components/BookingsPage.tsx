@@ -957,8 +957,9 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                   </div>
                 )
               )}
-            </>
-                  <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative overflow-hidden">
+              
+              {filteredBookings.length === 0 && (
+                <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative overflow-hidden">
                     <div className="absolute -top-4 -right-4 opacity-10 animate-float">
                       <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
                     </div>
