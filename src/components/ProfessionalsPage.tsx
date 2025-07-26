@@ -1016,6 +1016,9 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
       
       {/* Booking Modal */}
       <BookingModal />
+      
+      {/* Payment Modal */}
+      <PaymentModal />
     </div>
   );
 }
