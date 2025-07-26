@@ -455,17 +455,19 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                 <div className="flex items-center">
                   <Mail className="h-5 w-5 text-gray-500 mr-3" />
                   {isEditing ? (
-                    <input
-                      type="email"
-                      value={profileData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      className={`flex-1 border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
-                        errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                      }`}
-                    />
-                    {errors.email && (
-                      <div className="text-red-600 text-sm mt-1">{errors.email}</div>
-                    />
+                    <div className="flex-1">
+                      <input
+                        type="email"
+                        value={profileData.email}
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        className={`w-full border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
+                          errors.email ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                        }`}
+                      />
+                      {errors.email && (
+                        <div className="text-red-600 text-sm mt-1">{errors.email}</div>
+                      )}
+                    </div>
                   ) : (
                     <span className="text-gray-700 font-sans">{profileData.email}</span>
                   )}
@@ -474,17 +476,19 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
                 <div className="flex items-center">
                   <Phone className="h-5 w-5 text-gray-500 mr-3" />
                   {isEditing ? (
-                    <input
-                      type="tel"
-                      value={profileData.phone}
-                      onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className={`flex-1 border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
-                        errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-300'
-                      }`}
-                    />
-                    {errors.phone && (
-                      <div className="text-red-600 text-sm mt-1">{errors.phone}</div>
-                    />
+                    <div className="flex-1">
+                      <input
+                        type="tel"
+                        value={profileData.phone}
+                        onChange={(e) => handleInputChange('phone', e.target.value)}
+                        className={`w-full border-2 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans ${
+                          errors.phone ? 'border-red-300 bg-red-50' : 'border-gray-300'
+                        }`}
+                      />
+                      {errors.phone && (
+                        <div className="text-red-600 text-sm mt-1">{errors.phone}</div>
+                      )}
+                    </div>
                   ) : (
                     <span className="text-gray-700 font-sans">{profileData.phone}</span>
                   )}
@@ -839,8 +843,10 @@ export default function MyProfilePage({ user, onPageChange }: MyProfilePageProps
               <div className="space-y-3">
                 {profileData.achievements.map((achievement, index) => (
                   <div key={index} className="flex items-center justify-between p-3 bg-yellow-50 rounded-xl border border-yellow-200">
-                    <Award className="h-5 w-5 text-yellow-600 mr-3" />
-                    <span className="text-gray-700 font-sans">{achievement}</span>
+                    <div className="flex items-center">
+                      <Award className="h-5 w-5 text-yellow-600 mr-3" />
+                      <span className="text-gray-700 font-sans">{achievement}</span>
+                    </div>
                     {isEditing && (
                       <button
                         onClick={() => removeAchievement(index)}
