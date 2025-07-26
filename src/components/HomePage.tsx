@@ -48,19 +48,19 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-20 right-1/4 w-48 h-48 bg-gradient-to-br from-green-200 to-emerald-200 rounded-full opacity-25"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-20 left-16 opacity-50 animate-float" style={{ transform: 'translateX(-24rem)', zIndex: -1 }}>
+        <div className="absolute top-20 left-16 opacity-50 animate-float" style={{ transform: 'translateX(-24rem)' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-120 h-120" />
         </div>
-        <div className="absolute top-40 right-24 opacity-40 animate-float-2" style={{ animationDelay: '0.5s', transform: 'translateX(26.4rem)', zIndex: -1 }}>
+        <div className="absolute top-40 right-24 opacity-40 animate-float" style={{ animationDelay: '0.5s', transform: 'translateX(26.4rem)' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-132 h-132" />
         </div>
-        <div className="absolute bottom-32 left-20 opacity-45 animate-float-3" style={{ animationDelay: '1.5s', transform: 'translateX(-20.8rem)', zIndex: -1 }}>
+        <div className="absolute bottom-32 left-20 opacity-45 animate-float" style={{ animationDelay: '1.5s', transform: 'translateX(-20.8rem)' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-120 h-120" />
         </div>
-        <div className="absolute top-60 right-32 opacity-35 animate-float-4" style={{ animationDelay: '2s', transform: 'translateX(21.6rem)', zIndex: -1 }}>
+        <div className="absolute top-60 right-32 opacity-35 animate-float" style={{ animationDelay: '2s', transform: 'translateX(21.6rem)' }}>
           <img src="/pattern/pattern light pink with green.svg" alt="" className="w-108 h-108" />
         </div>
-        <div className="absolute bottom-60 left-40 opacity-40 animate-float-2" style={{ animationDelay: '2.5s', transform: 'translateX(-19.2rem)', zIndex: -1 }}>
+        <div className="absolute bottom-60 left-40 opacity-40 animate-float" style={{ animationDelay: '2.5s', transform: 'translateX(-19.2rem)' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
         </div>
         
@@ -160,16 +160,16 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-1/4 right-1/3 w-12 h-12 bg-white bg-opacity-10 rounded-full"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-10 left-10 opacity-40 animate-float" style={{ transform: 'translateX(-19.2rem)', zIndex: -1 }}>
+        <div className="absolute top-10 left-10 opacity-40 animate-float" style={{ transform: 'translateX(-19.2rem)' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
         </div>
-        <div className="absolute top-32 right-20 opacity-35 animate-float-3" style={{ animationDelay: '1s', transform: 'translateX(16.8rem)', zIndex: -1 }}>
+        <div className="absolute top-32 right-20 opacity-35 animate-float" style={{ animationDelay: '1s', transform: 'translateX(16.8rem)' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-84 h-84" />
         </div>
-        <div className="absolute bottom-20 left-32 opacity-45 animate-float-2" style={{ animationDelay: '2s', transform: 'translateX(-21.6rem)', zIndex: -1 }}>
+        <div className="absolute bottom-20 left-32 opacity-45 animate-float" style={{ animationDelay: '2s', transform: 'translateX(-21.6rem)' }}>
           <img src="/pattern/pattern light pink with green.svg" alt="" className="w-108 h-108" />
         </div>
-        <div className="absolute top-1/2 right-16 opacity-30 animate-float-4" style={{ animationDelay: '3s', transform: 'translateX(14.4rem)', zIndex: -1 }}>
+        <div className="absolute top-1/2 right-16 opacity-30 animate-float" style={{ animationDelay: '3s', transform: 'translateX(14.4rem)' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-72 h-72" />
         </div>
         
@@ -291,16 +291,16 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-20 right-0 w-64 h-64 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-15 translate-x-32"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-16 left-12 opacity-45 animate-float" style={{ transform: 'translateX(-28.8rem)', zIndex: -1 }}>
+        <div className="absolute top-16 left-12 opacity-45 animate-float" style={{ transform: 'translateX(-28.8rem)' }}>
           <img src="/pattern/pattern light pink with green.svg" alt="" className="w-144 h-144" />
         </div>
-        <div className="absolute top-32 right-16 opacity-40 animate-float-2" style={{ animationDelay: '1s', transform: 'translateX(31.2rem)', zIndex: -1 }}>
+        <div className="absolute top-32 right-16 opacity-40 animate-float" style={{ animationDelay: '1s', transform: 'translateX(31.2rem)' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-156 h-156" />
         </div>
-        <div className="absolute bottom-40 left-24 opacity-35 animate-float-3" style={{ animationDelay: '2s', transform: 'translateX(-26.4rem)', zIndex: -1 }}>
+        <div className="absolute bottom-40 left-24 opacity-35 animate-float" style={{ animationDelay: '2s', transform: 'translateX(-26.4rem)' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-132 h-132" />
         </div>
-        <div className="absolute top-60 right-40 opacity-50 animate-float-4" style={{ animationDelay: '1.5s', transform: 'translateX(24rem)', zIndex: -1 }}>
+        <div className="absolute top-60 right-40 opacity-50 animate-float" style={{ animationDelay: '1.5s', transform: 'translateX(24rem)' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-120 h-120" />
         </div>
         
@@ -346,16 +346,16 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="absolute bottom-0 right-1/4 w-40 h-40 bg-gradient-to-br from-green-200 to-pink-200 rounded-full opacity-20"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-24 left-8 opacity-45 animate-float" style={{ animationDelay: '0.8s', zIndex: -1 }}>
+        <div className="absolute top-24 left-8 opacity-45 animate-bounce" style={{ animationDelay: '0.8s' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-108 h-108" />
         </div>
-        <div className="absolute bottom-16 right-12 opacity-40 animate-float-2" style={{ animationDelay: '2s', zIndex: -1 }}>
+        <div className="absolute bottom-16 right-12 opacity-40 animate-pulse" style={{ animationDelay: '2s' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-120 h-120" />
         </div>
-        <div className="absolute top-40 right-20 opacity-35 animate-float-3" style={{ animationDelay: '1s', zIndex: -1 }}>
+        <div className="absolute top-40 right-20 opacity-35 animate-float" style={{ animationDelay: '1s' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-96 h-96" />
         </div>
-        <div className="absolute bottom-32 left-16 opacity-50 animate-float-4" style={{ animationDelay: '3s', zIndex: -1 }}>
+        <div className="absolute bottom-32 left-16 opacity-50 animate-bounce" style={{ animationDelay: '3s' }}>
           <img src="/pattern/pattern light pink with green.svg" alt="" className="w-132 h-132" />
         </div>
         
