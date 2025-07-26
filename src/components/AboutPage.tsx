@@ -11,21 +11,21 @@ export default function AboutPage({ onPageChange }: AboutPageProps) {
       name: 'Dr. Maria Santos',
       role: 'Founder & CEO',
       bio: 'Developmental pediatrician with 15+ years of experience in early childhood intervention.',
-      avatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+      avatar: '/team/gly.png',
       credentials: ['MD', 'PhD Developmental Psychology']
     },
     {
       name: 'Sarah Chen',
       role: 'Head of Technology',
       bio: 'AI researcher specializing in conversational interfaces for healthcare applications.',
-      avatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
+      avatar: '/team/angel.png',
       credentials: ['MS Computer Science', 'AI Ethics Certified']
     },
     {
       name: 'Dr. James Rodriguez',
       role: 'Clinical Director',
       bio: 'Speech-language pathologist with expertise in autism spectrum disorders and early intervention.',
-      avatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
+      avatar: '/team/zhor.png',
       credentials: ['MS-SLP', 'BCBA', 'CCC-SLP']
     }
   ];
