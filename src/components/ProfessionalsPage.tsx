@@ -164,13 +164,13 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
         {/* Background floating elements for main content */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 left-10 opacity-20 animate-pulse">
-            <img src="/pattern/pattern pink.svg" alt="" className="w-60 h-60" />
+            <img src="/pattern/pattern pink.svg" alt="" className="w-180 h-180" />
           </div>
           <div className="absolute top-40 right-16 opacity-18 animate-bounce" style={{ animationDelay: '1.5s' }}>
-            <img src="/pattern/pattern light green.svg" alt="" className="w-56 h-56" />
+            <img src="/pattern/pattern light green.svg" alt="" className="w-168 h-168" />
           </div>
           <div className="absolute bottom-32 left-20 opacity-22 animate-float" style={{ animationDelay: '0.8s' }}>
-            <img src="/pattern/pattern dark green.svg" alt="" className="w-52 h-52" />
+            <img src="/pattern/pattern dark green.svg" alt="" className="w-156 h-156" />
           </div>
         </div>
 

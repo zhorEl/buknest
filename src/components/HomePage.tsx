@@ -50,16 +50,16 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         
         {/* Floating Pattern Elements */}
         <div className="absolute top-10 left-10 opacity-40 animate-float">
-          <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
+          <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
         </div>
         <div className="absolute top-32 right-20 opacity-35 animate-bounce" style={{ animationDelay: '1s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-28 h-28" />
+          <img src="/pattern/pattern light green.svg" alt="" className="w-84 h-84" />
         </div>
         <div className="absolute bottom-20 left-32 opacity-45 animate-pulse" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-36 h-36" />
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-108 h-108" />
         </div>
         <div className="absolute top-1/2 right-16 opacity-30 animate-float" style={{ animationDelay: '3s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-24 h-24" />
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-72 h-72" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center min-h-[50vh]">
@@ -113,19 +113,19 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         
         {/* Floating Pattern Elements */}
         <div className="absolute top-20 left-16 opacity-50 animate-float">
-          <img src="/pattern/pattern pink.svg" alt="" className="w-40 h-40" />
+          <img src="/pattern/pattern pink.svg" alt="" className="w-120 h-120" />
         </div>
         <div className="absolute top-40 right-24 opacity-40 animate-bounce" style={{ animationDelay: '0.5s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-44 h-44" />
+          <img src="/pattern/pattern light green.svg" alt="" className="w-132 h-132" />
         </div>
         <div className="absolute bottom-32 left-20 opacity-45 animate-pulse" style={{ animationDelay: '1.5s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-40 h-40" />
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-120 h-120" />
         </div>
         <div className="absolute top-60 right-32 opacity-35 animate-float" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-36 h-36" />
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-108 h-108" />
         </div>
         <div className="absolute bottom-60 left-40 opacity-40 animate-bounce" style={{ animationDelay: '2.5s' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
+          <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
         </div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
@@ -293,16 +293,16 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         
         {/* Floating Pattern Elements */}
         <div className="absolute top-16 left-12 opacity-45 animate-float">
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-48 h-48" />
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-144 h-144" />
         </div>
         <div className="absolute top-32 right-16 opacity-40 animate-pulse" style={{ animationDelay: '1s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-52 h-52" />
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-156 h-156" />
         </div>
         <div className="absolute bottom-40 left-24 opacity-35 animate-bounce" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-44 h-44" />
+          <img src="/pattern/pattern pink.svg" alt="" className="w-132 h-132" />
         </div>
         <div className="absolute top-60 right-40 opacity-50 animate-float" style={{ animationDelay: '1.5s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-40 h-40" />
+          <img src="/pattern/pattern light green.svg" alt="" className="w-120 h-120" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -348,16 +348,16 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         
         {/* Floating Pattern Elements */}
         <div className="absolute top-24 left-8 opacity-45 animate-bounce" style={{ animationDelay: '0.8s' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-36 h-36" />
+          <img src="/pattern/pattern pink.svg" alt="" className="w-108 h-108" />
         </div>
         <div className="absolute bottom-16 right-12 opacity-40 animate-pulse" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-40 h-40" />
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-120 h-120" />
         </div>
         <div className="absolute top-40 right-20 opacity-35 animate-float" style={{ animationDelay: '1s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
+          <img src="/pattern/pattern light green.svg" alt="" className="w-96 h-96" />
         </div>
         <div className="absolute bottom-32 left-16 opacity-50 animate-bounce" style={{ animationDelay: '3s' }}>
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-44 h-44" />
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-132 h-132" />
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

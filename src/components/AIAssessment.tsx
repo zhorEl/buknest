@@ -107,16 +107,16 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
         
         {/* Floating Pattern Elements */}
         <div className="absolute top-12 left-20 opacity-45 animate-pulse">
-          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-44 h-44" />
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-132 h-132" />
         </div>
         <div className="absolute top-20 right-16 opacity-40 animate-bounce" style={{ animationDelay: '1s' }}>
-          <img src="/pattern/pattern pink.svg" alt="" className="w-40 h-40" />
+          <img src="/pattern/pattern pink.svg" alt="" className="w-120 h-120" />
         </div>
         <div className="absolute bottom-12 left-32 opacity-50 animate-float" style={{ animationDelay: '1.5s' }}>
-          <img src="/pattern/pattern light green.svg" alt="" className="w-36 h-36" />
+          <img src="/pattern/pattern light green.svg" alt="" className="w-108 h-108" />
         </div>
         <div className="absolute top-32 left-8 opacity-35 animate-pulse" style={{ animationDelay: '2s' }}>
-          <img src="/pattern/pattern dark green.svg" alt="" className="w-32 h-32" />
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-96 h-96" />
         </div>
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
@@ -147,13 +147,13 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-white border-opacity-50 relative">
           {/* Chat Container Floating Elements */}
           <div className="absolute -top-4 -right-4 opacity-40 animate-pulse">
-            <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
+            <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
           </div>
           <div className="absolute -bottom-4 -left-4 opacity-35 animate-bounce" style={{ animationDelay: '2s' }}>
-            <img src="/pattern/pattern dark green.svg" alt="" className="w-36 h-36" />
+            <img src="/pattern/pattern dark green.svg" alt="" className="w-108 h-108" />
           </div>
           <div className="absolute top-1/2 -right-6 opacity-30 animate-float" style={{ animationDelay: '1s' }}>
-            <img src="/pattern/pattern light green.svg" alt="" className="w-28 h-28" />
+            <img src="/pattern/pattern light green.svg" alt="" className="w-84 h-84" />
           </div>
           
           {/* Chat Messages */}
@@ -161,16 +161,16 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
             {/* Subtle background pattern */}
             <div className="absolute inset-0 opacity-10">
               <div className="absolute top-10 left-10">
-                <img src="/pattern/pattern light pink with green.svg" alt="" className="w-24 h-24" />
+                <img src="/pattern/pattern light pink with green.svg" alt="" className="w-72 h-72" />
               </div>
               <div className="absolute top-32 right-16">
-                <img src="/pattern/pattern light green.svg" alt="" className="w-20 h-20" />
+                <img src="/pattern/pattern light green.svg" alt="" className="w-60 h-60" />
               </div>
               <div className="absolute bottom-20 left-20">
-                <img src="/pattern/pattern pink.svg" alt="" className="w-22 h-22" />
+                <img src="/pattern/pattern pink.svg" alt="" className="w-66 h-66" />
               </div>
               <div className="absolute bottom-40 right-12">
-                <img src="/pattern/pattern dark green.svg" alt="" className="w-18 h-18" />
+                <img src="/pattern/pattern dark green.svg" alt="" className="w-54 h-54" />
               </div>
             </div>
             
@@ -277,7 +277,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
             <div className="border-t border-pink-200 p-6 bg-gradient-to-r from-pink-50 to-green-50 relative">
               {/* Input area decorative elements */}
               <div className="absolute top-2 right-4 opacity-20">
-                <img src="/pattern/pattern pink.svg" alt="" className="w-16 h-16" />
+                <img src="/pattern/pattern pink.svg" alt="" className="w-48 h-48" />
               </div>
               
               <div className="flex space-x-4 items-end">
