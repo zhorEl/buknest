@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Video, Phone, User, CheckCircle, XCircle, Edit, MessageCircle, Star, Filter, ChevronDown, AlertCircle, Home, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Calendar, Clock, MapPin, Video, Phone, User, CheckCircle, XCircle, Edit, MessageCircle, Star, Filter, ChevronDown, AlertCircle, Home, ChevronLeft, ChevronRight, X, Check } from 'lucide-react';
 
 interface BookingsPageProps {
   onPageChange: (page: string) => void;
@@ -19,6 +19,7 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
     '5': 'pending',
     '6': 'accepted'
   });
+  const [completedSessions, setCompletedSessions] = useState<Set<string>>(new Set());
 
   // Sample bookings data - different for parents vs professionals
   const parentBookings = [
@@ -183,6 +184,28 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
 
   const handleConfirmBooking = (bookingId: string) => {
     setBookingActions(prev => ({ ...prev, [bookingId]: 'confirmed' }));
+  };
+
+  const handleMarkAsDone = (bookingId: string) => {
+    setCompletedSessions(prev => new Set([...prev, bookingId]));
+  };
+
+  const isSessionPast = (date: string, time: string) => {
+    const sessionDateTime = new Date(`${date} ${time}`);
+    const now = new Date();
+    return sessionDateTime < now;
+  };
+
+  const canMarkAsDone = (booking: any) => {
+    const status = user?.role === 'professional' ? getBookingStatus(booking.id) : booking.status;
+    const isPast = isSessionPast(booking.date, booking.time);
+    const isCompleted = completedSessions.has(booking.id);
+    
+    return status === 'confirmed' && isPast && !isCompleted;
+  };
+
+  const hasEligibleSessions = () => {
+    return filteredBookings.some(booking => canMarkAsDone(booking));
   };
 
   const getBookingStatus = (bookingId: string) => {
@@ -787,6 +810,38 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
           </div>
         )}
       </div>
+      
+      {/* Mark as Done Button - Fixed Position */}
+      {hasEligibleSessions() && (
+        <div className="fixed bottom-8 right-8 z-50">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-200 p-4 max-w-sm">
+            <h4 className="text-lg font-bold text-gray-800 mb-3 font-handwritten">Sessions to Complete</h4>
+            <div className="space-y-2 max-h-40 overflow-y-auto">
+              {filteredBookings
+                .filter(booking => canMarkAsDone(booking))
+                .map(booking => (
+                  <div key={booking.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-gray-800 truncate font-sans">
+                        {user?.role === 'professional' ? booking.child : booking.professional}
+                      </p>
+                      <p className="text-xs text-gray-600 font-sans">
+                        {new Date(booking.date).toLocaleDateString()} at {booking.time}
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => handleMarkAsDone(booking.id)}
+                      className="ml-2 px-3 py-1 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 flex items-center text-xs font-sans"
+                    >
+                      <Check className="h-3 w-3 mr-1" />
+                      Done
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Calendar Modal */}
       <CalendarModal />
