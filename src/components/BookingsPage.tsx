@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Video, Phone, User, CheckCircle, XCircle, Edit, MessageCircle, Star, Filter, ChevronDown, AlertCircle, Home } from 'lucide-react';
+import { Calendar, Clock, MapPin, Video, Phone, User, CheckCircle, XCircle, Edit, MessageCircle, Star, Filter, ChevronDown, AlertCircle, Home, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 interface BookingsPageProps {
   onPageChange: (page: string) => void;
@@ -9,6 +9,8 @@ interface BookingsPageProps {
 export default function BookingsPage({ onPageChange, user }: BookingsPageProps) {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [selectedTimeframe, setSelectedTimeframe] = useState('upcoming');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [bookingActions, setBookingActions] = useState<{[key: string]: 'pending' | 'accepted' | 'declined' | 'confirmed'}>({
     '1': 'pending',
     '2': 'accepted', 
@@ -208,6 +210,215 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
     return booking.status === selectedFilter;
   });
 
+  // Calendar helper functions
+  const getDaysInMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date: Date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  };
+
+  const getSessionsForDate = (date: Date) => {
+    const dateString = date.toISOString().split('T')[0];
+    return bookings.filter(booking => booking.date === dateString);
+  };
+
+  const navigateMonth = (direction: 'prev' | 'next') => {
+    setCurrentDate(prev => {
+      const newDate = new Date(prev);
+      if (direction === 'prev') {
+        newDate.setMonth(prev.getMonth() - 1);
+      } else {
+        newDate.setMonth(prev.getMonth() + 1);
+      }
+      return newDate;
+    });
+  };
+
+  const CalendarModal = () => {
+    if (!showCalendar) return null;
+
+    const daysInMonth = getDaysInMonth(currentDate);
+    const firstDay = getFirstDayOfMonth(currentDate);
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center p-6 border-b border-gray-200">
+            <h2 className="text-3xl font-bold text-gray-900 font-handwritten">My Calendar</h2>
+            <button
+              onClick={() => setShowCalendar(false)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X className="h-6 w-6 text-gray-500" />
+            </button>
+          </div>
+          
+          <div className="p-8">
+            {/* Calendar Header */}
+            <div className="flex justify-between items-center mb-8">
+              <button
+                onClick={() => navigateMonth('prev')}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <ChevronLeft className="h-6 w-6 text-gray-600" />
+              </button>
+              
+              <h3 className="text-2xl font-bold text-gray-800 font-handwritten">
+                {monthNames[currentDate.getMonth()]} {currentDate.getFullYear()}
+              </h3>
+              
+              <button
+                onClick={() => navigateMonth('next')}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <ChevronRight className="h-6 w-6 text-gray-600" />
+              </button>
+            </div>
+
+            {/* Calendar Grid */}
+            <div className="grid grid-cols-7 gap-2 mb-6">
+              {/* Day Headers */}
+              {dayNames.map(day => (
+                <div key={day} className="text-center font-bold text-gray-600 p-3 font-sans">
+                  {day}
+                </div>
+              ))}
+              
+              {/* Empty cells for days before month starts */}
+              {Array.from({ length: firstDay }, (_, i) => (
+                <div key={`empty-${i}`} className="p-3"></div>
+              ))}
+              
+              {/* Calendar Days */}
+              {Array.from({ length: daysInMonth }, (_, i) => {
+                const day = i + 1;
+                const date = new Date(currentDate.getFullYear(), currentDate.getMonth(), day);
+                const isToday = date.toDateString() === new Date().toDateString();
+                const sessionsForDay = getSessionsForDate(date);
+                const hasConfirmedSessions = sessionsForDay.some(session => 
+                  user?.role === 'professional' ? getBookingStatus(session.id) === 'confirmed' : session.status === 'confirmed'
+                );
+                const hasPendingSessions = sessionsForDay.some(session => 
+                  user?.role === 'professional' ? getBookingStatus(session.id) === 'pending' : session.status === 'pending'
+                );
+                
+                return (
+                  <div
+                    key={day}
+                    className={`p-3 text-center rounded-xl cursor-pointer transition-all duration-300 hover:bg-gray-100 font-sans ${
+                      isToday
+                        ? 'bg-[#CB748E] text-white font-bold shadow-lg'
+                        : hasConfirmedSessions
+                        ? 'bg-green-100 text-green-800 font-semibold border-2 border-green-300'
+                        : hasPendingSessions
+                        ? 'bg-yellow-100 text-yellow-800 font-semibold border-2 border-yellow-300'
+                        : 'hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="text-lg">{day}</div>
+                    {sessionsForDay.length > 0 && (
+                      <div className="flex justify-center mt-1 space-x-1">
+                        {sessionsForDay.slice(0, 3).map((_, index) => (
+                          <div
+                            key={index}
+                            className={`w-2 h-2 rounded-full ${
+                              hasConfirmedSessions ? 'bg-green-600' : 
+                              hasPendingSessions ? 'bg-yellow-600' : 'bg-gray-400'
+                            }`}
+                          ></div>
+                        ))}
+                        {sessionsForDay.length > 3 && (
+                          <div className="text-xs font-bold">+{sessionsForDay.length - 3}</div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Calendar Legend */}
+            <div className="bg-gray-50 rounded-2xl p-6 mb-6">
+              <h4 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Legend</h4>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="flex items-center">
+                  <div className="w-4 h-4 bg-[#CB748E] rounded-full mr-3"></div>
+                  <span className="text-sm text-gray-700 font-sans">Today</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-4 h-4 bg-green-400 rounded-full mr-3"></div>
+                  <span className="text-sm text-gray-700 font-sans">Confirmed Sessions</span>
+                </div>
+                <div className="flex items-center">
+                  <div className="w-4 h-4 bg-yellow-400 rounded-full mr-3"></div>
+                  <span className="text-sm text-gray-700 font-sans">Pending Requests</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Today's Sessions Preview */}
+            <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200">
+              <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten">Today's Sessions</h4>
+              {(() => {
+                const todaySessions = getSessionsForDate(new Date());
+                if (todaySessions.length === 0) {
+                  return (
+                    <p className="text-gray-600 font-sans">No sessions scheduled for today</p>
+                  );
+                }
+                return (
+                  <div className="space-y-3">
+                    {todaySessions.map((session) => (
+                      <div key={session.id} className="flex justify-between items-center p-4 bg-white rounded-xl shadow-sm">
+                        <div>
+                          <p className="font-bold text-gray-800 font-sans">
+                            {user?.role === 'professional' ? session.child : session.professional}
+                          </p>
+                          <p className="text-sm text-gray-600 font-sans">
+                            {session.time} • {session.type === 'home-visit' ? 'Home Visit' : 'Online'}
+                          </p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold font-sans ${
+                          user?.role === 'professional' 
+                            ? getStatusColor(getBookingStatus(session.id))
+                            : session.status === 'confirmed' ? 'bg-green-100 text-green-800' :
+                              session.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                              'bg-red-100 text-red-800'
+                        }`}>
+                          {user?.role === 'professional' 
+                            ? getBookingStatus(session.id).charAt(0).toUpperCase() + getBookingStatus(session.id).slice(1)
+                            : session.status.charAt(0).toUpperCase() + session.status.slice(1)
+                          }
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Quick Actions */}
+            <div className="flex justify-center mt-8">
+              <button
+                onClick={() => setShowCalendar(false)}
+                className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-8 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+              >
+                Back to Sessions
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-green-50">
       {/* Hero Section */}
@@ -278,6 +489,14 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
               </div>
               
               <div className="relative">
+                <button
+                  onClick={() => setShowCalendar(true)}
+                  className="mr-4 px-4 py-3 bg-[#CB748E] text-white rounded-2xl font-bold hover:bg-[#d698ab] transition-all duration-300 flex items-center font-sans"
+                >
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Calendar View
+                </button>
+                
                 <select
                   value={selectedTimeframe}
                   onChange={(e) => setSelectedTimeframe(e.target.value)}
@@ -592,6 +811,9 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
           </div>
         )}
       </div>
+      
+      {/* Calendar Modal */}
+      <CalendarModal />
     </div>
   );
 }
