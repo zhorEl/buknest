@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Video, Home, User, CheckCircle, XCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, MapPin, Video, Home, User, CheckCircle, XCircle, AlertCircle, Plus, Filter, Search, Phone, Mail, Star, ChevronDown, Edit, Trash2 } from 'lucide-react';
 
 interface BookingsPageProps {
   onPageChange: (page: string) => void;
@@ -7,327 +7,597 @@ interface BookingsPageProps {
 
 export default function BookingsPage({ onPageChange }: BookingsPageProps) {
   const [activeTab, setActiveTab] = useState<'upcoming' | 'past' | 'book'>('upcoming');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterStatus, setFilterStatus] = useState('all');
+  const [selectedChild, setSelectedChild] = useState('all');
+
+  const children = [
+    { id: 'emma', name: 'Emma', age: 6 },
+    { id: 'alex', name: 'Alex', age: 4 }
+  ];
 
   const upcomingBookings = [
     {
       id: '1',
       professionalName: 'Dr. Sarah Johnson',
       professionalTitle: 'Speech-Language Pathologist',
+      professionalAvatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
       date: '2024-01-15',
       time: '10:00 AM',
+      duration: 60,
       type: 'home-visit',
       status: 'scheduled',
       childName: 'Emma',
-      address: '123 Main St, New York, NY',
-      notes: 'Focus on articulation exercises'
+      address: '123 Main St, Bukidnon, Philippines',
+      notes: 'Focus on articulation exercises and vocabulary building',
+      professionalPhone: '(555) 123-4567',
+      professionalEmail: 'sarah.johnson@buknest.com',
+      rating: 4.9,
+      price: 1200
     },
     {
       id: '2',
       professionalName: 'Maria Rodriguez',
       professionalTitle: 'Occupational Therapist',
+      professionalAvatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
       date: '2024-01-18',
       time: '2:00 PM',
+      duration: 45,
       type: 'online',
       status: 'scheduled',
       childName: 'Emma',
-      meetingLink: 'https://meet.therapyconnect.com/session-123'
+      meetingLink: 'https://meet.buknest.com/session-123',
+      notes: 'Sensory integration activities and fine motor skills development',
+      professionalPhone: '(555) 987-6543',
+      professionalEmail: 'maria.rodriguez@buknest.com',
+      rating: 4.8,
+      price: 900
+    },
+    {
+      id: '3',
+      professionalName: 'Dr. Michael Chen',
+      professionalTitle: 'Developmental Pediatrician',
+      professionalAvatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
+      date: '2024-01-20',
+      time: '11:00 AM',
+      duration: 90,
+      type: 'home-visit',
+      status: 'confirmed',
+      childName: 'Alex',
+      address: '123 Main St, Bukidnon, Philippines',
+      notes: 'Comprehensive developmental assessment and behavioral evaluation',
+      professionalPhone: '(555) 456-7890',
+      professionalEmail: 'michael.chen@buknest.com',
+      rating: 4.9,
+      price: 2500
     }
   ];
 
   const pastBookings = [
     {
-      id: '3',
+      id: '4',
       professionalName: 'Dr. Michael Chen',
       professionalTitle: 'Developmental Pediatrician',
+      professionalAvatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
       date: '2024-01-08',
       time: '11:00 AM',
+      duration: 60,
       type: 'online',
       status: 'completed',
       childName: 'Emma',
-      notes: 'Initial assessment completed. Recommended speech therapy.'
+      notes: 'Initial assessment completed. Recommended speech therapy and occupational therapy.',
+      rating: 4.9,
+      price: 1500,
+      feedback: 'Excellent session with detailed recommendations'
     },
     {
-      id: '4',
+      id: '5',
       professionalName: 'Jennifer Williams',
       professionalTitle: 'Special Education Teacher',
+      professionalAvatar: 'https://images.pexels.com/photos/5327647/pexels-photo-5327647.jpeg?auto=compress&cs=tinysrgb&w=400',
       date: '2024-01-05',
       time: '3:00 PM',
+      duration: 45,
       type: 'home-visit',
       status: 'completed',
       childName: 'Emma',
-      address: '123 Main St, New York, NY'
+      address: '123 Main St, Bukidnon, Philippines',
+      notes: 'Educational assessment and learning plan development',
+      rating: 4.7,
+      price: 800,
+      feedback: 'Very helpful session with practical strategies'
     }
   ];
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'scheduled':
-        return <AlertCircle className="h-5 w-5 text-blue-600" />;
+        return <Clock className="h-4 w-4 text-blue-600" />;
+      case 'confirmed':
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
       case 'completed':
-        return <CheckCircle className="h-5 w-5 text-green-600" />;
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
       case 'cancelled':
-        return <XCircle className="h-5 w-5 text-red-600" />;
+        return <XCircle className="h-4 w-4 text-red-600" />;
       default:
-        return <Clock className="h-5 w-5 text-gray-600" />;
+        return <AlertCircle className="h-4 w-4 text-gray-600" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'scheduled':
-        return 'text-blue-600 bg-blue-50';
+        return 'text-blue-600 bg-blue-50 border-blue-200';
+      case 'confirmed':
+        return 'text-green-600 bg-green-50 border-green-200';
       case 'completed':
-        return 'text-green-600 bg-green-50';
+        return 'text-green-600 bg-green-50 border-green-200';
       case 'cancelled':
-        return 'text-red-600 bg-red-50';
+        return 'text-red-600 bg-red-50 border-red-200';
       default:
-        return 'text-gray-600 bg-gray-50';
+        return 'text-gray-600 bg-gray-50 border-gray-200';
     }
   };
 
-  const BookingCard = ({ booking, showActions = false }: { booking: any; showActions?: boolean }) => (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="font-semibold text-gray-900">{booking.professionalName}</h3>
-          <p className="text-blue-600 text-sm">{booking.professionalTitle}</p>
-        </div>
-        <div className={`flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(booking.status)}`}>
-          {getStatusIcon(booking.status)}
-          <span className="ml-2 capitalize">{booking.status}</span>
-        </div>
+  const BookingCard = ({ booking, showActions = false, isPast = false }: { booking: any; showActions?: boolean; isPast?: boolean }) => (
+    <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-lg border border-white border-opacity-50 p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute -top-4 -right-4 opacity-5 animate-float">
+        <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
+      </div>
+      <div className="absolute -bottom-4 -left-4 opacity-4 animate-float" style={{ animationDelay: '2s' }}>
+        <img src="/pattern/pattern light green.svg" alt="" className="w-28 h-28" />
       </div>
 
-      <div className="space-y-3 mb-4">
-        <div className="flex items-center text-gray-600">
-          <Calendar className="h-4 w-4 mr-3" />
-          <span>{new Date(booking.date).toLocaleDateString('en-US', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-          })}</span>
-        </div>
-        
-        <div className="flex items-center text-gray-600">
-          <Clock className="h-4 w-4 mr-3" />
-          <span>{booking.time}</span>
+      <div className="relative">
+        {/* Header */}
+        <div className="flex justify-between items-start mb-6">
+          <div className="flex items-center space-x-4">
+            <img
+              src={booking.professionalAvatar}
+              alt={booking.professionalName}
+              className="w-16 h-16 rounded-full object-cover border-4 border-white shadow-lg"
+            />
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 font-handwritten">{booking.professionalName}</h3>
+              <p className="text-[#CB748E] font-semibold font-sans">{booking.professionalTitle}</p>
+              {booking.rating && (
+                <div className="flex items-center mt-1">
+                  <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                  <span className="ml-1 text-sm font-bold text-gray-700 font-sans">{booking.rating}</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="text-right">
+            <div className={`flex items-center px-3 py-2 rounded-full text-sm font-bold border ${getStatusColor(booking.status)} font-sans`}>
+              {getStatusIcon(booking.status)}
+              <span className="ml-2 capitalize">{booking.status}</span>
+            </div>
+            {booking.price && (
+              <p className="text-lg font-bold text-gray-800 mt-2 font-sans">₱{booking.price}</p>
+            )}
+          </div>
         </div>
 
-        <div className="flex items-center text-gray-600">
-          {booking.type === 'home-visit' ? (
-            <>
-              <Home className="h-4 w-4 mr-3" />
-              <span>Home Visit</span>
-            </>
-          ) : (
-            <>
-              <Video className="h-4 w-4 mr-3" />
-              <span>Online Session</span>
-            </>
-          )}
+        {/* Session Details */}
+        <div className="grid md:grid-cols-2 gap-6 mb-6">
+          <div className="space-y-4">
+            <div className="flex items-center text-gray-700 font-sans">
+              <Calendar className="h-5 w-5 mr-3 text-[#CB748E]" />
+              <span className="font-semibold">
+                {new Date(booking.date).toLocaleDateString('en-US', { 
+                  weekday: 'long', 
+                  year: 'numeric', 
+                  month: 'long', 
+                  day: 'numeric' 
+                })}
+              </span>
+            </div>
+            
+            <div className="flex items-center text-gray-700 font-sans">
+              <Clock className="h-5 w-5 mr-3 text-[#698a60]" />
+              <span className="font-semibold">{booking.time} ({booking.duration} minutes)</span>
+            </div>
+
+            <div className="flex items-center text-gray-700 font-sans">
+              {booking.type === 'home-visit' ? (
+                <>
+                  <Home className="h-5 w-5 mr-3 text-[#CB748E]" />
+                  <span className="font-semibold">Home Visit</span>
+                </>
+              ) : (
+                <>
+                  <Video className="h-5 w-5 mr-3 text-[#698a60]" />
+                  <span className="font-semibold">Online Session</span>
+                </>
+              )}
+            </div>
+
+            <div className="flex items-center text-gray-700 font-sans">
+              <User className="h-5 w-5 mr-3 text-gray-500" />
+              <span className="font-semibold">Child: {booking.childName}</span>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {booking.address && (
+              <div className="flex items-start text-gray-700 font-sans">
+                <MapPin className="h-5 w-5 mr-3 mt-0.5 text-[#CB748E] flex-shrink-0" />
+                <span className="font-semibold">{booking.address}</span>
+              </div>
+            )}
+
+            {booking.professionalPhone && (
+              <div className="flex items-center text-gray-700 font-sans">
+                <Phone className="h-5 w-5 mr-3 text-[#698a60]" />
+                <span className="font-semibold">{booking.professionalPhone}</span>
+              </div>
+            )}
+
+            {booking.professionalEmail && (
+              <div className="flex items-center text-gray-700 font-sans">
+                <Mail className="h-5 w-5 mr-3 text-gray-500" />
+                <span className="font-semibold">{booking.professionalEmail}</span>
+              </div>
+            )}
+          </div>
         </div>
 
-        {booking.address && (
-          <div className="flex items-center text-gray-600">
-            <MapPin className="h-4 w-4 mr-3" />
-            <span className="text-sm">{booking.address}</span>
+        {/* Notes */}
+        {booking.notes && (
+          <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-4 mb-6 border border-pink-100">
+            <h4 className="font-bold text-gray-800 mb-2 font-handwritten">Session Notes:</h4>
+            <p className="text-gray-700 font-sans leading-relaxed">{booking.notes}</p>
           </div>
         )}
 
-        <div className="flex items-center text-gray-600">
-          <User className="h-4 w-4 mr-3" />
-          <span>Child: {booking.childName}</span>
-        </div>
-      </div>
+        {/* Feedback for past sessions */}
+        {isPast && booking.feedback && (
+          <div className="bg-green-50 rounded-2xl p-4 mb-6 border border-green-200">
+            <h4 className="font-bold text-green-800 mb-2 font-handwritten">Your Feedback:</h4>
+            <p className="text-green-700 font-sans leading-relaxed">{booking.feedback}</p>
+          </div>
+        )}
 
-      {booking.notes && (
-        <div className="bg-gray-50 rounded-lg p-3 mb-4">
-          <p className="text-sm text-gray-700">{booking.notes}</p>
-        </div>
-      )}
-
-      {showActions && booking.status === 'scheduled' && (
-        <div className="flex space-x-3">
-          {booking.type === 'online' && (
-            <button className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors flex items-center justify-center">
-              <Video className="h-4 w-4 mr-2" />
-              Join Session
+        {/* Actions */}
+        {showActions && booking.status !== 'cancelled' && (
+          <div className="flex flex-wrap gap-3">
+            {booking.type === 'online' && booking.status === 'confirmed' && (
+              <button className="flex-1 min-w-[200px] bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-sans">
+                <Video className="h-5 w-5 mr-2" />
+                Join Session
+              </button>
+            )}
+            
+            <button className="px-6 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center font-sans">
+              <Edit className="h-4 w-4 mr-2" />
+              Reschedule
             </button>
-          )}
-          <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors text-gray-700">
-            Reschedule
-          </button>
-          <button className="px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition-colors">
-            Cancel
-          </button>
-        </div>
-      )}
+            
+            <button className="px-6 py-3 border-2 border-red-300 text-red-600 rounded-2xl hover:bg-red-50 transition-all duration-300 font-bold flex items-center font-sans">
+              <Trash2 className="h-4 w-4 mr-2" />
+              Cancel
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 
   const BookingForm = () => (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-6">Book a New Session</h3>
-      
-      <form className="space-y-6">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Select Professional</label>
-          <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">Choose a professional...</option>
-            <option value="1">Dr. Sarah Johnson - Speech-Language Pathologist</option>
-            <option value="2">Maria Rodriguez - Occupational Therapist</option>
-            <option value="3">Dr. Michael Chen - Developmental Pediatrician</option>
-            <option value="4">Jennifer Williams - Special Education Teacher</option>
-          </select>
-        </div>
+    <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl border border-white border-opacity-50 p-8 relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute -top-4 -right-4 opacity-5 animate-float">
+        <img src="/pattern/pattern light pink with green.svg" alt="" className="w-40 h-40" />
+      </div>
+      <div className="absolute -bottom-4 -left-4 opacity-4 animate-float" style={{ animationDelay: '3s' }}>
+        <img src="/pattern/pattern dark green.svg" alt="" className="w-36 h-36" />
+      </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Child</label>
-          <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">Select child...</option>
-            <option value="emma">Emma (Age 6)</option>
-          </select>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Date</label>
-            <input
-              type="date"
-              className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              min={new Date().toISOString().split('T')[0]}
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Preferred Time</label>
-            <select className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="">Select time...</option>
-              <option value="09:00">9:00 AM</option>
-              <option value="10:00">10:00 AM</option>
-              <option value="11:00">11:00 AM</option>
-              <option value="14:00">2:00 PM</option>
-              <option value="15:00">3:00 PM</option>
-              <option value="16:00">4:00 PM</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Session Type</label>
-          <div className="grid grid-cols-2 gap-4">
-            <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-              <input type="radio" name="sessionType" value="home-visit" className="mr-3" />
-              <div>
-                <div className="flex items-center">
-                  <Home className="h-5 w-5 text-blue-600 mr-2" />
-                  <span className="font-medium">Home Visit</span>
-                </div>
-                <p className="text-sm text-gray-600">Professional comes to your home</p>
+      <div className="relative">
+        <h3 className="text-3xl font-bold text-gray-900 mb-8 font-handwritten text-center" style={{ color: '#CB748E' }}>
+          Book a New Session
+        </h3>
+        
+        <form className="space-y-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">Select Professional *</label>
+              <div className="relative">
+                <select className="w-full border-2 border-gray-300 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none">
+                  <option value="">Choose a professional...</option>
+                  <option value="1">Dr. Sarah Johnson - Speech-Language Pathologist</option>
+                  <option value="2">Maria Rodriguez - Occupational Therapist</option>
+                  <option value="3">Dr. Michael Chen - Developmental Pediatrician</option>
+                  <option value="4">Jennifer Williams - Special Education Teacher</option>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
               </div>
-            </label>
+            </div>
+
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">Child *</label>
+              <div className="relative">
+                <select className="w-full border-2 border-gray-300 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none">
+                  <option value="">Select child...</option>
+                  <option value="emma">Emma (Age 6)</option>
+                  <option value="alex">Alex (Age 4)</option>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">Preferred Date *</label>
+              <input
+                type="date"
+                className="w-full border-2 border-gray-300 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans"
+                min={new Date().toISOString().split('T')[0]}
+              />
+            </div>
             
-            <label className="flex items-center p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
-              <input type="radio" name="sessionType" value="online" className="mr-3" />
-              <div>
-                <div className="flex items-center">
-                  <Video className="h-5 w-5 text-green-600 mr-2" />
-                  <span className="font-medium">Online Session</span>
-                </div>
-                <p className="text-sm text-gray-600">Video consultation</p>
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">Preferred Time *</label>
+              <div className="relative">
+                <select className="w-full border-2 border-gray-300 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none">
+                  <option value="">Select time...</option>
+                  <option value="09:00">9:00 AM</option>
+                  <option value="10:00">10:00 AM</option>
+                  <option value="11:00">11:00 AM</option>
+                  <option value="14:00">2:00 PM</option>
+                  <option value="15:00">3:00 PM</option>
+                  <option value="16:00">4:00 PM</option>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 pointer-events-none" />
               </div>
-            </label>
+            </div>
           </div>
-        </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Special Notes or Requests</label>
-          <textarea
-            rows={3}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Any specific concerns or goals for this session..."
-          ></textarea>
-        </div>
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-4 font-sans">Session Type *</label>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <label className="flex items-center p-6 border-2 border-gray-300 rounded-2xl cursor-pointer hover:bg-gray-50 hover:border-[#CB748E] transition-all duration-300 group">
+                <input type="radio" name="sessionType" value="home-visit" className="mr-4 w-5 h-5 text-[#CB748E]" />
+                <div className="flex-1">
+                  <div className="flex items-center mb-2">
+                    <Home className="h-6 w-6 text-[#CB748E] mr-3 group-hover:scale-110 transition-transform" />
+                    <span className="font-bold text-gray-800 font-handwritten">Home Visit</span>
+                  </div>
+                  <p className="text-sm text-gray-600 font-sans">Professional comes to your home for personalized care</p>
+                  <p className="text-xs text-[#CB748E] font-bold mt-2 font-sans">Starting from ₱800/session</p>
+                </div>
+              </label>
+              
+              <label className="flex items-center p-6 border-2 border-gray-300 rounded-2xl cursor-pointer hover:bg-gray-50 hover:border-[#698a60] transition-all duration-300 group">
+                <input type="radio" name="sessionType" value="online" className="mr-4 w-5 h-5 text-[#698a60]" />
+                <div className="flex-1">
+                  <div className="flex items-center mb-2">
+                    <Video className="h-6 w-6 text-[#698a60] mr-3 group-hover:scale-110 transition-transform" />
+                    <span className="font-bold text-gray-800 font-handwritten">Online Session</span>
+                  </div>
+                  <p className="text-sm text-gray-600 font-sans">Secure video consultation from the comfort of your home</p>
+                  <p className="text-xs text-[#698a60] font-bold mt-2 font-sans">Starting from ₱600/session</p>
+                </div>
+              </label>
+            </div>
+          </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-        >
-          Book Session
-        </button>
-      </form>
+          <div>
+            <label className="block text-sm font-bold text-gray-700 mb-3 font-sans">Special Notes or Requests</label>
+            <textarea
+              rows={4}
+              className="w-full border-2 border-gray-300 rounded-2xl px-4 py-4 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans resize-none"
+              placeholder="Any specific concerns, goals, or special requirements for this session..."
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-8 py-4 rounded-2xl font-bold text-lg hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl font-handwritten"
+          >
+            Book Session
+          </button>
+        </form>
+      </div>
     </div>
   );
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">My Bookings</h1>
-          <p className="text-gray-600">Manage your therapy sessions and appointments</p>
-        </div>
+  const filteredUpcoming = upcomingBookings.filter(booking => {
+    const matchesSearch = booking.professionalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         booking.professionalTitle.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesStatus = filterStatus === 'all' || booking.status === filterStatus;
+    const matchesChild = selectedChild === 'all' || booking.childName.toLowerCase() === selectedChild.toLowerCase();
+    return matchesSearch && matchesStatus && matchesChild;
+  });
 
-        {/* Tabs */}
-        <div className="flex space-x-1 bg-gray-100 p-1 rounded-lg mb-8 max-w-md mx-auto">
-          {[
-            { id: 'upcoming', label: 'Upcoming' },
-            { id: 'past', label: 'Past Sessions' },
-            { id: 'book', label: 'Book New' }
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id as any)}
-              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                activeTab === tab.id
-                  ? 'bg-white text-blue-600 shadow-sm'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+  const filteredPast = pastBookings.filter(booking => {
+    const matchesSearch = booking.professionalName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         booking.professionalTitle.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesChild = selectedChild === 'all' || booking.childName.toLowerCase() === selectedChild.toLowerCase();
+    return matchesSearch && matchesChild;
+  });
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-green-50 relative overflow-hidden">
+      {/* Background Pattern Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 opacity-10 animate-float">
+          <img src="/pattern/pattern pink.svg" alt="" className="w-64 h-64" />
+        </div>
+        <div className="absolute top-40 right-16 opacity-8 animate-float" style={{ animationDelay: '2s' }}>
+          <img src="/pattern/pattern light green.svg" alt="" className="w-56 h-56" />
+        </div>
+        <div className="absolute bottom-32 left-20 opacity-12 animate-float" style={{ animationDelay: '4s' }}>
+          <img src="/pattern/pattern dark green.svg" alt="" className="w-48 h-48" />
+        </div>
+        <div className="absolute bottom-20 right-12 opacity-9 animate-float" style={{ animationDelay: '1s' }}>
+          <img src="/pattern/pattern light pink with green.svg" alt="" className="w-52 h-52" />
+        </div>
+      </div>
+
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-20 relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
+        <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
+        <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
+        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+          <div className="flex justify-center items-center mb-6">
+            <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
+              <Calendar className="h-12 w-12 text-white" />
+            </div>
+            <div>
+              <h1 className="text-4xl md:text-6xl font-bold font-handwritten">
+                <span className="text-white">My </span><span className="text-yellow-300">Bookings</span>
+              </h1>
+            </div>
+          </div>
+          
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4 font-sans">
+              Manage your therapy sessions and appointments
+            </p>
+            <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed font-sans">
+              Keep track of your upcoming sessions, review past appointments, and book new consultations 
+              with our certified professionals.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+        {/* Header with Search and Filters */}
+        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-10 border border-white border-opacity-50 relative overflow-hidden">
+          <div className="absolute -top-3 -right-3 opacity-5 animate-float">
+            <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
+          </div>
+          
+          <div className="relative">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
+              <div className="flex-1 max-w-md">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search professionals..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans"
+                  />
+                </div>
+              </div>
+              
+              <div className="flex flex-wrap gap-4">
+                <div className="relative">
+                  <select
+                    value={filterStatus}
+                    onChange={(e) => setFilterStatus(e.target.value)}
+                    className="border-2 border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none pr-10"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="scheduled">Scheduled</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="completed">Completed</option>
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
+                
+                <div className="relative">
+                  <select
+                    value={selectedChild}
+                    onChange={(e) => setSelectedChild(e.target.value)}
+                    className="border-2 border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none pr-10"
+                  >
+                    <option value="all">All Children</option>
+                    {children.map(child => (
+                      <option key={child.id} value={child.name}>{child.name}</option>
+                    ))}
+                  </select>
+                  <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+                </div>
+              </div>
+            </div>
+
+            {/* Tabs */}
+            <div className="flex space-x-2 bg-gray-100 p-2 rounded-2xl max-w-md mx-auto">
+              {[
+                { id: 'upcoming', label: 'Upcoming', count: filteredUpcoming.length },
+                { id: 'past', label: 'Past Sessions', count: filteredPast.length },
+                { id: 'book', label: 'Book New', icon: Plus }
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  className={`flex-1 py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 flex items-center justify-center font-sans ${
+                    activeTab === tab.id
+                      ? 'bg-white text-[#CB748E] shadow-lg transform scale-105'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                  }`}
+                >
+                  {tab.icon && <tab.icon className="h-4 w-4 mr-2" />}
+                  {tab.label}
+                  {tab.count !== undefined && (
+                    <span className={`ml-2 px-2 py-1 rounded-full text-xs ${
+                      activeTab === tab.id ? 'bg-[#CB748E] text-white' : 'bg-gray-300 text-gray-600'
+                    }`}>
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Content */}
-        <div className="max-w-4xl mx-auto">
+        <div className="relative">
           {activeTab === 'upcoming' && (
-            <div className="space-y-6">
-              {upcomingBookings.length > 0 ? (
-                upcomingBookings.map((booking) => (
+            <div className="space-y-8">
+              {filteredUpcoming.length > 0 ? (
+                filteredUpcoming.map((booking) => (
                   <BookingCard key={booking.id} booking={booking} showActions={true} />
                 ))
               ) : (
-                <div className="text-center py-12">
-                  <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-medium text-gray-900 mb-2">No upcoming sessions</h3>
-                  <p className="text-gray-600 mb-4">Book your first session to get started</p>
-                  <button
-                    onClick={() => setActiveTab('book')}
-                    className="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                  >
-                    Book Session
-                  </button>
+                <div className="text-center py-16">
+                  <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative overflow-hidden">
+                    <div className="absolute -top-4 -right-4 opacity-10 animate-float">
+                      <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
+                    </div>
+                    <Calendar className="h-20 w-20 text-[#CB748E] mx-auto mb-6" />
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">No upcoming sessions</h3>
+                    <p className="text-gray-600 mb-6 font-sans">Book your next session to continue your child's development journey</p>
+                    <button
+                      onClick={() => setActiveTab('book')}
+                      className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-8 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+                    >
+                      Book Session
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
           )}
 
           {activeTab === 'past' && (
-            <div className="space-y-6">
-              {pastBookings.length > 0 ? (
-                pastBookings.map((booking) => (
-                  <BookingCard key={booking.id} booking={booking} />
+            <div className="space-y-8">
+              {filteredPast.length > 0 ? (
+                filteredPast.map((booking) => (
+                  <BookingCard key={booking.id} booking={booking} isPast={true} />
                 ))
               ) : (
-                <div className="text-center py-12">
-                  <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
-                    <div className="absolute -top-4 -right-4 opacity-20">
-                      <img src="/pattern/pattern light green.svg" alt="" className="w-12 h-12" />
+                <div className="text-center py-16">
+                  <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative overflow-hidden">
+                    <div className="absolute -top-4 -right-4 opacity-10 animate-float">
+                      <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
                     </div>
-                    <Clock className="h-16 w-16 text-green-400 mx-auto mb-6" />
-                    <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">No past sessions</h3>
-                    <p className="text-green-600 font-readable">Your completed sessions will appear here</p>
+                    <Clock className="h-20 w-20 text-[#698a60] mx-auto mb-6" />
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">No past sessions</h3>
+                    <p className="text-gray-600 font-sans">Your completed sessions will appear here</p>
                   </div>
                 </div>
               )}
