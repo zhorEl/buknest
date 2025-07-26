@@ -175,11 +175,11 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Header */}
-        <div className="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 rounded-3xl p-8 text-white mb-8 font-handwritten">
+        <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] rounded-3xl p-8 text-white mb-8 font-handwritten">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">Admin Dashboard</h1>
-              <p className="text-white text-opacity-90 text-lg">Platform overview and management tools</p>
+              <p className="text-white text-opacity-90 text-lg font-sans">Platform overview and management tools</p>
             </div>
             <div className="hidden md:block">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-4">
@@ -190,12 +190,12 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
         </div>
 
         {/* Stats Overview */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-10">
           <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 font-handwritten">
             <div className="flex items-center">
-              <Users className="h-8 w-8 text-blue-500" />
+              <Users className="h-8 w-8 text-[#CB748E]" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">Total Users</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">Total Users</p>
                 <p className="text-2xl font-bold text-gray-800">{stats.totalUsers.toLocaleString()}</p>
               </div>
             </div>
@@ -203,9 +203,9 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
           
           <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 font-handwritten">
             <div className="flex items-center">
-              <UserCheck className="h-8 w-8 text-blue-500" />
+              <UserCheck className="h-8 w-8 text-[#698a60]" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">Professionals</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">Professionals</p>
                 <p className="text-2xl font-bold text-gray-800">{stats.activeProfessionals}</p>
               </div>
             </div>
@@ -215,7 +215,7 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             <div className="flex items-center">
               <AlertTriangle className="h-8 w-8 text-yellow-500" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">Pending</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">Pending</p>
                 <p className="text-2xl font-bold text-gray-800">{stats.pendingVerifications}</p>
               </div>
             </div>
@@ -223,9 +223,9 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
           
           <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 font-handwritten">
             <div className="flex items-center">
-              <Calendar className="h-8 w-8 text-blue-500" />
+              <Calendar className="h-8 w-8 text-[#CB748E]" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">Sessions</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">Sessions</p>
                 <p className="text-2xl font-bold text-gray-800">{stats.totalSessions.toLocaleString()}</p>
               </div>
             </div>
@@ -233,9 +233,9 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
           
           <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 font-handwritten">
             <div className="flex items-center">
-              <DollarSign className="h-8 w-8 text-green-600" />
+              <DollarSign className="h-8 w-8 text-[#698a60]" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">Revenue</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">Revenue</p>
                 <p className="text-2xl font-bold text-gray-800">₱{stats.monthlyRevenue.toLocaleString()}</p>
               </div>
             </div>
@@ -245,7 +245,7 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             <div className="flex items-center">
               <TrendingUp className="h-8 w-8 text-gray-500" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">New Users</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">New Users</p>
                 <p className="text-2xl font-bold text-gray-800">{stats.newUsersThisWeek}</p>
               </div>
             </div>
@@ -255,7 +255,7 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             <div className="flex items-center">
               <Activity className="h-8 w-8 text-gray-500" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">Uptime</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">Uptime</p>
                 <p className="text-2xl font-bold text-gray-800">{stats.systemUptime}%</p>
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             <div className="flex items-center">
               <Zap className="h-8 w-8 text-yellow-500" />
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600 font-readable">Response</p>
+                <p className="text-sm font-medium text-gray-600 font-sans">Response</p>
                 <p className="text-2xl font-bold text-gray-800">{stats.avgResponseTime}ms</p>
               </div>
             </div>
@@ -273,42 +273,42 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-10">
           {/* Left Column */}
-          <div className="xl:col-span-2 space-y-8">
+          <div className="xl:col-span-2 space-y-10">
             {/* Pending Verifications */}
-            <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-              <div className="flex justify-between items-center mb-6">
+            <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+              <div className="flex justify-between items-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-800">Pending Verifications</h3>
-                <button className="text-blue-600 hover:text-blue-700 font-bold">
+                <button className="text-[#CB748E] hover:text-[#d698ab] font-bold font-sans">
                   View All
                 </button>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {pendingVerifications.map((verification) => (
-                  <div key={verification.id} className="border border-gray-200 rounded-2xl p-4 bg-gray-50">
-                    <div className="flex justify-between items-start mb-3">
+                  <div key={verification.id} className="border border-gray-200 rounded-2xl p-6 bg-gray-50">
+                    <div className="flex justify-between items-start mb-4">
                       <div>
                         <h4 className="font-bold text-gray-800">{verification.name}</h4>
-                        <p className="text-gray-600 text-sm font-semibold font-readable">{verification.type}</p>
-                        <p className="text-xs text-gray-600 font-readable">{verification.email}</p>
-                        <p className="text-xs text-gray-600 font-readable">Experience: {verification.experience}</p>
+                        <p className="text-gray-600 text-sm font-semibold font-sans">{verification.type}</p>
+                        <p className="text-xs text-gray-600 font-sans">{verification.email}</p>
+                        <p className="text-xs text-gray-600 font-sans">Experience: {verification.experience}</p>
                       </div>
                       <span className={`px-2 py-1 text-xs rounded-full ${
                         verification.status === 'pending' 
-                          ? 'bg-yellow-100 text-yellow-800 font-semibold' 
-                          : 'bg-blue-100 text-blue-800 font-semibold'
+                          ? 'bg-yellow-100 text-yellow-800 font-semibold font-sans' 
+                          : 'bg-pink-100 text-[#CB748E] font-semibold font-sans'
                       }`}>
                         {verification.status}
                       </span>
                     </div>
                     
-                    <div className="mb-3">
-                      <p className="text-sm text-gray-700 mb-2 font-semibold font-readable">Submitted: {new Date(verification.submittedDate).toLocaleDateString()}</p>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-700 mb-3 font-semibold font-sans">Submitted: {new Date(verification.submittedDate).toLocaleDateString()}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
                         {verification.documents.map((doc, index) => (
-                          <span key={index} className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-semibold font-readable">
+                          <span key={index} className="px-2 py-1 bg-pink-100 text-[#CB748E] text-xs rounded-full font-semibold font-sans">
                             {doc}
                           </span>
                         ))}
@@ -316,15 +316,15 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
                     </div>
                     
                     <div className="flex space-x-2">
-                      <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition-colors font-semibold flex items-center">
+                      <button className="px-3 py-1 bg-[#698a60] text-white text-sm rounded-full hover:bg-green-600 transition-colors font-semibold flex items-center font-sans">
                         <CheckCircle className="h-3 w-3 mr-1" />
                         Approve
                       </button>
-                      <button className="px-3 py-1 bg-red-600 text-white text-sm rounded-full hover:bg-red-700 transition-colors font-semibold flex items-center">
+                      <button className="px-3 py-1 bg-red-600 text-white text-sm rounded-full hover:bg-red-700 transition-colors font-semibold flex items-center font-sans">
                         <XCircle className="h-3 w-3 mr-1" />
                         Reject
                       </button>
-                      <button className="px-3 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold flex items-center">
+                      <button className="px-3 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold flex items-center font-sans">
                         <Eye className="h-3 w-3 mr-1" />
                         Review
                       </button>
@@ -335,21 +335,21 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             </div>
 
             {/* User Growth Chart */}
-            <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-              <h3 className="text-2xl font-bold text-gray-800 mb-6">User Growth</h3>
+            <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+              <h3 className="text-2xl font-bold text-gray-800 mb-8">User Growth</h3>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {userGrowth.map((month, index) => (
-                  <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-200">
+                  <div key={index} className="flex items-center justify-between p-6 bg-gray-50 rounded-2xl border border-gray-200">
                     <div>
                       <h4 className="font-bold text-gray-800">{month.month}</h4>
-                      <p className="text-sm text-gray-600 font-readable">Users: {month.users.toLocaleString()}</p>
-                      <p className="text-sm text-gray-600 font-readable">Professionals: {month.professionals}</p>
+                      <p className="text-sm text-gray-600 font-sans">Users: {month.users.toLocaleString()}</p>
+                      <p className="text-sm text-gray-600 font-sans">Professionals: {month.professionals}</p>
                     </div>
                     <div className="text-right">
                       <div className="w-24 h-2 bg-gray-200 rounded-full">
                         <div 
-                          className="h-2 bg-blue-500 rounded-full"
+                          className="h-2 bg-[#CB748E] rounded-full"
                           style={{ width: `${(month.users / 3000) * 100}%` }}
                         ></div>
                       </div>
@@ -360,13 +360,13 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             </div>
 
             {/* Recent Reports & Issues */}
-            <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-              <div className="flex justify-between items-center mb-6">
+            <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+              <div className="flex justify-between items-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-800">Recent Issues</h3>
                 <select
                   value={selectedTimeframe}
                   onChange={(e) => setSelectedTimeframe(e.target.value)}
-                  className="border border-gray-300 rounded-xl px-3 py-1 text-sm font-semibold"
+                  className="border border-gray-300 rounded-xl px-3 py-1 text-sm font-semibold font-sans"
                 >
                   <option value="week">This Week</option>
                   <option value="month">This Month</option>
@@ -374,19 +374,19 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
                 </select>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 {recentReports.map((report) => (
-                  <div key={report.id} className={`border rounded-2xl p-4 ${getPriorityColor(report.priority)}`}>
-                    <div className="flex justify-between items-start mb-2">
+                  <div key={report.id} className={`border rounded-2xl p-6 ${getPriorityColor(report.priority)}`}>
+                    <div className="flex justify-between items-start mb-3">
                       <div>
                         <h4 className="font-bold text-gray-800">{report.type}</h4>
-                        <p className="text-sm text-gray-700 font-semibold font-readable">{report.description}</p>
+                        <p className="text-sm text-gray-700 font-semibold font-sans">{report.description}</p>
                       </div>
-                      <span className="text-xs text-gray-600 font-semibold font-readable">{new Date(report.date).toLocaleDateString()}</span>
+                      <span className="text-xs text-gray-600 font-semibold font-sans">{new Date(report.date).toLocaleDateString()}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-sm text-gray-700 font-semibold font-readable">Reported by: {report.reporter}</p>
-                      <span className={`px-2 py-1 text-xs rounded-full font-bold ${getPriorityColor(report.priority)}`}>
+                      <p className="text-sm text-gray-700 font-semibold font-sans">Reported by: {report.reporter}</p>
+                      <span className={`px-2 py-1 text-xs rounded-full font-bold font-sans ${getPriorityColor(report.priority)}`}>
                         {report.priority} priority
                       </span>
                     </div>
@@ -397,20 +397,20 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
           </div>
 
           {/* Right Column */}
-          <div className="space-y-8">
+          <div className="space-y-10">
             {/* System Alerts */}
-            <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">System Status</h3>
+            <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">System Status</h3>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {systemAlerts.map((alert) => (
-                  <div key={alert.id} className="flex items-start p-3 rounded-2xl bg-gray-50">
-                    <div className="mr-3 mt-0.5">
+                  <div key={alert.id} className="flex items-start p-4 rounded-2xl bg-gray-50">
+                    <div className="mr-3 mt-1">
                       {getAlertIcon(alert.type)}
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm text-gray-800 font-semibold font-readable">{alert.message}</p>
-                      <p className="text-xs text-gray-600 mt-1 font-readable">{alert.time}</p>
+                      <p className="text-sm text-gray-800 font-semibold font-sans">{alert.message}</p>
+                      <p className="text-xs text-gray-600 mt-2 font-sans">{alert.time}</p>
                     </div>
                   </div>
                 ))}
@@ -418,20 +418,20 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             </div>
 
             {/* Recent Activities */}
-            <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Recent Activities</h3>
+            <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">Recent Activities</h3>
               
-              <div className="space-y-3">
+              <div className="space-y-4">
                 {recentActivities.map((activity) => {
                   const Icon = activity.icon;
                   return (
-                    <div key={activity.id} className="flex items-start p-3 rounded-2xl bg-gray-50">
-                      <div className="mr-3 mt-0.5">
+                    <div key={activity.id} className="flex items-start p-4 rounded-2xl bg-gray-50">
+                      <div className="mr-3 mt-1">
                         <Icon className="h-4 w-4 text-gray-600" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm text-gray-800 font-semibold font-readable">{activity.description}</p>
-                        <p className="text-xs text-gray-600 mt-1 font-readable">{activity.time}</p>
+                        <p className="text-sm text-gray-800 font-semibold font-sans">{activity.description}</p>
+                        <p className="text-xs text-gray-600 mt-2 font-sans">{activity.time}</p>
                       </div>
                     </div>
                   );
@@ -440,31 +440,31 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             </div>
 
             {/* Quick Actions */}
-            <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</h3>
+            <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">Quick Actions</h3>
               
-              <div className="space-y-3">
-                <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-2xl font-bold hover:bg-blue-700 transition-all duration-300 flex items-center justify-center">
+              <div className="space-y-4">
+                <button className="w-full bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 flex items-center justify-center font-sans">
                   <Users className="h-4 w-4 mr-2" />
                   Manage Users
                 </button>
                 
-                <button className="w-full bg-gray-600 text-white px-4 py-2 rounded-2xl font-bold hover:bg-gray-700 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-gray-600 text-white px-4 py-3 rounded-2xl font-bold hover:bg-gray-700 transition-all duration-300 flex items-center justify-center font-sans">
                   <UserCheck className="h-4 w-4 mr-2" />
                   Review Professionals
                 </button>
                 
-                <button className="w-full bg-green-600 text-white px-4 py-2 rounded-2xl font-bold hover:bg-green-700 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-[#698a60] text-white px-4 py-3 rounded-2xl font-bold hover:bg-green-700 transition-all duration-300 flex items-center justify-center font-sans">
                   <FileText className="h-4 w-4 mr-2" />
                   Generate Reports
                 </button>
                 
-                <button className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-2 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center font-sans">
                   <Settings className="h-4 w-4 mr-2" />
                   Platform Settings
                 </button>
                 
-                <button className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-2 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center">
+                <button className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center font-sans">
                   <Database className="h-4 w-4 mr-2" />
                   System Backup
                 </button>
@@ -472,40 +472,40 @@ export default function AdminDashboard({ user, onPageChange }: AdminDashboardPro
             </div>
 
             {/* Platform Health */}
-            <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4">Platform Health</h3>
+            <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+              <h3 className="text-2xl font-bold text-gray-800 mb-6">Platform Health</h3>
               
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                     <Server className="h-4 w-4 text-gray-600 mr-2" />
-                    <span className="text-sm text-gray-700 font-semibold font-readable">Server Uptime</span>
+                    <span className="text-sm text-gray-700 font-semibold font-sans">Server Uptime</span>
                   </div>
-                  <span className="text-sm font-bold text-gray-600 font-readable">99.9%</span>
+                  <span className="text-sm font-bold text-gray-600 font-sans">99.9%</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                     <Zap className="h-4 w-4 text-gray-600 mr-2" />
-                    <span className="text-sm text-gray-700 font-semibold font-readable">Response Time</span>
+                    <span className="text-sm text-gray-700 font-semibold font-sans">Response Time</span>
                   </div>
-                  <span className="text-sm font-bold text-gray-600 font-readable">245ms</span>
+                  <span className="text-sm font-bold text-gray-600 font-sans">245ms</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                     <Activity className="h-4 w-4 text-gray-600 mr-2" />
-                    <span className="text-sm text-gray-700 font-semibold font-readable">Active Sessions</span>
+                    <span className="text-sm text-gray-700 font-semibold font-sans">Active Sessions</span>
                   </div>
-                  <span className="text-sm font-bold text-gray-600 font-readable">1,247</span>
+                  <span className="text-sm font-bold text-gray-600 font-sans">1,247</span>
                 </div>
                 
                 <div className="flex justify-between items-center">
                   <div className="flex items-center">
                     <AlertTriangle className="h-4 w-4 text-gray-600 mr-2" />
-                    <span className="text-sm text-gray-700 font-semibold font-readable">Error Rate</span>
+                    <span className="text-sm text-gray-700 font-semibold font-sans">Error Rate</span>
                   </div>
-                  <span className="text-sm font-bold text-gray-600 font-readable">0.1%</span>
+                  <span className="text-sm font-bold text-gray-600 font-sans">0.1%</span>
                 </div>
               </div>
             </div>

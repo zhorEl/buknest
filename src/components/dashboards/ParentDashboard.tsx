@@ -128,11 +128,11 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Header */}
-        <div className="bg-gradient-to-r from-gray-600 via-gray-700 to-gray-800 rounded-3xl p-8 text-white mb-8 font-handwritten">
+        <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] rounded-3xl p-8 text-white mb-8 font-handwritten">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold mb-2">Welcome back, {user.name}!</h1>
-              <p className="text-white text-opacity-90 text-lg">Here's what's happening with your child's therapy journey</p>
+              <p className="text-white text-opacity-90 text-lg font-sans">Here's what's happening with your child's therapy journey</p>
             </div>
             <div className="hidden md:block">
               <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-2xl p-4">
@@ -143,16 +143,16 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
         </div>
 
         {/* Child Selector */}
-        <div className="bg-white rounded-3xl shadow-lg p-6 mb-8 border border-gray-200 font-handwritten">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Your Children</h2>
+        <div className="bg-white rounded-3xl shadow-lg p-8 mb-8 border border-gray-200 font-handwritten">
+          <h2 className="text-2xl font-bold text-gray-800 mb-8">Your Children</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {children.map((child) => (
               <button
                 key={child.id}
                 onClick={() => setSelectedChild(child.id)}
-                className={`p-6 rounded-2xl border-2 text-left transition-all duration-300 transform hover:scale-105 ${
+                className={`p-6 rounded-2xl border-2 text-left transition-all duration-300 transform hover:scale-105 font-sans ${
                   selectedChild === child.id
-                    ? 'border-blue-400 bg-blue-50 shadow-lg'
+                    ? 'border-[#CB748E] bg-pink-50 shadow-lg'
                     : 'border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                 }`}
               >
@@ -164,15 +164,15 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                   />
                   <div>
                     <span className="font-bold text-gray-800 text-lg">{child.name}</span>
-                    <p className="text-sm text-gray-600 font-readable">Age {child.age}</p>
+                    <p className="text-sm text-gray-600 font-sans">Age {child.age}</p>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center text-sm text-gray-700 font-readable">
+                <div className="space-y-3">
+                  <div className="flex items-center text-sm text-gray-700 font-sans">
                     <Activity className="h-4 w-4 mr-2" />
                     Progress: {child.progressScore}%
                   </div>
-                  <div className="text-xs text-gray-600 font-readable">
+                  <div className="text-xs text-gray-600 font-sans">
                     {child.conditions.slice(0, 2).join(', ')}
                     {child.conditions.length > 2 && ` +${child.conditions.length - 2} more`}
                   </div>
@@ -181,7 +181,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
             ))}
             <button className="p-6 rounded-2xl border-2 border-dashed border-gray-300 hover:border-gray-500 hover:bg-gray-50 transition-all duration-300 flex items-center justify-center">
               <Plus className="h-6 w-6 text-gray-400 mr-2" />
-              <span className="text-gray-600 font-semibold">Add Child</span>
+              <span className="text-gray-600 font-semibold font-sans">Add Child</span>
             </button>
           </div>
         </div>
@@ -189,12 +189,12 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
         {currentChild && (
           <>
             {/* Quick Stats */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
               <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 font-handwritten">
                 <div className="flex items-center">
-                  <Calendar className="h-8 w-8 text-blue-500" />
+                  <Calendar className="h-8 w-8 text-[#CB748E]" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600 font-readable">Next Session</p>
+                    <p className="text-sm font-medium text-gray-600 font-sans">Next Session</p>
                     <p className="text-lg font-bold text-gray-800">Tomorrow</p>
                   </div>
                 </div>
@@ -202,9 +202,9 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
               
               <div className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200 font-handwritten">
                 <div className="flex items-center">
-                  <TrendingUp className="h-8 w-8 text-blue-500" />
+                  <TrendingUp className="h-8 w-8 text-[#698a60]" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600 font-readable">Progress Score</p>
+                    <p className="text-sm font-medium text-gray-600 font-sans">Progress Score</p>
                     <p className="text-lg font-bold text-gray-800">{currentChild.progressScore}%</p>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                 <div className="flex items-center">
                   <Clock className="h-8 w-8 text-gray-500" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600 font-readable">Total Sessions</p>
+                    <p className="text-sm font-medium text-gray-600 font-sans">Total Sessions</p>
                     <p className="text-lg font-bold text-gray-800">{currentChild.totalSessions}</p>
                   </div>
                 </div>
@@ -224,7 +224,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                 <div className="flex items-center">
                   <Baby className="h-8 w-8 text-gray-500" />
                   <div className="ml-4">
-                    <p className="text-sm font-medium text-gray-600 font-readable">Age</p>
+                    <p className="text-sm font-medium text-gray-600 font-sans">Age</p>
                     <p className="text-lg font-bold text-gray-800">{currentChild.age} years</p>
                   </div>
                 </div>
@@ -232,34 +232,34 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
             </div>
 
             {/* Main Content Grid */}
-            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-10">
               {/* Left Column */}
-              <div className="xl:col-span-2 space-y-8">
+              <div className="xl:col-span-2 space-y-10">
                 {/* Upcoming Sessions */}
-                <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-                  <div className="flex justify-between items-center mb-6">
+                <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+                  <div className="flex justify-between items-center mb-8">
                     <h3 className="text-2xl font-bold text-gray-800">Upcoming Sessions</h3>
                     <button
                       onClick={() => onPageChange('bookings')}
-                      className="text-blue-600 hover:text-blue-700 font-bold"
+                      className="text-[#CB748E] hover:text-[#d698ab] font-bold font-sans"
                     >
                       View All
                     </button>
                   </div>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {upcomingSessions.map((session) => (
-                      <div key={session.id} className="border border-gray-200 rounded-2xl p-4 bg-gray-50">
-                        <div className="flex justify-between items-start mb-2">
+                      <div key={session.id} className="border border-gray-200 rounded-2xl p-6 bg-gray-50">
+                        <div className="flex justify-between items-start mb-4">
                           <div>
                             <h4 className="font-bold text-gray-800">{session.professional}</h4>
-                            <p className="text-gray-600 text-sm font-semibold">{session.type}</p>
+                            <p className="text-gray-600 text-sm font-semibold font-sans">{session.type}</p>
                           </div>
-                          <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-semibold">
+                          <span className="px-3 py-1 bg-pink-100 text-[#CB748E] text-xs rounded-full font-semibold font-sans">
                             {session.sessionType}
                           </span>
                         </div>
-                        <div className="flex items-center text-sm text-gray-700 font-readable">
+                        <div className="flex items-center text-sm text-gray-700 font-sans">
                           <Calendar className="h-4 w-4 mr-2" />
                           {new Date(session.date).toLocaleDateString()} at {session.time}
                         </div>
@@ -269,27 +269,27 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                 </div>
 
                 {/* Daily Activities */}
-                <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Today's Activities</h3>
+                <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-8">Today's Activities</h3>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     {dailyActivities.map((activity, index) => (
-                      <div key={index} className={`flex items-center p-3 rounded-2xl ${
+                      <div key={index} className={`flex items-center p-4 rounded-2xl ${
                         activity.completed ? 'bg-blue-50 border border-blue-200' : 'bg-yellow-50 border border-yellow-200'
                       }`}>
                         <div className={`w-4 h-4 rounded-full mr-3 ${
-                          activity.completed ? 'bg-blue-500' : 'bg-yellow-400'
+                          activity.completed ? 'bg-[#CB748E]' : 'bg-yellow-400'
                         }`}></div>
                         <div className="flex-1">
                           <div className="flex justify-between items-center">
                             <span className="font-semibold text-gray-800">{activity.time}</span>
-                            <span className={`text-xs px-2 py-1 rounded-full font-readable ${
-                              activity.completed ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800'
+                            <span className={`text-xs px-2 py-1 rounded-full font-sans ${
+                              activity.completed ? 'bg-pink-100 text-[#CB748E]' : 'bg-yellow-100 text-yellow-800'
                             }`}>
                               {activity.completed ? 'Completed' : 'Pending'}
                             </span>
                           </div>
-                          <p className="text-sm text-gray-700 font-readable">{activity.activity}</p>
+                          <p className="text-sm text-gray-700 font-sans mt-1">{activity.activity}</p>
                         </div>
                       </div>
                     ))}
@@ -298,10 +298,10 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
               </div>
 
               {/* Right Column */}
-              <div className="space-y-8">
+              <div className="space-y-10">
                 {/* Child Profile Card */}
-                <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-                  <div className="flex items-center mb-6">
+                <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+                  <div className="flex items-center mb-8">
                     <img
                       src={currentChild.avatar}
                       alt={currentChild.name}
@@ -309,18 +309,18 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                     />
                     <div>
                       <h3 className="text-2xl font-bold text-gray-800">{currentChild.name}</h3>
-                      <p className="text-gray-600 font-readable">Born: {new Date(currentChild.dateOfBirth).toLocaleDateString()}</p>
+                      <p className="text-gray-600 font-sans">Born: {new Date(currentChild.dateOfBirth).toLocaleDateString()}</p>
                     </div>
                   </div>
                   
-                  <div className="space-y-4">
+                  <div className="space-y-6">
                     <div>
-                      <label className="text-sm font-bold text-gray-600 font-readable">Conditions</label>
-                      <div className="mt-2 space-y-2">
+                      <label className="text-sm font-bold text-gray-600 font-sans">Conditions</label>
+                      <div className="mt-3 space-y-2">
                         {currentChild.conditions.map((condition, index) => (
                           <span
                             key={index}
-                            className="inline-block px-3 py-1 bg-blue-100 text-blue-800 text-sm rounded-full mr-2 mb-2 font-semibold font-readable"
+                            className="inline-block px-3 py-1 bg-pink-100 text-[#CB748E] text-sm rounded-full mr-2 mb-2 font-semibold font-sans"
                           >
                             {condition}
                           </span>
@@ -329,12 +329,12 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                     </div>
                     
                     <div>
-                      <label className="text-sm font-bold text-gray-600 font-readable">Favorite Activities</label>
-                      <div className="mt-2 space-y-2">
+                      <label className="text-sm font-bold text-gray-600 font-sans">Favorite Activities</label>
+                      <div className="mt-3 space-y-2">
                         {currentChild.favoriteActivities.map((activity, index) => (
                           <span
                             key={index}
-                            className="inline-block px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full mr-2 mb-2 font-semibold font-readable"
+                            className="inline-block px-3 py-1 bg-gray-100 text-gray-800 text-sm rounded-full mr-2 mb-2 font-semibold font-sans"
                           >
                             {activity}
                           </span>
@@ -343,32 +343,32 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                     </div>
                     
                     <div>
-                      <label className="text-sm font-bold text-gray-600 font-readable">Recent Progress</label>
-                      <p className="text-sm text-gray-700 mt-1 font-readable">{currentChild.recentProgress}</p>
+                      <label className="text-sm font-bold text-gray-600 font-sans">Recent Progress</label>
+                      <p className="text-sm text-gray-700 mt-2 font-sans">{currentChild.recentProgress}</p>
                     </div>
                     
                     <div>
-                      <label className="text-sm font-bold text-gray-600 font-readable">Emergency Contact</label>
-                      <div className="flex items-center mt-1">
+                      <label className="text-sm font-bold text-gray-600 font-sans">Emergency Contact</label>
+                      <div className="flex items-center mt-2">
                         <Phone className="h-4 w-4 text-gray-600 mr-2" />
-                        <p className="text-sm text-gray-700 font-readable">{currentChild.emergencyContact}</p>
+                        <p className="text-sm text-gray-700 font-sans">{currentChild.emergencyContact}</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Milestones */}
-                <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Recent Milestones</h3>
+                <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Recent Milestones</h3>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {milestones.map((milestone) => (
-                      <div key={milestone.id} className={`p-3 rounded-2xl border ${
+                      <div key={milestone.id} className={`p-4 rounded-2xl border ${
                         milestone.achieved 
-                          ? 'bg-blue-50 border-blue-200' 
+                          ? 'bg-pink-50 border-pink-200' 
                           : 'bg-yellow-50 border-yellow-200'
                       }`}>
-                        <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center justify-between mb-3">
                           <h4 className="font-bold text-gray-800">{milestone.title}</h4>
                           {milestone.achieved ? (
                             <Star className="h-5 w-5 text-yellow-500 fill-current" />
@@ -376,21 +376,21 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                             <Clock className="h-5 w-5 text-yellow-500" />
                           )}
                         </div>
-                        <p className="text-sm text-gray-700">{milestone.description}</p>
-                        <p className="text-xs text-gray-600 mt-1 font-readable">{new Date(milestone.date).toLocaleDateString()}</p>
+                        <p className="text-sm text-gray-700 font-sans">{milestone.description}</p>
+                        <p className="text-xs text-gray-600 mt-2 font-sans">{new Date(milestone.date).toLocaleDateString()}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Quick Actions */}
-                <div className="bg-white rounded-3xl shadow-lg p-6 border border-gray-200 font-handwritten">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-4">Quick Actions</h3>
+                <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
+                  <h3 className="text-2xl font-bold text-gray-800 mb-6">Quick Actions</h3>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <button
                       onClick={() => onPageChange('bookings')}
-                      className="w-full bg-blue-600 text-white px-4 py-3 rounded-2xl font-bold hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                      className="w-full bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 flex items-center justify-center font-sans"
                     >
                       <Calendar className="h-5 w-5 mr-2" />
                       Book New Session
@@ -398,7 +398,7 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                     
                     <button
                       onClick={() => onPageChange('assessment')}
-                      className="w-full bg-gray-600 text-white px-4 py-3 rounded-2xl font-bold hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+                      className="w-full bg-gray-600 text-white px-4 py-3 rounded-2xl font-bold hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center font-sans"
                     >
                       <MessageCircle className="h-5 w-5 mr-2" />
                       AI Assessment
@@ -406,13 +406,13 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                     
                     <button
                       onClick={() => onPageChange('professionals')}
-                      className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center"
+                      className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center font-sans"
                     >
                       <User className="h-5 w-5 mr-2" />
                       Find Professionals
                     </button>
                     
-                    <button className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center">
+                    <button className="w-full bg-white border-2 border-gray-300 text-gray-700 px-4 py-3 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 flex items-center justify-center font-sans">
                       <FileText className="h-5 w-5 mr-2" />
                       View Reports
                     </button>
