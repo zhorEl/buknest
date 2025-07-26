@@ -8,6 +8,7 @@ interface ParentDashboardProps {
 
 export default function ParentDashboard({ user, onPageChange }: ParentDashboardProps) {
   const [selectedChild, setSelectedChild] = useState('emma');
+  const [filterByChild, setFilterByChild] = useState<string | null>(null);
 
   const children = [
     {
@@ -43,27 +44,36 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
   const upcomingSessions = [
     {
       id: '1',
+      childId: 'emma',
+      childName: 'Emma',
       professional: 'Dr. Sarah Johnson',
       type: 'Speech Therapy',
       date: '2024-01-15',
       time: '10:00 AM',
-      sessionType: 'Home Visit'
+      sessionType: 'Home Visit',
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       id: '2',
+      childId: 'alex',
+      childName: 'Alex',
       professional: 'Maria Rodriguez',
       type: 'Occupational Therapy',
       date: '2024-01-18',
       time: '2:00 PM',
-      sessionType: 'Online'
+      sessionType: 'Online',
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       id: '3',
+      childId: 'emma',
+      childName: 'Emma',
       professional: 'Dr. Michael Chen',
       type: 'Developmental Assessment',
       date: '2024-01-20',
       time: '11:00 AM',
-      sessionType: 'Home Visit'
+      sessionType: 'Home Visit',
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
     }
   ];
 
@@ -94,35 +104,89 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
   const milestones = [
     {
       id: '1',
+      childId: 'emma',
+      childName: 'Emma',
       title: 'First Words',
       description: 'Emma said her first clear word "mama"',
       date: '2024-01-12',
-      achieved: true
+      achieved: true,
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       id: '2',
+      childId: 'emma',
+      childName: 'Emma',
       title: 'Eye Contact',
       description: 'Maintained eye contact for 5+ seconds',
       date: '2024-01-10',
-      achieved: true
+      achieved: true,
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
     },
     {
       id: '3',
+      childId: 'alex',
+      childName: 'Alex',
       title: 'Social Play',
       description: 'Engaged in parallel play with peers',
       date: '2024-01-15',
-      achieved: false
+      achieved: false,
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
     }
   ];
 
   const dailyActivities = [
-    { time: '8:00 AM', activity: 'Morning routine with visual schedule', completed: true },
-    { time: '10:00 AM', activity: 'Speech therapy exercises', completed: true },
-    { time: '2:00 PM', activity: 'Sensory break time', completed: false },
-    { time: '4:00 PM', activity: 'Social story reading', completed: false }
+    { 
+      time: '8:00 AM', 
+      activity: 'Morning routine with visual schedule', 
+      completed: true,
+      childId: 'emma',
+      childName: 'Emma',
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    { 
+      time: '10:00 AM', 
+      activity: 'Speech therapy exercises', 
+      completed: true,
+      childId: 'emma',
+      childName: 'Emma',
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    { 
+      time: '2:00 PM', 
+      activity: 'Sensory break time', 
+      completed: false,
+      childId: 'alex',
+      childName: 'Alex',
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    { 
+      time: '4:00 PM', 
+      activity: 'Social story reading', 
+      completed: false,
+      childId: 'alex',
+      childName: 'Alex',
+      childAvatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
+    }
   ];
 
   const currentChild = children.find(child => child.id === selectedChild);
+  
+  // Filter data based on selected filter
+  const filteredSessions = filterByChild 
+    ? upcomingSessions.filter(session => session.childId === filterByChild)
+    : upcomingSessions;
+    
+  const filteredMilestones = filterByChild 
+    ? milestones.filter(milestone => milestone.childId === filterByChild)
+    : milestones;
+    
+  const filteredActivities = filterByChild 
+    ? dailyActivities.filter(activity => activity.childId === filterByChild)
+    : dailyActivities;
+
+  const handleChildClick = (childId: string) => {
+    setFilterByChild(filterByChild === childId ? null : childId);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -149,13 +213,20 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
             {children.map((child) => (
               <button
                 key={child.id}
-                onClick={() => setSelectedChild(child.id)}
-                className={`p-6 rounded-2xl border-2 text-left transition-all duration-300 transform hover:scale-105 font-sans ${
-                  selectedChild === child.id
-                    ? 'border-[#CB748E] bg-pink-50 shadow-lg'
+                onClick={() => handleChildClick(child.id)}
+                className={`p-6 rounded-2xl border-2 text-left transition-all duration-300 transform hover:scale-105 font-sans relative ${
+                  filterByChild === child.id
+                    ? 'border-[#CB748E] bg-pink-50 shadow-lg ring-2 ring-[#CB748E] ring-opacity-50'
+                    : selectedChild === child.id
+                    ? 'border-[#698a60] bg-green-50 shadow-lg'
                     : 'border-gray-200 hover:bg-gray-50 hover:border-gray-300'
                 }`}
               >
+                {filterByChild === child.id && (
+                  <div className="absolute top-2 right-2 bg-[#CB748E] text-white text-xs px-2 py-1 rounded-full font-bold">
+                    FILTERED
+                  </div>
+                )}
                 <div className="flex items-center mb-4">
                   <img
                     src={child.avatar}
@@ -185,6 +256,30 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
             </button>
           </div>
         </div>
+
+        {/* Filter Status */}
+        {filterByChild && (
+          <div className="bg-gradient-to-r from-pink-100 to-green-100 rounded-2xl p-4 mb-8 border border-pink-200">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <img
+                  src={children.find(c => c.id === filterByChild)?.avatar}
+                  alt=""
+                  className="w-8 h-8 rounded-full object-cover mr-3"
+                />
+                <span className="font-bold text-gray-800 font-handwritten">
+                  Showing data for {children.find(c => c.id === filterByChild)?.name}
+                </span>
+              </div>
+              <button
+                onClick={() => setFilterByChild(null)}
+                className="px-4 py-2 bg-white border border-gray-300 rounded-xl hover:bg-gray-50 transition-colors font-bold text-sm font-sans"
+              >
+                Show All Children
+              </button>
+            </div>
+          </div>
+        )}
 
         {currentChild && (
           <>
@@ -248,8 +343,20 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                   </div>
                   
                   <div className="space-y-6">
-                    {upcomingSessions.map((session) => (
+                    {filteredSessions.map((session) => (
                       <div key={session.id} className="border border-gray-200 rounded-2xl p-6 bg-gray-50">
+                        <div className="flex justify-between items-start mb-4">
+                          <div className="flex items-center mb-2">
+                            <img
+                              src={session.childAvatar}
+                              alt={session.childName}
+                              className="w-8 h-8 rounded-full object-cover mr-3 border-2 border-white shadow-sm"
+                            />
+                            <span className="text-sm font-bold text-[#CB748E] font-handwritten">
+                              {session.childName}
+                            </span>
+                          </div>
+                        </div>
                         <div className="flex justify-between items-start mb-4">
                           <div>
                             <h4 className="font-bold text-gray-800">{session.professional}</h4>
@@ -273,16 +380,26 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                   <h3 className="text-2xl font-bold text-gray-800 mb-8">Today's Activities</h3>
                   
                   <div className="space-y-6">
-                    {dailyActivities.map((activity, index) => (
+                    {filteredActivities.map((activity, index) => (
                       <div key={index} className={`flex items-center p-4 rounded-2xl ${
                         activity.completed ? 'bg-blue-50 border border-blue-200' : 'bg-yellow-50 border border-yellow-200'
                       }`}>
+                        <img
+                          src={activity.childAvatar}
+                          alt={activity.childName}
+                          className="w-6 h-6 rounded-full object-cover mr-3 border border-white shadow-sm"
+                        />
                         <div className={`w-4 h-4 rounded-full mr-3 ${
                           activity.completed ? 'bg-[#CB748E]' : 'bg-yellow-400'
                         }`}></div>
                         <div className="flex-1">
                           <div className="flex justify-between items-center">
-                            <span className="font-semibold text-gray-800">{activity.time}</span>
+                            <div className="flex items-center">
+                              <span className="font-semibold text-gray-800">{activity.time}</span>
+                              <span className="text-xs text-[#CB748E] font-bold ml-2 font-handwritten">
+                                {activity.childName}
+                              </span>
+                            </div>
                             <span className={`text-xs px-2 py-1 rounded-full font-sans ${
                               activity.completed ? 'bg-pink-100 text-[#CB748E]' : 'bg-yellow-100 text-yellow-800'
                             }`}>
@@ -362,14 +479,21 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                   <h3 className="text-2xl font-bold text-gray-800 mb-6">Recent Milestones</h3>
                   
                   <div className="space-y-4">
-                    {milestones.map((milestone) => (
+                    {filteredMilestones.map((milestone) => (
                       <div key={milestone.id} className={`p-4 rounded-2xl border ${
                         milestone.achieved 
                           ? 'bg-pink-50 border-pink-200' 
                           : 'bg-yellow-50 border-yellow-200'
                       }`}>
                         <div className="flex items-center justify-between mb-3">
-                          <h4 className="font-bold text-gray-800">{milestone.title}</h4>
+                          <div className="flex items-center">
+                            <img
+                              src={milestone.childAvatar}
+                              alt={milestone.childName}
+                              className="w-6 h-6 rounded-full object-cover mr-3 border border-white shadow-sm"
+                            />
+                            <h4 className="font-bold text-gray-800">{milestone.title}</h4>
+                          </div>
                           {milestone.achieved ? (
                             <Star className="h-5 w-5 text-yellow-500 fill-current" />
                           ) : (
@@ -377,7 +501,12 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
                           )}
                         </div>
                         <p className="text-sm text-gray-700 font-sans">{milestone.description}</p>
-                        <p className="text-xs text-gray-600 mt-2 font-sans">{new Date(milestone.date).toLocaleDateString()}</p>
+                        <div className="flex justify-between items-center mt-2">
+                          <p className="text-xs text-gray-600 font-sans">{new Date(milestone.date).toLocaleDateString()}</p>
+                          <span className="text-xs text-[#CB748E] font-bold font-handwritten">
+                            {milestone.childName}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
