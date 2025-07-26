@@ -333,10 +333,10 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
         {filteredProfessionals.length === 0 && (
           <div className="text-center py-16">
             <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
-              <div className="absolute -top-4 -right-4 opacity-25">
+              <div className="absolute -top-4 -right-4 opacity-25" style={{ transform: 'translateX(21.6rem)' }}>
                 <img src="/pattern/pattern pink.svg" alt="" className="w-108 h-108" />
               </div>
-              <div className="absolute -bottom-4 -left-4 opacity-20">
+              <div className="absolute -bottom-4 -left-4 opacity-20" style={{ transform: 'translateX(-19.2rem)' }}>
                 <img src="/pattern/pattern light green.svg" alt="" className="w-96 h-96" />
               </div>
               <div className="text-green-400 mb-6">
