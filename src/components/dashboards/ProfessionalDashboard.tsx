@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Users, DollarSign, Star, Clock, MessageCircle, FileText, TrendingUp, Bell, Award, BookOpen, Activity, Phone, Video, Home, CheckCircle, AlertCircle, MapPin, Navigation, Edit } from 'lucide-react';
+import { Calendar, Users, DollarSign, Star, Clock, MessageCircle, FileText, TrendingUp, Bell, Award, BookOpen, Activity, Phone, Video, Home, CheckCircle, AlertCircle, MapPin, Navigation, Edit, User } from 'lucide-react';
 
 interface ProfessionalDashboardProps {
   user: any;
@@ -41,20 +41,20 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       duration: 60,
       notes: 'Focus on articulation exercises',
       parentPhone: '(555) 123-4567',
-      address: '123 Main St, Bukidnon'
-    },
-    clientDetails: {
-      childName: 'Emma Johnson',
-      age: 6,
-      conditions: ['Autism Spectrum Disorder', 'Speech Delay'],
-      parentName: 'Sarah Johnson',
-      parentEmail: 'sarah.johnson@email.com',
-      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
-      progressScore: 85,
-      totalSessions: 24,
-      completedSessions: 18,
-      joinedDate: '2023-09-15',
-      notes: 'Shows excellent progress in articulation. Very responsive to visual cues.'
+      address: '123 Main St, Bukidnon',
+      clientDetails: {
+        childName: 'Emma Johnson',
+        age: 6,
+        conditions: ['Autism Spectrum Disorder', 'Speech Delay'],
+        parentName: 'Sarah Johnson',
+        parentEmail: 'sarah.johnson@email.com',
+        avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+        progressScore: 85,
+        totalSessions: 24,
+        completedSessions: 18,
+        joinedDate: '2023-09-15',
+        notes: 'Shows excellent progress in articulation. Very responsive to visual cues.'
+      }
     },
     {
       id: '2',
@@ -66,20 +66,20 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       duration: 45,
       notes: 'Continue with sensory integration activities',
       parentPhone: '(555) 987-6543',
-      meetingLink: 'https://meet.buknest.com/session-456'
-    },
-    clientDetails: {
-      childName: 'Michael Chen',
-      age: 4,
-      conditions: ['Sensory Processing Disorder'],
-      parentName: 'Lisa Chen',
-      parentEmail: 'lisa.chen@email.com',
-      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
-      progressScore: 72,
-      totalSessions: 16,
-      completedSessions: 12,
-      joinedDate: '2023-10-20',
-      notes: 'Responds well to sensory integration activities. Needs consistent routine.'
+      meetingLink: 'https://meet.buknest.com/session-456',
+      clientDetails: {
+        childName: 'Michael Chen',
+        age: 4,
+        conditions: ['Sensory Processing Disorder'],
+        parentName: 'Lisa Chen',
+        parentEmail: 'lisa.chen@email.com',
+        avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+        progressScore: 72,
+        totalSessions: 16,
+        completedSessions: 12,
+        joinedDate: '2023-10-20',
+        notes: 'Responds well to sensory integration activities. Needs consistent routine.'
+      }
     },
     {
       id: '3',
@@ -91,20 +91,20 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       duration: 60,
       notes: 'Initial assessment session',
       parentPhone: '(555) 456-7890',
-      address: '456 Oak Ave, Bukidnon'
-    },
-    clientDetails: {
-      childName: 'Sofia Rodriguez',
-      age: 5,
-      conditions: ['ADHD', 'Language Delay'],
-      parentName: 'Maria Rodriguez',
-      parentEmail: 'maria.rodriguez@email.com',
-      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
-      progressScore: 68,
-      totalSessions: 20,
-      completedSessions: 15,
-      joinedDate: '2023-08-10',
-      notes: 'High energy child. Benefits from movement breaks during sessions.'
+      address: '456 Oak Ave, Bukidnon',
+      clientDetails: {
+        childName: 'Sofia Rodriguez',
+        age: 5,
+        conditions: ['ADHD', 'Language Delay'],
+        parentName: 'Maria Rodriguez',
+        parentEmail: 'maria.rodriguez@email.com',
+        avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+        progressScore: 68,
+        totalSessions: 20,
+        completedSessions: 15,
+        joinedDate: '2023-08-10',
+        notes: 'High energy child. Benefits from movement breaks during sessions.'
+      }
     },
     {
       id: '4',
@@ -116,20 +116,20 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       duration: 30,
       notes: 'Follow-up session for behavioral strategies',
       parentPhone: '(555) 321-0987',
-      meetingLink: 'https://meet.buknest.com/session-789'
-    },
-    clientDetails: {
-      childName: 'Alex Thompson',
-      age: 4,
-      conditions: ['ADHD', 'Behavioral Issues'],
-      parentName: 'Jennifer Thompson',
-      parentEmail: 'jennifer.thompson@email.com',
-      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
-      progressScore: 75,
-      totalSessions: 12,
-      completedSessions: 8,
-      joinedDate: '2023-11-05',
-      notes: 'Responds well to structured activities and clear expectations.'
+      meetingLink: 'https://meet.buknest.com/session-789',
+      clientDetails: {
+        childName: 'Alex Thompson',
+        age: 4,
+        conditions: ['ADHD', 'Behavioral Issues'],
+        parentName: 'Jennifer Thompson',
+        parentEmail: 'jennifer.thompson@email.com',
+        avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+        progressScore: 75,
+        totalSessions: 12,
+        completedSessions: 8,
+        joinedDate: '2023-11-05',
+        notes: 'Responds well to structured activities and clear expectations.'
+      }
     }
   ];
 
@@ -544,7 +544,27 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                         <Clock className="h-4 w-4 mr-1" />
                         {session.duration} minutes
                       </div>
-                      <div className="flex space-x-2">
+                      <div className="flex flex-wrap gap-2">
+                        {getBookingStatus(session.id) === 'pending' && (
+                          <>
+                            <button 
+                              onClick={() => handleAcceptBooking(session.id)}
+                              className="px-3 py-1 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition-colors font-semibold flex items-center font-sans"
+                            >
+                              <CheckCircle className="h-3 w-3 mr-1" />
+                              Accept
+                            </button>
+                          </>
+                        )}
+                        {getBookingStatus(session.id) === 'accepted' && (
+                          <button 
+                            onClick={() => handleConfirmBooking(session.id)}
+                            className="px-3 py-1 bg-green-600 text-white text-sm rounded-full hover:bg-green-700 transition-colors font-semibold flex items-center font-sans"
+                          >
+                            <CheckCircle className="h-3 w-3 mr-1" />
+                            Confirm
+                          </button>
+                        )}
                         {session.type === 'online' ? (
                           <button className="px-3 py-1 bg-[#CB748E] text-white text-sm rounded-full hover:bg-[#d698ab] transition-colors font-semibold flex items-center font-sans">
                             <Video className="h-3 w-3 mr-1" />
@@ -561,19 +581,24 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                         )}
                         <button 
                           onClick={() => handleReschedule(session.id)}
-                          className="px-2 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold flex items-center font-sans"
+                          disabled={getBookingStatus(session.id) !== 'confirmed'}
+                          className={`px-3 py-1 text-sm rounded-full font-semibold flex items-center font-sans transition-colors ${
+                            getBookingStatus(session.id) === 'confirmed' 
+                              ? 'bg-[#CB748E] text-white hover:bg-[#d698ab]' 
+                              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                          }`}
                         >
                           <Edit className="h-3 w-3 mr-1" />
                           Edit
                         </button>
+                        <button 
+                          onClick={() => handleViewClientDetails(session.id)}
+                          className="px-2 py-1 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition-colors font-semibold flex items-center font-sans"
+                        >
+                          <User className="h-3 w-3 mr-1" />
+                          Client
+                        </button>
                       </div>
-                     <button 
-                       onClick={() => handleViewClientDetails(session.id)}
-                       className="px-2 py-1 bg-blue-600 text-white text-sm rounded-full hover:bg-blue-700 transition-colors font-semibold flex items-center font-sans"
-                     >
-                       <User className="h-3 w-3 mr-1" />
-                       Client
-                     </button>
                     </div>
                     
                     {session.notes && (
@@ -646,7 +671,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
               <div className="grid grid-cols-5 gap-6">
                 {weeklySchedule.map((day, index) => (
                   <div key={index} className="text-center">
-                    <div className={`p-6 rounded-2xl ${
+                    <div className={\`p-6 rounded-2xl ${
                       day.sessions > 0 
                         ? 'bg-pink-50 border border-pink-200' 
                         : 'bg-gray-100 border border-gray-200'
@@ -712,7 +737,7 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
               
               <div className="space-y-4">
                 {recentMessages.map((message) => (
-                  <div key={message.id} className={`p-4 rounded-2xl border ${
+                  <div key={message.id} className={\`p-4 rounded-2xl border ${
                     message.unread
                       ? 'bg-pink-50 border-pink-200'
                       : 'bg-gray-50 border-gray-200'
@@ -788,7 +813,6 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
       {/* Modals */}
       {showCalendar && <CalendarModal />}
       {rescheduleSession && <RescheduleModal />}
-      <ClientDetailsModal />
     </div>
   );
 }
