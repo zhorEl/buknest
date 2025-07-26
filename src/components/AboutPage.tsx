@@ -27,13 +27,6 @@ export default function AboutPage({ onPageChange }: AboutPageProps) {
       bio: 'Speech-language pathologist with expertise in autism spectrum disorders and early intervention.',
       avatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
       credentials: ['MS-SLP', 'BCBA', 'CCC-SLP']
-    },
-    {
-      name: 'Lisa Thompson',
-      role: 'Community Outreach Manager',
-      bio: 'Special education advocate working to make therapy services accessible to underserved communities.',
-      avatar: 'https://images.pexels.com/photos/5327647/pexels-photo-5327647.jpeg?auto=compress&cs=tinysrgb&w=400',
-      credentials: ['M.Ed Special Education', 'Community Health Worker']
     }
   ];
 
