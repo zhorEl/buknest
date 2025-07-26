@@ -695,13 +695,6 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                           <Edit className="h-4 w-4 mr-2" />
                           Reschedule
                         </button>
-                        <button
-                          onClick={() => handleMarkAsDone(booking.id)}
-                          className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
-                        >
-                          <CheckCircle className="h-4 w-4 mr-2" />
-                          Mark as Done
-                        </button>
                       </div>
                     )}
                     
@@ -715,6 +708,16 @@ export default function BookingsPage({ onPageChange, user }: BookingsPageProps) 
                       <MessageCircle className="h-4 w-4 mr-2" />
                       Contact Parent
                     </button>
+                    
+                    {getBookingStatus(booking.id) === 'confirmed' && (
+                      <button
+                        onClick={() => handleMarkAsDone(booking.id)}
+                        className="px-6 py-3 bg-[#698a60] text-white rounded-xl font-bold hover:bg-green-700 transition-colors flex items-center font-sans"
+                      >
+                        <CheckCircle className="h-4 w-4 mr-2" />
+                        Mark as Done
+                      </button>
+                    )}
                   </div>
                 </div>
               ) : (
