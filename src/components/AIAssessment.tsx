@@ -115,16 +115,16 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
         <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-12 left-20 opacity-45 animate-float" style={{ transform: 'translateX(-26.4rem)' }}>
+        <div className="absolute top-12 left-20 opacity-25 animate-float-slow" style={{ transform: 'translateX(-26.4rem)', animationDelay: '3s' }}>
           <img src="/pattern/pattern light pink with green.svg" alt="" className="w-132 h-132" />
         </div>
-        <div className="absolute top-20 right-16 opacity-40 animate-float" style={{ animationDelay: '1s', transform: 'translateX(24rem)' }}>
+        <div className="absolute top-20 right-16 opacity-22 animate-float-gentle" style={{ animationDelay: '8s', transform: 'translateX(24rem)' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-120 h-120" />
         </div>
-        <div className="absolute bottom-12 left-32 opacity-50 animate-float" style={{ animationDelay: '1.5s', transform: 'translateX(-21.6rem)' }}>
+        <div className="absolute bottom-12 left-32 opacity-28 animate-subtle-bounce" style={{ animationDelay: '12s', transform: 'translateX(-21.6rem)' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-108 h-108" />
         </div>
-        <div className="absolute top-32 left-8 opacity-35 animate-float" style={{ animationDelay: '2s', transform: 'translateX(-19.2rem)' }}>
+        <div className="absolute top-32 left-8 opacity-20 animate-float-gentle" style={{ animationDelay: '15s', transform: 'translateX(-19.2rem)' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-96 h-96" />
         </div>
         
@@ -155,13 +155,13 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden border border-white border-opacity-50 relative">
           {/* Chat Container Floating Elements */}
-          <div className="absolute -top-4 -right-4 opacity-40 animate-float" style={{ transform: 'translateX(19.2rem)' }}>
+          <div className="absolute -top-4 -right-4 opacity-22 animate-float-slow" style={{ transform: 'translateX(19.2rem)', animationDelay: '5s' }}>
             <img src="/pattern/pattern pink.svg" alt="" className="w-96 h-96" />
           </div>
-          <div className="absolute -bottom-4 -left-4 opacity-35 animate-float" style={{ animationDelay: '2s', transform: 'translateX(-21.6rem)' }}>
+          <div className="absolute -bottom-4 -left-4 opacity-20 animate-float-gentle" style={{ animationDelay: '10s', transform: 'translateX(-21.6rem)' }}>
             <img src="/pattern/pattern dark green.svg" alt="" className="w-108 h-108" />
           </div>
-          <div className="absolute top-1/2 -right-6 opacity-30 animate-float" style={{ animationDelay: '1s', transform: 'translateX(16.8rem)' }}>
+          <div className="absolute top-1/2 -right-6 opacity-18 animate-subtle-bounce" style={{ animationDelay: '7s', transform: 'translateX(16.8rem)' }}>
             <img src="/pattern/pattern light green.svg" alt="" className="w-84 h-84" />
           </div>
           
@@ -169,16 +169,16 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
           <div className="h-[70vh] min-h-[600px] max-h-[800px] overflow-y-auto p-8 space-y-6 relative scroll-smooth">
             {/* Subtle background pattern */}
             <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-10 left-10" style={{ transform: 'translateX(-14.4rem)' }}>
+              <div className="absolute top-10 left-10 animate-gentle-pulse" style={{ transform: 'translateX(-14.4rem)', animationDelay: '2s' }}>
                 <img src="/pattern/pattern light pink with green.svg" alt="" className="w-72 h-72" />
               </div>
-              <div className="absolute top-32 right-16" style={{ transform: 'translateX(12rem)' }}>
+              <div className="absolute top-32 right-16 animate-float-slow" style={{ transform: 'translateX(12rem)', animationDelay: '6s' }}>
                 <img src="/pattern/pattern light green.svg" alt="" className="w-60 h-60" />
               </div>
-              <div className="absolute bottom-20 left-20" style={{ transform: 'translateX(-13.2rem)' }}>
+              <div className="absolute bottom-20 left-20 animate-subtle-bounce" style={{ transform: 'translateX(-13.2rem)', animationDelay: '9s' }}>
                 <img src="/pattern/pattern pink.svg" alt="" className="w-66 h-66" />
               </div>
-              <div className="absolute bottom-40 right-12" style={{ transform: 'translateX(10.8rem)' }}>
+              <div className="absolute bottom-40 right-12 animate-float-gentle" style={{ transform: 'translateX(10.8rem)', animationDelay: '13s' }}>
                 <img src="/pattern/pattern dark green.svg" alt="" className="w-54 h-54" />
               </div>
             </div>
@@ -285,7 +285,7 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
           {!assessmentComplete && (
             <div className="border-t border-pink-200 p-6 bg-gradient-to-r from-pink-50 to-green-50 relative">
               {/* Input area decorative elements */}
-              <div className="absolute top-2 right-4 opacity-20">
+              <div className="absolute top-2 right-4 opacity-15 animate-gentle-pulse" style={{ animationDelay: '4s' }}>
                 <img src="/pattern/pattern pink.svg" alt="" className="w-48 h-48" />
               </div>
               
@@ -313,10 +313,10 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
 
         <div className="mt-6 text-center">
           <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-2xl p-4 border border-white border-opacity-50 shadow-lg relative">
-            <div className="absolute -top-2 -right-2 opacity-30" style={{ transform: 'translateX(4.8rem)' }}>
+            <div className="absolute -top-2 -right-2 opacity-18 animate-float-slow" style={{ transform: 'translateX(4.8rem)', animationDelay: '11s' }}>
               <img src="/pattern/pattern dark green.svg" alt="" className="w-24 h-24" />
             </div>
-            <div className="absolute -bottom-2 -left-2 opacity-25" style={{ transform: 'translateX(-4rem)' }}>
+            <div className="absolute -bottom-2 -left-2 opacity-15 animate-subtle-bounce" style={{ transform: 'translateX(-4rem)', animationDelay: '16s' }}>
               <img src="/pattern/pattern light pink with green.svg" alt="" className="w-20 h-20" />
             </div>
             <p className="text-sm text-green-700 font-readable">

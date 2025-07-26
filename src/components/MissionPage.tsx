@@ -103,16 +103,16 @@ export default function MissionPage({ onPageChange }: MissionPageProps) {
         <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-16 left-12 opacity-35 animate-pulse">
+        <div className="absolute top-16 left-12 opacity-20 animate-gentle-pulse" style={{ animationDelay: '3s' }}>
           <img src="/pattern/pattern light pink with green.svg" alt="" className="w-20 h-20" />
         </div>
-        <div className="absolute top-24 right-20 opacity-30 animate-bounce" style={{ animationDelay: '1s' }}>
+        <div className="absolute top-24 right-20 opacity-18 animate-subtle-bounce" style={{ animationDelay: '8s' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-18 h-18" />
         </div>
-        <div className="absolute bottom-16 left-24 opacity-40 animate-float" style={{ animationDelay: '2s' }}>
+        <div className="absolute bottom-16 left-24 opacity-22 animate-float-gentle" style={{ animationDelay: '12s' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-16 h-16" />
         </div>
-        <div className="absolute top-32 right-8 opacity-25 animate-pulse" style={{ animationDelay: '1.5s' }}>
+        <div className="absolute top-32 right-8 opacity-15 animate-gentle-pulse" style={{ animationDelay: '15s' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-14 h-14" />
         </div>
         
@@ -147,13 +147,13 @@ export default function MissionPage({ onPageChange }: MissionPageProps) {
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-rose-200 to-pink-200 rounded-full opacity-15 -translate-x-40 translate-y-40"></div>
         
         {/* Floating Pattern Elements */}
-        <div className="absolute top-20 left-16 opacity-30 animate-float">
+        <div className="absolute top-20 left-16 opacity-18 animate-float-slow" style={{ animationDelay: '5s' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-22 h-22" />
         </div>
-        <div className="absolute bottom-32 right-20 opacity-25 animate-bounce" style={{ animationDelay: '1s' }}>
+        <div className="absolute bottom-32 right-20 opacity-15 animate-subtle-bounce" style={{ animationDelay: '10s' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-18 h-18" />
         </div>
-        <div className="absolute top-40 right-32 opacity-35 animate-pulse" style={{ animationDelay: '2s' }}>
+        <div className="absolute top-40 right-32 opacity-20 animate-gentle-pulse" style={{ animationDelay: '14s' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-16 h-16" />
         </div>
         

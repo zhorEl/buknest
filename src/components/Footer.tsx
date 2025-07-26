@@ -40,16 +40,16 @@ export default function Footer({ onPageChange }: FooterProps) {
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
       {/* Background Pattern Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 left-10 opacity-5 animate-float">
+        <div className="absolute top-10 left-10 opacity-3 animate-float-slow" style={{ animationDelay: '6s' }}>
           <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
         </div>
-        <div className="absolute top-20 right-16 opacity-4 animate-float" style={{ animationDelay: '2s' }}>
+        <div className="absolute top-20 right-16 opacity-2 animate-float-gentle" style={{ animationDelay: '11s' }}>
           <img src="/pattern/pattern light green.svg" alt="" className="w-28 h-28" />
         </div>
-        <div className="absolute bottom-16 left-20 opacity-6 animate-float" style={{ animationDelay: '4s' }}>
+        <div className="absolute bottom-16 left-20 opacity-3 animate-subtle-bounce" style={{ animationDelay: '16s' }}>
           <img src="/pattern/pattern dark green.svg" alt="" className="w-24 h-24" />
         </div>
-        <div className="absolute bottom-10 right-12 opacity-5 animate-float" style={{ animationDelay: '1s' }}>
+        <div className="absolute bottom-10 right-12 opacity-2 animate-float-gentle" style={{ animationDelay: '4s' }}>
           <img src="/pattern/pattern light pink with green.svg" alt="" className="w-30 h-30" />
         </div>
       </div>
