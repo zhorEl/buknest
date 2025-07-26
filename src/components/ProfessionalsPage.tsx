@@ -117,6 +117,25 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
         <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
         <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
         
+        {/* Professional Page Floating Elements */}
+        <div className="absolute top-16 left-12 opacity-25 animate-pulse">
+          <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+            <circle cx="25" cy="25" r="20" fill="white" opacity="0.8"/>
+            <path d="M25 10V40M10 25H40" stroke="#CB748E" strokeWidth="3"/>
+          </svg>
+        </div>
+        <div className="absolute top-24 right-20 opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>
+          <svg width="45" height="45" viewBox="0 0 45 45" fill="none">
+            <path d="M22.5 5L27 15H37L29.5 21L32 31L22.5 26L13 31L15.5 21L8 15H18L22.5 5Z" fill="white" opacity="0.9"/>
+          </svg>
+        </div>
+        <div className="absolute bottom-16 left-24 opacity-30 animate-float" style={{ animationDelay: '2s' }}>
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+            <rect x="8" y="8" width="24" height="24" rx="12" fill="white" opacity="0.7"/>
+            <circle cx="20" cy="20" r="6" fill="#698a60"/>
+          </svg>
+        </div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
           <div className="flex justify-center items-center mb-6">
             <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
@@ -142,9 +161,39 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Background floating elements for main content */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-10 opacity-10 animate-pulse">
+            <svg width="60" height="60" viewBox="0 0 60 60" fill="none">
+              <circle cx="30" cy="30" r="25" fill="#d698ab"/>
+            </svg>
+          </div>
+          <div className="absolute top-40 right-16 opacity-8 animate-bounce" style={{ animationDelay: '1.5s' }}>
+            <svg width="55" height="55" viewBox="0 0 55 55" fill="none">
+              <path d="M27.5 5L32 18H45L35 26L39 39L27.5 33L16 39L20 26L10 18H23L27.5 5Z" fill="#698a60"/>
+            </svg>
+          </div>
+          <div className="absolute bottom-32 left-20 opacity-12 animate-float" style={{ animationDelay: '0.8s' }}>
+            <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
+              <rect x="10" y="10" width="30" height="30" rx="15" fill="#CB748E"/>
+            </svg>
+          </div>
+        </div>
 
         {/* Filters */}
-        <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg p-8 mb-8 border border-white border-opacity-50 font-handwritten">
+        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-8 border border-white border-opacity-50 font-handwritten relative">
+          {/* Filter section decorative elements */}
+          <div className="absolute -top-3 -right-3 opacity-20">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+              <circle cx="15" cy="15" r="12" fill="#d698ab"/>
+            </svg>
+          </div>
+          <div className="absolute -bottom-3 -left-3 opacity-15">
+            <svg width="35" height="35" viewBox="0 0 35 35" fill="none">
+              <path d="M17.5 5L20 12H27L21.5 16L23 23L17.5 20L12 23L13.5 16L8 12H15L17.5 5Z" fill="#698a60"/>
+            </svg>
+          </div>
+          
           <div className="flex items-center mb-4">
             <Filter className="h-6 w-6 text-green-600 mr-3" />
             <h3 className="text-2xl font-bold text-green-800">Find Your Perfect Match</h3>
@@ -156,7 +205,7 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
               <select
                 value={selectedSpecialization}
                 onChange={(e) => setSelectedSpecialization(e.target.value)}
-                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white shadow-sm font-readable"
+                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white bg-opacity-95 shadow-lg font-readable backdrop-blur-sm"
               >
                 {specializations.map(spec => (
                   <option key={spec} value={spec}>
@@ -171,7 +220,7 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white shadow-sm font-readable"
+                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white bg-opacity-95 shadow-lg font-readable backdrop-blur-sm"
               >
                 {locations.map(location => (
                   <option key={location} value={location}>
@@ -186,7 +235,7 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
               <select
                 value={selectedAvailability}
                 onChange={(e) => setSelectedAvailability(e.target.value)}
-                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white shadow-sm font-readable"
+                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white bg-opacity-95 shadow-lg font-readable backdrop-blur-sm"
               >
                 {availabilityOptions.map(option => (
                   <option key={option} value={option}>
@@ -201,13 +250,25 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
         {/* Professionals Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProfessionals.map((professional) => (
-            <div key={professional.id} className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-white border-opacity-50 font-handwritten">
+            <div key={professional.id} className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border border-white border-opacity-50 font-handwritten relative group">
+              {/* Card floating elements */}
+              <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-20 transition-opacity duration-300">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none">
+                  <circle cx="12.5" cy="12.5" r="10" fill="#d698ab"/>
+                </svg>
+              </div>
+              <div className="absolute -bottom-2 -left-2 opacity-0 group-hover:opacity-15 transition-opacity duration-300">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none">
+                  <path d="M15 3L17.5 10H25L19 14.5L21.5 21.5L15 17.5L8.5 21.5L11 14.5L5 10H12.5L15 3Z" fill="#698a60"/>
+                </svg>
+              </div>
+              
               <div className="p-8">
                 <div className="flex items-center mb-4">
                   <img
                     src={professional.avatar}
                     alt={professional.name}
-                    className="w-20 h-20 rounded-full object-cover mr-4 border-4 border-white shadow-lg"
+                    className="w-20 h-20 rounded-full object-cover mr-4 border-4 border-white shadow-xl ring-2 ring-pink-200"
                   />
                   <div>
                     <h3 className="text-xl font-bold text-green-800">{professional.name}</h3>
@@ -269,12 +330,12 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
                 <div className="flex space-x-2">
                   <button
                     onClick={() => onPageChange('bookings')}
-                    className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center"
+                    className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center border border-white border-opacity-20"
                   >
                     <Calendar className="h-4 w-4 mr-2" />
                     Book Session
                   </button>
-                  <button className="px-4 py-3 border-2 border-green-300 rounded-2xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105">
+                  <button className="px-4 py-3 border-2 border-green-300 rounded-2xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-lg bg-white bg-opacity-80 backdrop-blur-sm">
                     <MessageCircle className="h-4 w-4 text-green-600" />
                   </button>
                 </div>
@@ -285,7 +346,12 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
 
         {filteredProfessionals.length === 0 && (
           <div className="text-center py-16">
-            <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50">
+            <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
+              <div className="absolute -top-4 -right-4 opacity-20">
+                <svg width="35" height="35" viewBox="0 0 35 35" fill="none">
+                  <circle cx="17.5" cy="17.5" r="15" fill="#d698ab"/>
+                </svg>
+              </div>
               <div className="text-green-400 mb-6">
                 <Filter className="h-16 w-16 mx-auto" />
               </div>
@@ -297,7 +363,7 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
                   setSelectedLocation('all');
                   setSelectedAvailability('all');
                 }}
-                className="bg-gradient-to-r from-pink-400 to-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+                className="bg-gradient-to-r from-pink-400 to-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl font-handwritten border border-white border-opacity-20"
               >
                 Clear Filters
               </button>
