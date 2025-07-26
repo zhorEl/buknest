@@ -134,7 +134,7 @@ export default function AboutPage({ onPageChange }: AboutPageProps) {
               <div className="bg-white bg-opacity-80 backdrop-blur-sm rounded-3xl p-8 border border-white border-opacity-50">
                 <h3 className="text-2xl font-bold mb-4 font-handwritten" style={{ color: '#CB748E' }}>Our Solution</h3>
                 <p className="text-green-700 leading-relaxed font-readable" style={{ fontFamily: 'Calibri, sans-serif' }}>
-                  We created NESTY, an AI companion that provides immediate support and guidance, paired with a 
+                  We created NESTY, an AI companion that provides initial support and guidance, paired with a 
                   platform that connects families directly with verified professionals. Our approach combines the 
                   accessibility of technology with the irreplaceable value of human expertise.
                 </p>
