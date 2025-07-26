@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Users, DollarSign, Star, Clock, MessageCircle, FileText, TrendingUp, Bell, Award, BookOpen, Activity, Phone, Video, Home, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Users, DollarSign, Star, Clock, MessageCircle, FileText, TrendingUp, Bell, Award, BookOpen, Activity, Phone, Video, Home, CheckCircle, AlertCircle, MapPin, Navigation, Edit } from 'lucide-react';
 
 interface ProfessionalDashboardProps {
   user: any;
@@ -8,6 +8,8 @@ interface ProfessionalDashboardProps {
 
 export default function ProfessionalDashboard({ user, onPageChange }: ProfessionalDashboardProps) {
   const [selectedTimeframe, setSelectedTimeframe] = useState('week');
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [rescheduleSession, setRescheduleSession] = useState<string | null>(null);
 
   const stats = {
     totalSessions: 156,
@@ -161,6 +163,161 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
     }
   ];
 
+  const handleViewCalendar = () => {
+    setShowCalendar(true);
+  };
+
+  const handleNavigate = (address: string) => {
+    // Open Google Maps with the address
+    const encodedAddress = encodeURIComponent(address);
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodedAddress}`, '_blank');
+  };
+
+  const handleReschedule = (sessionId: string) => {
+    setRescheduleSession(sessionId);
+  };
+
+  const CalendarModal = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center p-6 border-b border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-900 font-handwritten">My Calendar</h2>
+          <button
+            onClick={() => setShowCalendar(false)}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            ✕
+          </button>
+        </div>
+        
+        <div className="p-6">
+          {/* Calendar Grid */}
+          <div className="grid grid-cols-7 gap-2 mb-6">
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+              <div key={day} className="text-center font-bold text-gray-600 p-2 font-sans">
+                {day}
+              </div>
+            ))}
+            
+            {/* Calendar Days */}
+            {Array.from({ length: 35 }, (_, i) => {
+              const day = i - 6; // Start from previous month
+              const isToday = day === 15;
+              const hasSession = [15, 16, 18, 20].includes(day);
+              
+              return (
+                <div
+                  key={i}
+                  className={`p-3 text-center rounded-lg cursor-pointer transition-colors font-sans ${
+                    day < 1 || day > 31
+                      ? 'text-gray-300'
+                      : isToday
+                      ? 'bg-[#CB748E] text-white font-bold'
+                      : hasSession
+                      ? 'bg-green-100 text-green-800 font-semibold'
+                      : 'hover:bg-gray-100'
+                  }`}
+                >
+                  {day > 0 && day <= 31 ? day : ''}
+                  {hasSession && day > 0 && day <= 31 && (
+                    <div className="w-2 h-2 bg-green-600 rounded-full mx-auto mt-1"></div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Today's Sessions */}
+          <div className="bg-gray-50 rounded-2xl p-6">
+            <h3 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Today's Sessions</h3>
+            <div className="space-y-3">
+              {upcomingSessions.slice(0, 2).map((session) => (
+                <div key={session.id} className="flex justify-between items-center p-3 bg-white rounded-lg">
+                  <div>
+                    <p className="font-semibold text-gray-800 font-sans">{session.time} - {session.childName}</p>
+                    <p className="text-sm text-gray-600 font-sans">{session.type === 'home-visit' ? 'Home Visit' : 'Online'}</p>
+                  </div>
+                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold font-sans">
+                    Scheduled
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const RescheduleModal = () => (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white rounded-3xl shadow-xl max-w-md w-full">
+        <div className="flex justify-between items-center p-6 border-b border-gray-200">
+          <h2 className="text-2xl font-bold text-gray-900 font-handwritten">Reschedule Session</h2>
+          <button
+            onClick={() => setRescheduleSession(null)}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            ✕
+          </button>
+        </div>
+        
+        <div className="p-6">
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">New Date</label>
+              <input
+                type="date"
+                className="w-full border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                min={new Date().toISOString().split('T')[0]}
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">New Time</label>
+              <select className="w-full border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans">
+                <option value="">Select time...</option>
+                <option value="09:00">9:00 AM</option>
+                <option value="10:00">10:00 AM</option>
+                <option value="11:00">11:00 AM</option>
+                <option value="14:00">2:00 PM</option>
+                <option value="15:00">3:00 PM</option>
+                <option value="16:00">4:00 PM</option>
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Reason for Reschedule</label>
+              <textarea
+                rows={3}
+                className="w-full border-2 border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                placeholder="Optional reason for rescheduling..."
+              ></textarea>
+            </div>
+          </div>
+          
+          <div className="flex space-x-3 mt-6">
+            <button
+              onClick={() => {
+                // Handle reschedule logic here
+                setRescheduleSession(null);
+              }}
+              className="flex-1 bg-[#CB748E] text-white px-4 py-2 rounded-xl font-bold hover:bg-[#d698ab] transition-colors font-sans"
+            >
+              Confirm Reschedule
+            </button>
+            <button
+              onClick={() => setRescheduleSession(null)}
+              className="px-4 py-2 border border-gray-300 rounded-xl font-bold hover:bg-gray-50 transition-colors font-sans"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -250,7 +407,10 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
             <div className="bg-white rounded-3xl shadow-lg p-8 border border-gray-200 font-handwritten">
               <div className="flex justify-between items-center mb-8">
                 <h3 className="text-2xl font-bold text-gray-800">Today's Schedule</h3>
-                <button className="text-[#CB748E] hover:text-[#d698ab] font-bold font-sans">
+                <button 
+                  onClick={handleViewCalendar}
+                  className="text-[#CB748E] hover:text-[#d698ab] font-bold font-sans"
+                >
                   View Calendar
                 </button>
               </div>
@@ -291,12 +451,19 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
                             Join Call
                           </button>
                         ) : (
-                          <button className="px-3 py-1 bg-[#CB748E] text-white text-sm rounded-full hover:bg-[#d698ab] transition-colors font-semibold flex items-center font-sans">
-                            <Home className="h-3 w-3 mr-1" />
+                          <button 
+                            onClick={() => handleNavigate(session.address)}
+                            className="px-3 py-1 bg-[#CB748E] text-white text-sm rounded-full hover:bg-[#d698ab] transition-colors font-semibold flex items-center font-sans"
+                          >
+                            <Navigation className="h-3 w-3 mr-1" />
                             Navigate
                           </button>
                         )}
-                        <button className="px-3 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold font-sans">
+                        <button 
+                          onClick={() => handleReschedule(session.id)}
+                          className="px-3 py-1 border border-gray-300 text-gray-700 text-sm rounded-full hover:bg-gray-50 transition-colors font-semibold font-sans"
+                        >
+                          <Edit className="h-3 w-3 mr-1" />
                           Reschedule
                         </button>
                       </div>
@@ -510,6 +677,10 @@ export default function ProfessionalDashboard({ user, onPageChange }: Profession
           </div>
         </div>
       </div>
+      
+      {/* Modals */}
+      {showCalendar && <CalendarModal />}
+      {rescheduleSession && <RescheduleModal />}
     </div>
   );
 }
