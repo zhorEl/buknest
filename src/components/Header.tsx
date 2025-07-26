@@ -132,6 +132,19 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
                         Dashboard
                       </button>
                       
+                     {user.role === 'professional' && (
+                       <button
+                         onClick={() => {
+                           onPageChange('my-profile');
+                           setIsUserDropdownOpen(false);
+                         }}
+                         className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 font-sans"
+                       >
+                         <User className="h-4 w-4 mr-3" />
+                         My Profile
+                       </button>
+                     )}
+                     
                       {user.role === 'parent' && (
                         <button
                           onClick={() => {

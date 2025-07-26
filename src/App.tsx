@@ -15,6 +15,7 @@ import ProfessionalDashboard from './components/dashboards/ProfessionalDashboard
 import AdminDashboard from './components/dashboards/AdminDashboard';
 import MyServicesPage from './components/MyServicesPage';
 import MyClientsPage from './components/MyClientsPage.tsx';
+import MyProfilePage from './components/MyProfilePage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -85,6 +86,8 @@ function App() {
         return <MyServicesPage user={user} onPageChange={setCurrentPage} />;
       case 'my-clients':
         return <MyClientsPage user={user} onPageChange={setCurrentPage} />;
+     case 'my-profile':
+       return <MyProfilePage user={user} onPageChange={setCurrentPage} />;
       default:
         return <HomePage onPageChange={setCurrentPage} />;
     }
