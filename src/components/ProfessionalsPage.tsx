@@ -4,9 +4,11 @@ import { Professional } from '../types';
 
 interface ProfessionalsPageProps {
   onPageChange: (page: string) => void;
+  user?: any;
+  onLogin?: () => void;
 }
 
-export default function ProfessionalsPage({ onPageChange }: ProfessionalsPageProps) {
+export default function ProfessionalsPage({ onPageChange, user, onLogin }: ProfessionalsPageProps) {
   const [selectedSpecialization, setSelectedSpecialization] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [selectedAvailability, setSelectedAvailability] = useState('all');
@@ -107,6 +109,17 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
     return matchesSpecialization && matchesLocation;
   });
 
+  const handleBookSession = () => {
+    if (!user) {
+      // If user is not logged in, redirect to login
+      if (onLogin) {
+        onLogin();
+      }
+      return;
+    }
+    // If user is logged in, proceed to bookings page
+    onPageChange('bookings');
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-green-50">
       {/* Hero Section */}
@@ -315,11 +328,11 @@ export default function ProfessionalsPage({ onPageChange }: ProfessionalsPagePro
 
                 <div className="flex space-x-2">
                   <button
-                    onClick={() => onPageChange('bookings')}
+                    onClick={handleBookSession}
                     className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center border border-white border-opacity-20"
                   >
                     <Calendar className="h-4 w-4 mr-2" />
-                    Book Session
+                    {user ? 'Book Session' : 'Sign In to Book'}
                   </button>
                   <button className="px-4 py-3 border-2 border-green-300 rounded-2xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-lg bg-white bg-opacity-80 backdrop-blur-sm">
                     <MessageCircle className="h-4 w-4 text-green-600" />

@@ -68,7 +68,7 @@ function App() {
       case 'mission':
         return <MissionPage onPageChange={setCurrentPage} />;
       case 'professionals':
-        return <ProfessionalsPage onPageChange={setCurrentPage} />;
+        return <ProfessionalsPage onPageChange={setCurrentPage} user={user} onLogin={handleShowLogin} />;
       case 'bookings':
         return <BookingsPage onPageChange={setCurrentPage} />;
       case 'signup':
