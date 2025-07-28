@@ -185,8 +185,8 @@ export default function AIAssessment({ onPageChange }: AIAssessmentProps) {
             
             {/* NESTY Introduction */}
             <div className="flex flex-col items-center py-8 border-b border-pink-200 relative z-10">
-              <div className="w-24 h-24 bg-gradient-to-br from-pink-200 to-green-200 rounded-full flex items-center justify-center mb-6 shadow-xl border-4 border-white">
-                <img src="/NESTY.svg" alt="NESTY" className="h-14 w-14" />
+              <div className="w-32 h-32 bg-gradient-to-br from-pink-200 to-green-200 rounded-full flex items-center justify-center mb-6 shadow-xl border-4 border-white overflow-hidden">
+                <img src="/NESTY.svg" alt="NESTY" className="h-24 w-24" />
               </div>
               <h3 className="text-2xl font-bold text-gray-800 mb-3 font-handwritten">NESTY</h3>
               <p className="text-gray-600 text-center max-w-md font-sans">
