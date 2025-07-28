@@ -168,6 +168,24 @@ export default function FloatingNestyChat() {
               <>
                 {/* Messages */}
                 <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-br from-pink-50 via-rose-50 to-green-50">
+                  {/* NESTY Introduction */}
+                  <div className="flex flex-col items-center py-6 border-b border-pink-200">
+                    <div className="w-20 h-20 bg-gradient-to-br from-pink-200 to-green-200 rounded-full flex items-center justify-center mb-4 shadow-lg border-4 border-white">
+                      <img src="/NESTY.svg" alt="NESTY" className="h-12 w-12" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 font-handwritten">NESTY</h3>
+                    <p className="text-sm text-gray-600 text-center font-sans">
+                      We're here to support you and your child's developmental journey.
+                    </p>
+                  </div>
+                  
+                  {/* Today Divider */}
+                  <div className="text-center">
+                    <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs font-semibold font-sans">
+                      Today
+                    </span>
+                  </div>
+                  
                   {messages.map((message) => (
                     <div
                       key={message.id}
