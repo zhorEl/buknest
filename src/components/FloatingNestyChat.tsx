@@ -200,7 +200,7 @@ export default function FloatingNestyChat() {
                           {message.type === 'user' ? (
                             <span className="text-white text-xs font-bold">U</span>
                           ) : (
-                            <img src="/NESTY.svg" alt="NESTY" className="h-4 w-4" />
+                            <img src="/NESTY.svg" alt="NESTY" className="w-full h-full object-cover" />
                           )}
                         </div>
                         <div className={`px-4 py-3 rounded-2xl shadow-md backdrop-blur-sm ${
@@ -217,8 +217,8 @@ export default function FloatingNestyChat() {
                   {isTyping && (
                     <div className="flex justify-start">
                       <div className="flex items-start space-x-3">
-                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center shadow-md border-2 border-white">
-                          <img src="/NESTY.svg" alt="NESTY" className="h-4 w-4" />
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gray-200 shadow-md border-2 border-white overflow-hidden">
+                          <img src="/NESTY.svg" alt="NESTY" className="w-full h-full object-cover" />
                         </div>
                         <div className="px-4 py-3 rounded-2xl bg-white border-2 border-gray-200 shadow-sm">
                           <div className="flex space-x-1">
