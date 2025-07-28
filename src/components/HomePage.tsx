@@ -176,8 +176,8 @@ export default function HomePage({ onPageChange }: HomePageProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative flex items-center min-h-[50vh]">
           <div className="text-center w-full">
             <div className="flex justify-center items-center mb-4">
-              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4">
-                <MessageCircle className="h-12 w-12 text-white" />
+              <div className="bg-white bg-opacity-20 backdrop-blur-sm rounded-full p-4 mr-4 w-20 h-20 overflow-hidden border-4 border-white shadow-lg">
+                <img src="/NESTY.svg" alt="NESTY" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h1 className="text-4xl md:text-6xl font-bold font-handwritten" style={{ color: '#CB748E' }}>
