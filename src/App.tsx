@@ -17,6 +17,7 @@ import MyServicesPage from './components/MyServicesPage';
 import MyClientsPage from './components/MyClientsPage.tsx';
 import MyProfilePage from './components/MyProfilePage';
 import KidsProfilePage from './components/KidsProfilePage';
+import FloatingNestyChat from './components/FloatingNestyChat';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -114,6 +115,7 @@ function App() {
       />
       {renderPage()}
       <Footer onPageChange={setCurrentPage} />
+      <FloatingNestyChat />
     </div>
   );
 }
