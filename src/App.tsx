@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { AuthProvider } from './components/AuthProvider';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import LoginModal from './components/LoginModal';
@@ -98,25 +99,27 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header 
-        currentPage={currentPage} 
-        onPageChange={setCurrentPage}
-        user={user}
-        onLogin={handleShowLogin}
-        onSignup={handleShowSignup}
-        onLogout={handleLogout}
-      />
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onLogin={handleLogin}
-        initialMode={loginModalMode}
-      />
-      {renderPage()}
-      <Footer onPageChange={setCurrentPage} />
-      <FloatingNestyChat />
-    </div>
+    <AuthProvider>
+      <div className="min-h-screen bg-gray-50">
+        <Header 
+          currentPage={currentPage} 
+          onPageChange={setCurrentPage}
+          user={user}
+          onLogin={handleShowLogin}
+          onSignup={handleShowSignup}
+          onLogout={handleLogout}
+        />
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          onLogin={handleLogin}
+          initialMode={loginModalMode}
+        />
+        {renderPage()}
+        <Footer onPageChange={setCurrentPage} />
+        <FloatingNestyChat />
+      </div>
+    </AuthProvider>
   );
 }
 
