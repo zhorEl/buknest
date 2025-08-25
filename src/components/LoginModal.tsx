@@ -65,8 +65,21 @@ export default function LoginModal({ isOpen, onClose, onLogin, initialMode = 'lo
         createdAt: new Date().toISOString(),
         lastLogin: new Date().toISOString()
       };
+    } else if (isLogin) {
+      // Handle real login with Supabase
+      // This would be implemented with actual Supabase auth
+      userData = {
+        id: Date.now().toString(),
+        email: formData.email,
+        name: formData.name || formData.email.split('@')[0],
+        role: userType,
+        avatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString()
+      };
     } else {
-      // Regular signup/login
+      // Handle real signup with Supabase
+      // This would be implemented with actual Supabase auth
       userData = {
         id: Date.now().toString(),
         email: formData.email,
