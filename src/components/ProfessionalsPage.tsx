@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Star, Calendar, Filter, ChevronDown, User, Award, Clock, Phone, Mail, Video, Home, Heart, Shield, CheckCircle } from 'lucide-react';
+import { Search, MapPin, Star, Calendar, Filter, ChevronDown, User, Award, Clock, Phone, Mail, Video, Home, Heart, Shield, CheckCircle, Settings, Globe, TrendingUp, X } from 'lucide-react';
+import Calendar from './Calendar';
 
 interface ProfessionalsPageProps {
   onPageChange: (page: string) => void;
