@@ -351,3 +351,60 @@ export const updateChildIntervention = async (id: string, updates: Partial<Child
   
   return { data, error }
 }
+
+// Professional functions
+export const getProfessionals = async () => {
+  const { data, error } = await supabase
+    .from('user_profiles')
+    .select(`
+      *,
+      professional_profiles (
+        title,
+        specializations,
+        hourly_rate,
+        experience_years,
+        bio,
+        credentials,
+        languages,
+        is_verified,
+        rating,
+        review_count,
+        total_sessions,
+        completed_sessions,
+        response_rate,
+        completion_rate,
+        average_response_time,
+        consultation_fee,
+        service_areas,
+        verification_status
+      ),
+      services (
+        id,
+        name,
+        description,
+        rate,
+        duration,
+        session_type,
+        category,
+        age_range,
+        is_active
+      ),
+      availability (
+        day_of_week,
+        start_time,
+        end_time,
+        is_available,
+        max_sessions_per_day
+      )
+    `)
+    .eq('role', 'professional')
+    .eq('is_active', true)
+    .order('created_at', { ascending: false })
+  
+  if (error) {
+    console.error('Error fetching professionals:', error)
+    return { data: [], error }
+  }
+  
+  return { data: data || [], error: null }
+}
