@@ -53,7 +53,7 @@ export default function LoginModal({ isOpen, onClose, onLogin, initialMode = 'lo
     if (formData.email === sampleCred.email && formData.password === sampleCred.password) {
       // Use sample user data
       userData = {
-        id: userType === 'parent' ? '1' : userType === 'professional' ? '2' : '3',
+        id: userType === 'parent' ? '550e8400-e29b-41d4-a716-446655440001' : userType === 'professional' ? '550e8400-e29b-41d4-a716-446655440002' : '550e8400-e29b-41d4-a716-446655440003',
         email: sampleCred.email,
         name: sampleCred.name,
         role: userType,
