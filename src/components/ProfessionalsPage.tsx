@@ -7,6 +7,14 @@ interface ProfessionalsPageProps {
   onLogin: () => void;
 }
 
+interface Child {
+  id: string;
+  name: string;
+  age: number;
+  conditions: string[];
+  avatar: string;
+}
+
 interface Professional {
   id: string;
   name: string;
@@ -43,6 +51,26 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
   const [sortBy, setSortBy] = useState('rating');
   const [selectedProfessional, setSelectedProfessional] = useState<Professional | null>(null);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [selectedChild, setSelectedChild] = useState<string>('');
+  const [selectedService, setSelectedService] = useState<string>('');
+
+  // Sample children data for parent users
+  const sampleChildren: Child[] = [
+    {
+      id: '1',
+      name: 'Emma Johnson',
+      age: 6,
+      conditions: ['Autism Spectrum Disorder', 'Speech Delay'],
+      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
+    },
+    {
+      id: '2',
+      name: 'Alex Johnson',
+      age: 4,
+      conditions: ['ADHD', 'Language Delay'],
+      avatar: 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400'
+    }
+  ];
 
   // Specializations based on intervention categories from database
   const specializations = [
@@ -607,6 +635,9 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
   const BookingModal = () => {
     if (!showBookingModal || !selectedProfessional) return null;
 
+    const selectedChildData = sampleChildren.find(child => child.id === selectedChild);
+    const selectedServiceData = selectedProfessional.services.find(service => service.id === selectedService);
+
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
@@ -636,13 +667,73 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
 
             <div className="space-y-6">
               <div>
+                <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Select Child</label>
+                <div className="space-y-3">
+                  {sampleChildren.map((child) => (
+                    <div
+                      key={child.id}
+                      onClick={() => setSelectedChild(child.id)}
+                      className={`border-2 rounded-xl p-4 cursor-pointer transition-all duration-300 ${
+                        selectedChild === child.id
+                          ? 'border-[#CB748E] bg-pink-50'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-center">
+                        <img
+                          src={child.avatar}
+                          alt={child.name}
+                          className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-white shadow-lg"
+                        />
+                        <div className="flex-1">
+                          <h4 className="font-bold text-gray-800 font-handwritten">{child.name}</h4>
+                          <p className="text-sm text-gray-600 font-sans">Age {child.age}</p>
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {child.conditions.slice(0, 2).map((condition, index) => (
+                              <span
+                                key={index}
+                                className="px-2 py-1 bg-pink-100 text-[#CB748E] text-xs rounded-full font-semibold font-sans"
+                              >
+                                {condition}
+                              </span>
+                            ))}
+                            {child.conditions.length > 2 && (
+                              <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full font-semibold font-sans">
+                                +{child.conditions.length - 2}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        {selectedChild === child.id && (
+                          <CheckCircle className="h-6 w-6 text-[#CB748E]" />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
                 <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Select Service</label>
                 <div className="space-y-3">
                   {selectedProfessional.services.map((service) => (
-                    <div key={service.id} className="border border-gray-200 rounded-xl p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                    <div 
+                      key={service.id}
+                      onClick={() => setSelectedService(service.id)}
+                      className={`border-2 rounded-xl p-4 cursor-pointer transition-all duration-300 ${
+                        selectedService === service.id
+                          ? 'border-[#698a60] bg-green-50'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
                       <div className="flex justify-between items-start">
                         <div>
-                          <h4 className="font-bold text-gray-800 font-handwritten">{service.name}</h4>
+                          <div className="flex items-center mb-2">
+                            <h4 className="font-bold text-gray-800 font-handwritten">{service.name}</h4>
+                            {selectedService === service.id && (
+                              <CheckCircle className="h-5 w-5 text-[#698a60] ml-2" />
+                            )}
+                          </div>
                           <p className="text-sm text-gray-600 font-sans">{service.description}</p>
                           <div className="flex items-center mt-2 text-sm text-gray-700 font-sans">
                             <Clock className="h-4 w-4 mr-1" />
@@ -696,15 +787,34 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
               <div className="flex space-x-4">
                 <button
                   onClick={() => {
+                    if (!selectedChild) {
+                      alert('Please select a child for this session.');
+                      return;
+                    }
+                    if (!selectedService) {
+                      alert('Please select a service for this session.');
+                      return;
+                    }
                     setShowBookingModal(false);
+                    setSelectedChild('');
+                    setSelectedService('');
                     onPageChange('bookings');
                   }}
-                  className="flex-1 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-4 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+                  className={`flex-1 px-6 py-4 rounded-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten ${
+                    selectedChild && selectedService
+                      ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                  disabled={!selectedChild || !selectedService}
                 >
                   Book Session
                 </button>
                 <button
-                  onClick={() => setShowBookingModal(false)}
+                  onClick={() => {
+                    setShowBookingModal(false);
+                    setSelectedChild('');
+                    setSelectedService('');
+                  }}
                   className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 text-gray-700 font-handwritten"
                 >
                   Cancel
