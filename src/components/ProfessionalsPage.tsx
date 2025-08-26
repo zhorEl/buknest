@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Star, Calendar, Filter, ChevronDown, User, Award, Clock, Phone, Mail, Video, Home, Heart, Shield, CheckCircle, Settings, Globe, TrendingUp, X } from 'lucide-react';
+import { Search, MapPin, Star, Calendar as CalendarIcon, Filter, ChevronDown, User, Award, Clock, Phone, Mail, Video, Home, Heart, Shield, CheckCircle, Settings, Globe, TrendingUp, X } from 'lucide-react';
 import Calendar from './Calendar';
 
 interface ProfessionalsPageProps {
@@ -1003,7 +1003,7 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
                 
                 <div className="space-y-3">
                   <div className="flex items-center text-gray-700 font-sans">
-                    <Calendar className="h-4 w-4 mr-2 text-gray-500" />
+                    <CalendarIcon className="h-4 w-4 mr-2 text-gray-500" />
                     <span className="text-sm">{professional.totalSessions} sessions completed</span>
                   </div>
                   
@@ -1046,7 +1046,7 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
                   onClick={() => handleBookSession(professional)}
                   className="flex-1 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten"
                 >
-                  <Calendar className="h-4 w-4 mr-2" />
+                  <CalendarIcon className="h-4 w-4 mr-2" />
                   Book Session
                 </button>
                 <button className="px-4 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center font-sans">
