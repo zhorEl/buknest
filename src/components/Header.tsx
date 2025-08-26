@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, User, Calendar, MessageCircle, LogIn, LogOut, Heart, Users, ChevronDown } from 'lucide-react';
+import { Menu, X, User, Calendar, MessageCircle, LogIn, LogOut, Heart, Users, ChevronDown, Activity } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
@@ -17,6 +17,7 @@ export default function Header({ currentPage, onPageChange, user, onLogin, onSig
   const navigation = [
     { name: 'Assessment with NESTY', id: 'assessment', icon: MessageCircle },
     { name: 'Find Professionals', id: 'professionals', icon: User },
+    { name: 'Interventions', id: 'interventions', icon: Activity },
     { name: 'About Us', id: 'about', icon: Users },
     { name: 'Our Mission', id: 'mission', icon: Heart },
   ];

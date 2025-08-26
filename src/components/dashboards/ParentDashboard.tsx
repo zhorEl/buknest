@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, User, MessageCircle, TrendingUp, Bell, Plus, Clock, Star, FileText, Baby, Activity, BookOpen, Users, Phone, MapPin, AlertCircle } from 'lucide-react';
+import { useChildren } from '../../hooks/useChildren';
+import { useChildInterventions } from '../../hooks/useInterventions';
 
 interface ParentDashboardProps {
   user: any;
@@ -7,10 +9,26 @@ interface ParentDashboardProps {
 }
 
 export default function ParentDashboard({ user, onPageChange }: ParentDashboardProps) {
+  const { children: dbChildren, loading: childrenLoading } = useChildren(user?.id);
   const [selectedChild, setSelectedChild] = useState('emma');
   const [filterByChild, setFilterByChild] = useState<string | null>(null);
+  const { childInterventions } = useChildInterventions(filterByChild);
 
-  const children = [
+  // Use database children if available, otherwise fallback to sample data
+  const children = dbChildren.length > 0 ? dbChildren.map(child => ({
+    id: child.id,
+    name: child.name,
+    age: child.age,
+    dateOfBirth: child.date_of_birth || '2018-03-15',
+    conditions: child.conditions || [],
+    nextSession: '2024-01-15 10:00 AM', // This would come from sessions table
+    recentProgress: 'Recent progress data', // This would come from session reports
+    avatar: child.avatar_url || 'https://images.pexels.com/photos/1620760/pexels-photo-1620760.jpeg?auto=compress&cs=tinysrgb&w=400',
+    progressScore: child.progress_score || 0,
+    totalSessions: child.total_sessions || 0,
+    favoriteActivities: child.favorite_activities || [],
+    emergencyContact: child.emergency_contact || 'No emergency contact set'
+  })) : [
     {
       id: 'emma',
       name: 'Emma',
@@ -277,6 +295,66 @@ export default function ParentDashboard({ user, onPageChange }: ParentDashboardP
               >
                 Show All Children
               </button>
+            </div>
+          </div>
+        )}
+
+        {/* Active Interventions Section */}
+        {childInterventions.length > 0 && (
+          <div className="bg-white rounded-3xl shadow-lg p-8 mb-8 border border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 font-handwritten">Active Interventions</h2>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {childInterventions.map((intervention: any) => (
+                <div key={intervention.id} className="border border-gray-200 rounded-2xl p-6 bg-gradient-to-br from-pink-50 to-green-50">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-gray-800 font-handwritten">{intervention.interventions?.name}</h3>
+                    <span className={`px-2 py-1 text-xs rounded-full font-bold font-sans ${
+                      intervention.status === 'active' ? 'bg-green-100 text-green-800' :
+                      intervention.status === 'completed' ? 'bg-blue-100 text-blue-800' :
+                      intervention.status === 'paused' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-red-100 text-red-800'
+                    }`}>
+                      {intervention.status}
+                    </span>
+                  </div>
+                  
+                  <p className="text-sm text-gray-700 mb-4 font-sans">{intervention.interventions?.description}</p>
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center text-xs text-gray-600 font-sans">
+                      <Calendar className="h-3 w-3 mr-2" />
+                      Started: {new Date(intervention.start_date).toLocaleDateString()}
+                    </div>
+                    <div className="flex items-center text-xs text-gray-600 font-sans">
+                      <User className="h-3 w-3 mr-2" />
+                      {intervention.user_profiles?.full_name || 'No professional assigned'}
+                    </div>
+                    <div className="flex items-center text-xs text-gray-600 font-sans">
+                      <Activity className="h-3 w-3 mr-2" />
+                      Frequency: {intervention.frequency}
+                    </div>
+                  </div>
+                  
+                  {intervention.goals && intervention.goals.length > 0 && (
+                    <div className="mt-4">
+                      <h4 className="text-sm font-bold text-gray-800 mb-2 font-handwritten">Goals:</h4>
+                      <div className="space-y-1">
+                        {intervention.goals.slice(0, 2).map((goal: string, index: number) => (
+                          <div key={index} className="text-xs text-gray-700 flex items-center font-sans">
+                            <div className="w-1 h-1 bg-[#CB748E] rounded-full mr-2"></div>
+                            {goal}
+                          </div>
+                        ))}
+                        {intervention.goals.length > 2 && (
+                          <div className="text-xs text-gray-600 font-sans">
+                            +{intervention.goals.length - 2} more goals
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         )}

@@ -19,6 +19,7 @@ import MyClientsPage from './components/MyClientsPage.tsx';
 import MyProfilePage from './components/MyProfilePage';
 import KidsProfilePage from './components/KidsProfilePage';
 import FloatingNestyChat from './components/FloatingNestyChat';
+import InterventionsPage from './components/InterventionsPage';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -93,6 +94,8 @@ function App() {
        return <MyProfilePage user={user} onPageChange={setCurrentPage} />;
       case 'kids-profile':
         return <KidsProfilePage user={user} onPageChange={setCurrentPage} />;
+      case 'interventions':
+        return <InterventionsPage user={user} onPageChange={setCurrentPage} />;
       default:
         return <HomePage onPageChange={setCurrentPage} />;
     }

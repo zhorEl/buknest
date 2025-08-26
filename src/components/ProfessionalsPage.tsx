@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, MapPin, Star, Calendar as CalendarIcon, Filter, ChevronDown, User, Award, Clock, Phone, Mail, Video, Home, Heart, Shield, CheckCircle, Settings, Globe, TrendingUp, X } from 'lucide-react';
 import Calendar from './Calendar';
+import { useInterventionCategories, useInterventions } from '../hooks/useInterventions';
 
 interface ProfessionalsPageProps {
   onPageChange: (page: string) => void;
@@ -46,6 +47,9 @@ interface Professional {
 }
 
 export default function ProfessionalsPage({ onPageChange, user, onLogin }: ProfessionalsPageProps) {
+  const { categories } = useInterventionCategories();
+  const { interventions } = useInterventions();
+  
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialization, setSelectedSpecialization] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
@@ -73,25 +77,8 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
     }
   ];
 
-  // Specializations based on intervention categories from database
-  const specializations = [
-    'all',
-    'Applied Behavior Analysis (ABA)',
-    'Speech and Language Therapy',
-    'Occupational Therapy (OT)',
-    'Developmental Therapy',
-    'Social Skills Training',
-    'Sensory Integration Therapy',
-    'Early Intervention',
-    'Special Education',
-    'Behavioral Therapy',
-    'Autism Spectrum Disorders',
-    'ADHD Support',
-    'Developmental Delays',
-    'Communication Disorders',
-    'Motor Skills Development',
-    'Parent Training and Support'
-  ];
+  // Get specializations from database
+  const specializations = ['all', ...categories.map(cat => cat.name)];
 
   // Mindanao locations
   const locations = [
