@@ -358,7 +358,7 @@ export const getProfessionals = async () => {
     .from('user_profiles')
     .select(`
       *,
-      professional_profiles (
+      professional_profiles!inner (
         title,
         specializations,
         hourly_rate,
@@ -366,6 +366,10 @@ export const getProfessionals = async () => {
         bio,
         credentials,
         languages,
+        profession,
+        education,
+        certifications,
+        service_areas,
         is_verified,
         rating,
         review_count,
@@ -374,8 +378,8 @@ export const getProfessionals = async () => {
         response_rate,
         completion_rate,
         average_response_time,
+        is_accepting_new_clients,
         consultation_fee,
-        service_areas,
         verification_status
       ),
       services (
@@ -387,6 +391,7 @@ export const getProfessionals = async () => {
         session_type,
         category,
         age_range,
+        max_sessions,
         is_active
       ),
       availability (
@@ -399,7 +404,7 @@ export const getProfessionals = async () => {
     `)
     .eq('role', 'professional')
     .eq('is_active', true)
-    .order('created_at', { ascending: false })
+    .order('created_at', { ascending: true })
   
   if (error) {
     console.error('Error fetching professionals:', error)

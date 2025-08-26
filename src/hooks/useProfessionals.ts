@@ -19,7 +19,7 @@ export const useProfessionals = () => {
         
         // Transform database data to match UI expectations
         const transformedData = data.map((prof: any) => {
-          const profile = prof.professional_profiles?.[0]
+          const profile = prof.professional_profiles
           const services = prof.services || []
           const availability = prof.availability || []
           
@@ -81,7 +81,7 @@ export const useProfessionals = () => {
         if (data) {
           // Transform and set data (same logic as above)
           const transformedData = data.map((prof: any) => {
-            const profile = prof.professional_profiles?.[0]
+            const profile = prof.professional_profiles
             const services = prof.services || []
             const availability = prof.availability || []
             
