@@ -98,21 +98,13 @@ export interface ChildIntervention {
   child_id: string
   intervention_id: string
   professional_id?: string
-  status: 'planned' | 'active' | 'paused' | 'completed' | 'discontinued'
+  status: 'active' | 'completed' | 'paused' | 'discontinued'
   start_date: string
   end_date?: string
-  target_goals: string[]
-  current_goals: string[]
+  goals: string[]
   progress_notes?: string
   effectiveness_rating?: number
-  parent_satisfaction?: number
-  sessions_completed: number
-  sessions_planned: number
-  home_practice_compliance?: number
-  materials_used: string[]
-  adaptations_made?: string
-  discontinuation_reason?: string
-  next_steps?: string
+  frequency: string
   is_active: boolean
   created_at: string
   updated_at: string
