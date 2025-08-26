@@ -1,864 +1,715 @@
 import React, { useState } from 'react';
-import { Star, MapPin, Clock, Filter, Calendar, MessageCircle, Award, User, Grid, List, X, CheckCircle, Home, Video, DollarSign, Users as UsersIcon } from 'lucide-react';
-import { Professional } from '../types';
+import { Search, MapPin, Star, Calendar, Filter, ChevronDown, User, Award, Clock, Phone, Mail, Video, Home, Heart, Shield, CheckCircle } from 'lucide-react';
 
 interface ProfessionalsPageProps {
   onPageChange: (page: string) => void;
   user?: any;
-  onLogin?: () => void;
+  onLogin: () => void;
+}
+
+interface Professional {
+  id: string;
+  name: string;
+  title: string;
+  specializations: string[];
+  rating: number;
+  reviewCount: number;
+  experience: number;
+  location: string;
+  avatar: string;
+  hourlyRate: number;
+  availability: string[];
+  bio: string;
+  credentials: string[];
+  languages: string[];
+  isVerified: boolean;
+  responseTime: string;
+  completionRate: number;
+  totalSessions: number;
+  services: {
+    id: string;
+    name: string;
+    description: string;
+    duration: number;
+    rate: number;
+    type: 'assessment' | 'therapy' | 'consultation';
+  }[];
 }
 
 export default function ProfessionalsPage({ onPageChange, user, onLogin }: ProfessionalsPageProps) {
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialization, setSelectedSpecialization] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
-  const [selectedAvailability, setSelectedAvailability] = useState('all');
-  const [viewMode, setViewMode] = useState<'thumbnail' | 'table'>('thumbnail');
-  const [showBookingModal, setShowBookingModal] = useState(false);
+  const [sortBy, setSortBy] = useState('rating');
   const [selectedProfessional, setSelectedProfessional] = useState<Professional | null>(null);
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [selectedSessionType, setSelectedSessionType] = useState<'home-visit' | 'online' | ''>('');
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedTime, setSelectedTime] = useState('');
-  const [specialRequests, setSpecialRequests] = useState('');
-  const [selectedChild, setSelectedChild] = useState('');
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [paymentDetails, setPaymentDetails] = useState({
-    cardNumber: '4111 1111 1111 1111',
-    expiryDate: '12/25',
-    cvv: '123',
-    cardName: 'John Doe',
-    gcashNumber: '09123456789',
-    mayaNumber: '09123456789'
-  });
-  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
-  // Sample children data for parent
-  const parentChildren = [
-    {
-      id: '1',
-      name: 'Emma Johnson',
-      age: 6,
-      conditions: ['Autism Spectrum Disorder', 'Speech Delay']
-    },
-    {
-      id: '2',
-      name: 'Alex Johnson',
-      age: 4,
-      conditions: ['ADHD', 'Language Delay']
-    }
+  // Specializations based on intervention categories from database
+  const specializations = [
+    'all',
+    'Applied Behavior Analysis (ABA)',
+    'Speech and Language Therapy',
+    'Occupational Therapy (OT)',
+    'Developmental Therapy',
+    'Social Skills Training',
+    'Sensory Integration Therapy',
+    'Early Intervention',
+    'Special Education',
+    'Behavioral Therapy',
+    'Autism Spectrum Disorders',
+    'ADHD Support',
+    'Developmental Delays',
+    'Communication Disorders',
+    'Motor Skills Development',
+    'Parent Training and Support'
   ];
 
+  // Mindanao locations
+  const locations = [
+    'all',
+    'Cagayan de Oro City',
+    'Davao City',
+    'General Santos City',
+    'Butuan City',
+    'Iligan City',
+    'Malaybalay City, Bukidnon',
+    'Valencia City, Bukidnon',
+    'Kidapawan City, Cotabato',
+    'Koronadal City, South Cotabato',
+    'Zamboanga City',
+    'Pagadian City',
+    'Dipolog City',
+    'Marawi City',
+    'Cotabato City'
+  ];
+
+  // Enhanced sample professionals with Philippine context
   const professionals: Professional[] = [
     {
       id: '1',
-      name: 'Dr. Sarah Johnson',
-      title: 'Speech-Language Pathologist',
-      specialization: ['Autism Spectrum Disorders', 'Language Delays', 'Articulation'],
+      name: 'Dr. Maria Santos-Cruz',
+      title: 'Licensed Speech-Language Pathologist',
+      specializations: ['Speech and Language Therapy', 'Autism Spectrum Disorders', 'Communication Disorders'],
       rating: 4.9,
       reviewCount: 127,
-      experience: 8,
-      location: 'New York, NY',
-      avatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
-      hourlyRate: 85,
-      availability: ['Mon', 'Wed', 'Fri'],
-      bio: 'Specialized in working with children on the autism spectrum and language development.',
-      credentials: ['MS-SLP', 'CCC-SLP', 'BCBA'],
+      experience: 12,
+      location: 'Cagayan de Oro City',
+      avatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 1500,
+      availability: ['Monday', 'Tuesday', 'Wednesday', 'Friday'],
+      bio: 'Dedicated speech-language pathologist with over 12 years of experience helping children with communication disorders. Specializes in autism spectrum disorders and developmental delays. Fluent in Filipino, English, and Cebuano.',
+      credentials: ['Licensed Speech-Language Pathologist (PRC)', 'Master\'s in Speech Pathology - University of the Philippines', 'ABA Certification', 'PECS Level 2 Certified'],
+      languages: ['Filipino', 'English', 'Cebuano'],
+      isVerified: true,
+      responseTime: '2 hours',
+      completionRate: 98,
+      totalSessions: 1247,
       services: [
         {
           id: '1',
-          name: 'Initial Speech Assessment',
-          description: 'Comprehensive evaluation of speech and language abilities',
+          name: 'Speech Assessment',
+          description: 'Comprehensive speech and language evaluation',
           duration: 90,
-          rate: 150,
-          type: 'consultation'
+          rate: 2000,
+          type: 'assessment'
         },
         {
           id: '2',
           name: 'Individual Speech Therapy',
-          description: 'One-on-one therapy sessions for speech development',
+          description: 'One-on-one speech therapy sessions',
           duration: 60,
-          rate: 85,
-          type: 'service'
+          rate: 1500,
+          type: 'therapy'
         },
         {
           id: '3',
-          name: 'Articulation Therapy',
-          description: 'Focused sessions on sound production and clarity',
+          name: 'Parent Consultation',
+          description: 'Guidance for parents on home practice',
           duration: 45,
-          rate: 75,
-          type: 'service'
+          rate: 1200,
+          type: 'consultation'
         }
       ]
     },
     {
       id: '2',
-      name: 'Maria Rodriguez',
-      title: 'Occupational Therapist',
-      specialization: ['Sensory Processing', 'Fine Motor Skills', 'Daily Living Skills'],
+      name: 'Dr. Jose Miguel Reyes',
+      title: 'Developmental Pediatrician',
+      specializations: ['Developmental Therapy', 'Autism Spectrum Disorders', 'ADHD Support', 'Early Intervention'],
       rating: 4.8,
       reviewCount: 89,
-      experience: 6,
-      location: 'Los Angeles, CA',
-      avatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
-      hourlyRate: 75,
-      availability: ['Tue', 'Thu', 'Sat'],
-      bio: 'Passionate about helping children develop independence through sensory integration therapy.',
-      credentials: ['OTR/L', 'SI Certified'],
+      experience: 15,
+      location: 'Davao City',
+      avatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 2000,
+      availability: ['Monday', 'Wednesday', 'Thursday', 'Saturday'],
+      bio: 'Board-certified developmental pediatrician specializing in autism spectrum disorders and ADHD. Provides comprehensive developmental assessments and treatment planning for children with special needs.',
+      credentials: ['Board Certified Developmental Pediatrician', 'Doctor of Medicine - University of Santo Tomas', 'Fellowship in Developmental Pediatrics - Philippine Children\'s Medical Center', 'ADHD Specialist Certification'],
+      languages: ['Filipino', 'English', 'Bisaya'],
+      isVerified: true,
+      responseTime: '4 hours',
+      completionRate: 96,
+      totalSessions: 892,
       services: [
         {
-          id: '1',
-          name: 'Occupational Therapy Assessment',
-          description: 'Comprehensive evaluation of motor skills and sensory processing',
+          id: '4',
+          name: 'Developmental Assessment',
+          description: 'Comprehensive developmental evaluation',
+          duration: 120,
+          rate: 3000,
+          type: 'assessment'
+        },
+        {
+          id: '5',
+          name: 'ADHD Consultation',
+          description: 'ADHD assessment and management planning',
           duration: 90,
-          rate: 120,
+          rate: 2500,
           type: 'consultation'
         },
         {
-          id: '2',
-          name: 'Sensory Integration Therapy',
-          description: 'Therapy focused on sensory processing and integration',
+          id: '6',
+          name: 'Follow-up Consultation',
+          description: 'Progress review and treatment adjustment',
           duration: 60,
-          rate: 75,
-          type: 'service'
-        },
-        {
-          id: '3',
-          name: 'Fine Motor Skills Training',
-          description: 'Targeted therapy for hand and finger coordination',
-          duration: 45,
-          rate: 65,
-          type: 'service'
+          rate: 2000,
+          type: 'consultation'
         }
       ]
     },
     {
       id: '3',
-      name: 'Dr. Michael Chen',
-      title: 'Developmental Pediatrician',
-      specialization: ['ADHD', 'Developmental Delays', 'Behavioral Issues'],
-      rating: 4.9,
+      name: 'Ms. Ana Luz Fernandez',
+      title: 'Licensed Occupational Therapist',
+      specializations: ['Occupational Therapy (OT)', 'Sensory Integration Therapy', 'Motor Skills Development'],
+      rating: 4.7,
       reviewCount: 156,
-      experience: 12,
-      location: 'Chicago, IL',
-      avatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
-      hourlyRate: 120,
-      availability: ['Mon', 'Tue', 'Thu'],
-      bio: 'Board-certified developmental pediatrician with expertise in neurodevelopmental disorders.',
-      credentials: ['MD', 'Board Certified Pediatrics', 'Developmental-Behavioral Pediatrics'],
+      experience: 8,
+      location: 'Malaybalay City, Bukidnon',
+      avatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 1300,
+      availability: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      bio: 'Licensed occupational therapist passionate about helping children develop essential life skills. Specializes in sensory integration and fine motor development for children with autism and developmental delays.',
+      credentials: ['Licensed Occupational Therapist (PRC)', 'Bachelor of Science in Occupational Therapy - Mindanao State University', 'Sensory Integration Certification', 'Pediatric OT Specialist'],
+      languages: ['Filipino', 'English', 'Hiligaynon'],
+      isVerified: true,
+      responseTime: '3 hours',
+      completionRate: 94,
+      totalSessions: 743,
       services: [
         {
-          id: '1',
-          name: 'Developmental Assessment',
-          description: 'Comprehensive medical evaluation of developmental milestones',
-          duration: 120,
-          rate: 200,
-          type: 'consultation'
-        },
-        {
-          id: '2',
-          name: 'ADHD Evaluation',
-          description: 'Specialized assessment for attention and behavioral concerns',
+          id: '7',
+          name: 'OT Assessment',
+          description: 'Occupational therapy evaluation',
           duration: 90,
-          rate: 150,
-          type: 'consultation'
+          rate: 1800,
+          type: 'assessment'
         },
         {
-          id: '3',
-          name: 'Follow-up Consultation',
-          description: 'Regular check-ups and treatment plan adjustments',
-          duration: 45,
-          rate: 120,
-          type: 'service'
+          id: '8',
+          name: 'Sensory Integration Therapy',
+          description: 'Individual sensory integration sessions',
+          duration: 60,
+          rate: 1300,
+          type: 'therapy'
         }
       ]
     },
     {
       id: '4',
-      name: 'Jennifer Williams',
-      title: 'Special Education Teacher',
-      specialization: ['Learning Disabilities', 'IEP Development', 'Academic Support'],
-      rating: 4.7,
-      reviewCount: 73,
+      name: 'Ms. Grace Villanueva-Tan',
+      title: 'Special Education Teacher (SPED)',
+      specializations: ['Special Education', 'Applied Behavior Analysis (ABA)', 'Social Skills Training', 'Academic Skills'],
+      rating: 4.6,
+      reviewCount: 203,
       experience: 10,
-      location: 'Houston, TX',
-      avatar: 'https://images.pexels.com/photos/5327647/pexels-photo-5327647.jpeg?auto=compress&cs=tinysrgb&w=400',
-      hourlyRate: 60,
-      availability: ['Mon', 'Wed', 'Fri', 'Sat'],
-      bio: 'Dedicated special education teacher helping children reach their academic potential.',
-      credentials: ['M.Ed Special Education', 'State Certified'],
+      location: 'General Santos City',
+      avatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 1000,
+      availability: ['Monday', 'Tuesday', 'Thursday', 'Friday'],
+      bio: 'Experienced special education teacher with expertise in ABA and academic skill development. Dedicated to creating inclusive learning environments for children with diverse learning needs.',
+      credentials: ['Licensed Professional Teacher (LPT)', 'Master\'s in Special Education - Central Mindanao University', 'ABA Therapist Certification', 'Autism Specialist Certificate'],
+      languages: ['Filipino', 'English', 'Cebuano'],
+      isVerified: true,
+      responseTime: '1 hour',
+      completionRate: 97,
+      totalSessions: 1156,
       services: [
         {
-          id: '1',
+          id: '9',
           name: 'Educational Assessment',
-          description: 'Comprehensive evaluation of learning abilities and challenges',
-          duration: 90,
-          rate: 80,
-          type: 'consultation'
+          description: 'Academic skills and learning needs evaluation',
+          duration: 120,
+          rate: 1500,
+          type: 'assessment'
         },
         {
-          id: '2',
-          name: 'Individual Tutoring',
-          description: 'One-on-one academic support and skill building',
+          id: '10',
+          name: 'ABA Therapy Session',
+          description: 'Applied behavior analysis therapy',
           duration: 60,
-          rate: 60,
-          type: 'service'
+          rate: 1000,
+          type: 'therapy'
+        }
+      ]
+    },
+    {
+      id: '5',
+      name: 'Dr. Roberto Dela Cruz',
+      title: 'Clinical Psychologist',
+      specializations: ['Behavioral Therapy', 'Autism Spectrum Disorders', 'ADHD Support', 'Parent Training and Support'],
+      rating: 4.8,
+      reviewCount: 94,
+      experience: 18,
+      location: 'Butuan City',
+      avatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 1800,
+      availability: ['Monday', 'Wednesday', 'Friday', 'Saturday'],
+      bio: 'Clinical psychologist specializing in autism spectrum disorders and behavioral interventions. Extensive experience in family therapy and parent training programs.',
+      credentials: ['Licensed Psychologist (PRC)', 'PhD in Clinical Psychology - Ateneo de Davao University', 'Board Certified Behavior Analyst (BCBA)', 'Family Therapy Certification'],
+      languages: ['Filipino', 'English', 'Bisaya'],
+      isVerified: true,
+      responseTime: '6 hours',
+      completionRate: 95,
+      totalSessions: 567,
+      services: [
+        {
+          id: '11',
+          name: 'Psychological Assessment',
+          description: 'Comprehensive psychological evaluation',
+          duration: 150,
+          rate: 3500,
+          type: 'assessment'
         },
         {
-          id: '3',
-          name: 'IEP Development Support',
-          description: 'Assistance with Individualized Education Program planning',
+          id: '12',
+          name: 'Behavioral Therapy',
+          description: 'Individual behavioral intervention sessions',
+          duration: 60,
+          rate: 1800,
+          type: 'therapy'
+        }
+      ]
+    },
+    {
+      id: '6',
+      name: 'Ms. Jennifer Lim-Garcia',
+      title: 'Physical Therapist',
+      specializations: ['Motor Skills Development', 'Developmental Therapy', 'Early Intervention'],
+      rating: 4.5,
+      reviewCount: 78,
+      experience: 6,
+      location: 'Iligan City',
+      avatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 1200,
+      availability: ['Tuesday', 'Wednesday', 'Thursday', 'Saturday'],
+      bio: 'Licensed physical therapist focused on pediatric development and motor skills enhancement. Experienced in working with children with cerebral palsy, developmental delays, and motor coordination issues.',
+      credentials: ['Licensed Physical Therapist (PRC)', 'Bachelor of Science in Physical Therapy - Mindanao State University', 'Pediatric Physical Therapy Certification', 'NDT Certification'],
+      languages: ['Filipino', 'English', 'Maranao'],
+      isVerified: true,
+      responseTime: '4 hours',
+      completionRate: 92,
+      totalSessions: 445,
+      services: [
+        {
+          id: '13',
+          name: 'Motor Skills Assessment',
+          description: 'Gross and fine motor skills evaluation',
+          duration: 90,
+          rate: 1600,
+          type: 'assessment'
+        },
+        {
+          id: '14',
+          name: 'Physical Therapy Session',
+          description: 'Individual motor development therapy',
+          duration: 60,
+          rate: 1200,
+          type: 'therapy'
+        }
+      ]
+    },
+    {
+      id: '7',
+      name: 'Ms. Catherine Morales-Dizon',
+      title: 'Registered Behavior Technician (RBT)',
+      specializations: ['Applied Behavior Analysis (ABA)', 'Behavioral Therapy', 'Social Skills Training'],
+      rating: 4.4,
+      reviewCount: 112,
+      experience: 4,
+      location: 'Valencia City, Bukidnon',
+      avatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 800,
+      availability: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      bio: 'Certified behavior technician specializing in ABA therapy for children with autism. Passionate about creating positive learning environments and supporting families in their journey.',
+      credentials: ['Registered Behavior Technician (RBT)', 'Bachelor of Science in Psychology - Central Mindanao University', 'ABA Training Certificate', 'First Aid/CPR Certified'],
+      languages: ['Filipino', 'English', 'Cebuano'],
+      isVerified: true,
+      responseTime: '2 hours',
+      completionRate: 96,
+      totalSessions: 623,
+      services: [
+        {
+          id: '15',
+          name: 'ABA Therapy Session',
+          description: 'Applied behavior analysis intervention',
+          duration: 90,
+          rate: 1200,
+          type: 'therapy'
+        },
+        {
+          id: '16',
+          name: 'Social Skills Group',
+          description: 'Group social skills training',
+          duration: 60,
+          rate: 800,
+          type: 'therapy'
+        }
+      ]
+    },
+    {
+      id: '8',
+      name: 'Dr. Mark Anthony Gonzales',
+      title: 'Developmental Pediatrician',
+      specializations: ['Developmental Therapy', 'Autism Spectrum Disorders', 'ADHD Support', 'Early Intervention'],
+      rating: 4.9,
+      reviewCount: 67,
+      experience: 20,
+      location: 'Kidapawan City, Cotabato',
+      avatar: 'https://images.pexels.com/photos/5327656/pexels-photo-5327656.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 2500,
+      availability: ['Monday', 'Wednesday', 'Friday'],
+      bio: 'Senior developmental pediatrician with two decades of experience in diagnosing and treating children with developmental disorders. Advocates for early intervention and family-centered care.',
+      credentials: ['Board Certified Developmental Pediatrician', 'Doctor of Medicine - Davao Medical School Foundation', 'Fellowship in Developmental Pediatrics - Philippine General Hospital', 'Autism Diagnostic Certification'],
+      languages: ['Filipino', 'English', 'Hiligaynon'],
+      isVerified: true,
+      responseTime: '8 hours',
+      completionRate: 99,
+      totalSessions: 234,
+      services: [
+        {
+          id: '17',
+          name: 'Comprehensive Developmental Assessment',
+          description: 'Full developmental evaluation and diagnosis',
+          duration: 180,
+          rate: 4500,
+          type: 'assessment'
+        },
+        {
+          id: '18',
+          name: 'Developmental Consultation',
+          description: 'Treatment planning and family guidance',
+          duration: 90,
+          rate: 2500,
+          type: 'consultation'
+        }
+      ]
+    },
+    {
+      id: '9',
+      name: 'Ms. Rosalie Magbanua-Torres',
+      title: 'Early Intervention Specialist',
+      specializations: ['Early Intervention', 'Developmental Therapy', 'Parent Training and Support', 'Motor Skills Development'],
+      rating: 4.6,
+      reviewCount: 145,
+      experience: 9,
+      location: 'Koronadal City, South Cotabato',
+      avatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 1100,
+      availability: ['Monday', 'Tuesday', 'Thursday', 'Friday', 'Saturday'],
+      bio: 'Early intervention specialist dedicated to supporting infants and toddlers with developmental delays. Strong advocate for family-centered intervention and community-based services.',
+      credentials: ['Early Intervention Specialist Certification', 'Master\'s in Special Education - Notre Dame University', 'Infant Development Specialist', 'Family Service Coordination Certificate'],
+      languages: ['Filipino', 'English', 'Hiligaynon', 'T\'boli'],
+      isVerified: true,
+      responseTime: '3 hours',
+      completionRate: 93,
+      totalSessions: 789,
+      services: [
+        {
+          id: '19',
+          name: 'Early Intervention Assessment',
+          description: 'Developmental screening for infants and toddlers',
+          duration: 90,
+          rate: 1500,
+          type: 'assessment'
+        },
+        {
+          id: '20',
+          name: 'Family-Centered Therapy',
+          description: 'Home-based early intervention services',
           duration: 75,
-          rate: 70,
-          type: 'service'
+          rate: 1100,
+          type: 'therapy'
+        }
+      ]
+    },
+    {
+      id: '10',
+      name: 'Ms. Aileen Delos Santos',
+      title: 'Music Therapist',
+      specializations: ['Developmental Therapy', 'Social Skills Training', 'Communication Disorders', 'Sensory Integration Therapy'],
+      rating: 4.7,
+      reviewCount: 91,
+      experience: 7,
+      location: 'Zamboanga City',
+      avatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 1000,
+      availability: ['Monday', 'Wednesday', 'Thursday', 'Friday'],
+      bio: 'Certified music therapist using music as a therapeutic tool to enhance communication, social skills, and emotional expression in children with special needs.',
+      credentials: ['Board Certified Music Therapist', 'Bachelor of Music Therapy - University of the Philippines', 'Neurologic Music Therapy Certification', 'Autism Music Therapy Specialist'],
+      languages: ['Filipino', 'English', 'Chavacano', 'Cebuano'],
+      isVerified: true,
+      responseTime: '5 hours',
+      completionRate: 91,
+      totalSessions: 512,
+      services: [
+        {
+          id: '21',
+          name: 'Music Therapy Assessment',
+          description: 'Musical and developmental assessment',
+          duration: 60,
+          rate: 1200,
+          type: 'assessment'
+        },
+        {
+          id: '22',
+          name: 'Individual Music Therapy',
+          description: 'One-on-one music therapy sessions',
+          duration: 45,
+          rate: 1000,
+          type: 'therapy'
+        }
+      ]
+    },
+    {
+      id: '11',
+      name: 'Dr. Patricia Ramos-Aquino',
+      title: 'Child Psychiatrist',
+      specializations: ['Behavioral Therapy', 'ADHD Support', 'Autism Spectrum Disorders', 'Parent Training and Support'],
+      rating: 4.8,
+      reviewCount: 73,
+      experience: 14,
+      location: 'Dipolog City',
+      avatar: 'https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 2200,
+      availability: ['Tuesday', 'Wednesday', 'Friday', 'Saturday'],
+      bio: 'Board-certified child psychiatrist specializing in neurodevelopmental disorders. Provides comprehensive psychiatric evaluation and medication management for children with complex needs.',
+      credentials: ['Board Certified Child Psychiatrist', 'Doctor of Medicine - Ateneo School of Medicine', 'Residency in Psychiatry - National Center for Mental Health', 'Child Psychiatry Fellowship - Philippine General Hospital'],
+      languages: ['Filipino', 'English', 'Cebuano'],
+      isVerified: true,
+      responseTime: '12 hours',
+      completionRate: 98,
+      totalSessions: 298,
+      services: [
+        {
+          id: '23',
+          name: 'Psychiatric Evaluation',
+          description: 'Comprehensive mental health assessment',
+          duration: 120,
+          rate: 3500,
+          type: 'assessment'
+        },
+        {
+          id: '24',
+          name: 'Medication Management',
+          description: 'Psychiatric medication consultation',
+          duration: 60,
+          rate: 2200,
+          type: 'consultation'
+        }
+      ]
+    },
+    {
+      id: '12',
+      name: 'Ms. Michelle Cabrera-Yap',
+      title: 'Art Therapist',
+      specializations: ['Developmental Therapy', 'Social Skills Training', 'Communication Disorders', 'Behavioral Therapy'],
+      rating: 4.5,
+      reviewCount: 86,
+      experience: 5,
+      location: 'Pagadian City',
+      avatar: 'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400',
+      hourlyRate: 900,
+      availability: ['Monday', 'Tuesday', 'Wednesday', 'Thursday'],
+      bio: 'Creative arts therapist using visual arts to help children express emotions and develop communication skills. Specializes in working with non-verbal children and those with emotional regulation challenges.',
+      credentials: ['Registered Art Therapist', 'Master\'s in Art Therapy - De La Salle University', 'Play Therapy Certification', 'Trauma-Informed Care Certificate'],
+      languages: ['Filipino', 'English', 'Cebuano'],
+      isVerified: true,
+      responseTime: '4 hours',
+      completionRate: 89,
+      totalSessions: 387,
+      services: [
+        {
+          id: '25',
+          name: 'Art Therapy Assessment',
+          description: 'Creative expression and emotional assessment',
+          duration: 75,
+          rate: 1100,
+          type: 'assessment'
+        },
+        {
+          id: '26',
+          name: 'Individual Art Therapy',
+          description: 'Creative arts therapy sessions',
+          duration: 60,
+          rate: 900,
+          type: 'therapy'
         }
       ]
     }
   ];
 
-  const specializations = [
-    'all',
-    'Speech Therapy',
-    'Occupational Therapy',
-    'Developmental Pediatrics',
-    'Special Education'
-  ];
-
-  const locations = [
-    'all',
-    'New York, NY',
-    'Los Angeles, CA',
-    'Chicago, IL',
-    'Houston, TX'
-  ];
-
-  const availabilityOptions = [
-    'all',
-    'Today',
-    'This Week',
-    'Weekends'
-  ];
-
   const filteredProfessionals = professionals.filter(professional => {
+    const matchesSearch = professional.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         professional.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         professional.specializations.some(spec => spec.toLowerCase().includes(searchTerm.toLowerCase()));
+    
     const matchesSpecialization = selectedSpecialization === 'all' || 
-      professional.title.toLowerCase().includes(selectedSpecialization.toLowerCase()) ||
-      professional.specialization.some(spec => spec.toLowerCase().includes(selectedSpecialization.toLowerCase()));
+                                 professional.specializations.includes(selectedSpecialization);
     
     const matchesLocation = selectedLocation === 'all' || professional.location === selectedLocation;
     
-    return matchesSpecialization && matchesLocation;
+    return matchesSearch && matchesSpecialization && matchesLocation;
   });
 
-  const handleBookSession = (professional?: Professional) => {
+  const sortedProfessionals = [...filteredProfessionals].sort((a, b) => {
+    switch (sortBy) {
+      case 'rating':
+        return b.rating - a.rating;
+      case 'experience':
+        return b.experience - a.experience;
+      case 'price-low':
+        return a.hourlyRate - b.hourlyRate;
+      case 'price-high':
+        return b.hourlyRate - a.hourlyRate;
+      case 'name':
+        return a.name.localeCompare(b.name);
+      default:
+        return 0;
+    }
+  });
+
+  const handleBookSession = (professional: Professional) => {
     if (!user) {
-      // If user is not logged in, redirect to login
-      if (onLogin) {
-        onLogin();
-      }
+      onLogin();
       return;
     }
-    // If user is logged in, show booking modal
-    if (professional) {
-      setSelectedProfessional(professional);
-      setShowBookingModal(true);
-    }
-  };
-
-  const handleServiceToggle = (serviceId: string) => {
-    setSelectedServices(prev => 
-      prev.includes(serviceId) 
-        ? prev.filter(id => id !== serviceId)
-        : [...prev, serviceId]
-    );
-  };
-
-  const calculateTotal = () => {
-    if (!selectedProfessional) return 0;
-    return selectedServices.reduce((total, serviceId) => {
-      const service = selectedProfessional.services?.find(s => s.id === serviceId);
-      return total + (service?.rate || 0);
-    }, 0);
-  };
-
-  const handleBookingSubmit = () => {
-    if (!selectedProfessional || selectedServices.length === 0 || !selectedSessionType || !selectedDate || !selectedTime || !selectedChild) {
-      alert('Please fill in all required fields including child selection');
+    
+    if (user.role !== 'parent') {
+      alert('Only parents/guardians can book sessions. Please log in with a parent account.');
       return;
     }
-
-    // Show payment modal
-    setShowPaymentModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedServices([]);
-    setSelectedSessionType('');
-    setSelectedDate('');
-    setSelectedTime('');
-    setSpecialRequests('');
-    setSelectedChild('');
-    setShowBookingModal(false);
-    setSelectedProfessional(null);
-    setShowPaymentModal(false);
-    setPaymentMethod('');
-    setIsProcessingPayment(false);
-    setPaymentSuccess(false);
-  };
-
-  const handlePaymentSubmit = () => {
-    if (!paymentMethod) {
-      alert('Please select a payment method');
-      return;
-    }
-
-    setIsProcessingPayment(true);
-
-    // Simulate payment processing
-    setTimeout(() => {
-      setIsProcessingPayment(false);
-      setPaymentSuccess(true);
-      
-      // Show success for 2 seconds then close
-      setTimeout(() => {
-        // Here you would typically submit the booking to your backend
-        console.log('Booking submitted:', {
-          professional: selectedProfessional?.name,
-          child: parentChildren.find(c => c.id === selectedChild)?.name,
-          services: selectedServices,
-          sessionType: selectedSessionType,
-          date: selectedDate,
-          time: selectedTime,
-          specialRequests,
-          paymentMethod,
-          total: calculateTotal()
-        });
-
-        handleCloseModal();
-        alert('Booking confirmed! Payment successful. The professional will contact you to confirm the session details.');
-      }, 2000);
-    }, 3000);
-  };
-
-  const PaymentModal = () => {
-    if (!showPaymentModal || !selectedProfessional) return null;
-
-    return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="flex justify-between items-center p-6 border-b border-gray-200">
-            <h2 className="text-3xl font-bold text-gray-900 font-handwritten">Payment</h2>
-            <button
-              onClick={handleCloseModal}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <X className="h-6 w-6 text-gray-500" />
-            </button>
-          </div>
-          
-          <div className="p-8">
-            {paymentSuccess ? (
-              <div className="text-center">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckCircle className="h-12 w-12 text-green-600" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">Payment Successful!</h3>
-                <p className="text-gray-600 mb-6 font-sans">Your booking has been confirmed. The professional will contact you soon.</p>
-              </div>
-            ) : isProcessingPayment ? (
-              <div className="text-center">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6 animate-pulse">
-                  <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">Processing Payment...</h3>
-                <p className="text-gray-600 font-sans">Please wait while we process your payment securely.</p>
-              </div>
-            ) : (
-              <>
-                {/* Booking Summary */}
-                <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200 mb-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4 font-handwritten">Booking Summary</h3>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700 font-sans">Professional:</span>
-                      <span className="font-bold text-gray-800 font-sans">{selectedProfessional.name}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700 font-sans">Child:</span>
-                      <span className="font-bold text-gray-800 font-sans">
-                        {parentChildren.find(c => c.id === selectedChild)?.name || 'Not selected'}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700 font-sans">Date & Time:</span>
-                      <span className="font-bold text-gray-800 font-sans">{selectedDate} at {selectedTime}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-700 font-sans">Session Type:</span>
-                      <span className="font-bold text-gray-800 font-sans capitalize">{selectedSessionType?.replace('-', ' ')}</span>
-                    </div>
-                    <div className="border-t border-gray-300 pt-2 mt-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-lg font-bold text-gray-800 font-handwritten">Total Amount:</span>
-                        <span className="text-2xl font-bold text-[#698a60] font-handwritten">₱{calculateTotal()}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Payment Methods */}
-                <div className="mb-6">
-                  <h4 className="text-lg font-bold text-gray-800 mb-4 font-handwritten">Select Payment Method</h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('card')}
-                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
-                        paymentMethod === 'card'
-                          ? 'border-[#CB748E] bg-pink-50'
-                          : 'border-gray-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="font-bold font-sans">Credit/Debit Card</div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('gcash')}
-                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
-                        paymentMethod === 'gcash'
-                          ? 'border-[#698a60] bg-green-50'
-                          : 'border-gray-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="font-bold font-sans">GCash</div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod('maya')}
-                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
-                        paymentMethod === 'maya'
-                          ? 'border-[#CB748E] bg-pink-50'
-                          : 'border-gray-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="font-bold font-sans">Maya</div>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Payment Details */}
-                {paymentMethod === 'card' && (
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Card Number</label>
-                      <input
-                        type="text"
-                        value={paymentDetails.cardNumber}
-                        onChange={(e) => setPaymentDetails({...paymentDetails, cardNumber: e.target.value})}
-                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                        placeholder="1234 5678 9012 3456"
-                      />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Expiry Date</label>
-                        <input
-                          type="text"
-                          value={paymentDetails.expiryDate}
-                          onChange={(e) => setPaymentDetails({...paymentDetails, expiryDate: e.target.value})}
-                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                          placeholder="MM/YY"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">CVV</label>
-                        <input
-                          type="text"
-                          value={paymentDetails.cvv}
-                          onChange={(e) => setPaymentDetails({...paymentDetails, cvv: e.target.value})}
-                          className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                          placeholder="123"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Cardholder Name</label>
-                      <input
-                        type="text"
-                        value={paymentDetails.cardName}
-                        onChange={(e) => setPaymentDetails({...paymentDetails, cardName: e.target.value})}
-                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                        placeholder="John Doe"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {paymentMethod === 'gcash' && (
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">GCash Number</label>
-                      <input
-                        type="text"
-                        value={paymentDetails.gcashNumber}
-                        onChange={(e) => setPaymentDetails({...paymentDetails, gcashNumber: e.target.value})}
-                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#698a60] focus:border-transparent font-sans"
-                        placeholder="09123456789"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {paymentMethod === 'maya' && (
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-2 font-sans">Maya Number</label>
-                      <input
-                        type="text"
-                        value={paymentDetails.mayaNumber}
-                        onChange={(e) => setPaymentDetails({...paymentDetails, mayaNumber: e.target.value})}
-                        className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                        placeholder="09123456789"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {/* Action Buttons */}
-                <div className="flex space-x-4 pt-6 border-t border-gray-200">
-                  <button
-                    onClick={handlePaymentSubmit}
-                    disabled={!paymentMethod}
-                    className={`flex-1 px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten ${
-                      paymentMethod
-                        ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
-                  >
-                    <CheckCircle className="h-5 w-5 mr-2" />
-                    Pay ₱{calculateTotal()}
-                  </button>
-                  <button
-                    onClick={handleCloseModal}
-                    className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 text-gray-700 flex items-center justify-center font-handwritten"
-                  >
-                    <X className="h-5 w-5 mr-2" />
-                    Cancel
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    );
+    
+    setSelectedProfessional(professional);
+    setShowBookingModal(true);
   };
 
   const BookingModal = () => {
     if (!showBookingModal || !selectedProfessional) return null;
 
-    const consultations = selectedProfessional.services?.filter(s => s.type === 'consultation') || [];
-    const services = selectedProfessional.services?.filter(s => s.type === 'service') || [];
-    const timeSlots = ['9:00 AM', '10:00 AM', '11:00 AM', '2:00 PM', '3:00 PM', '4:00 PM'];
-
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-3xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-3xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           <div className="flex justify-between items-center p-6 border-b border-gray-200">
             <h2 className="text-3xl font-bold text-gray-900 font-handwritten">Book Session</h2>
             <button
-              onClick={handleCloseModal}
+              onClick={() => setShowBookingModal(false)}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
             >
-              <X className="h-6 w-6 text-gray-500" />
+              ✕
             </button>
           </div>
           
           <div className="p-8">
-            {/* Professional Info */}
-            <div className="flex items-center mb-8 p-6 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
+            <div className="flex items-center mb-6 p-4 bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl border border-pink-200">
               <img
                 src={selectedProfessional.avatar}
                 alt={selectedProfessional.name}
-                className="w-20 h-20 rounded-full object-cover mr-6 border-4 border-white shadow-lg"
+                className="w-16 h-16 rounded-full object-cover mr-4 border-4 border-white shadow-lg"
               />
-              <div className="flex-1">
-                <h3 className="text-2xl font-bold text-gray-900 font-handwritten">{selectedProfessional.name}</h3>
-                <p className="text-xl text-[#CB748E] font-semibold font-sans">{selectedProfessional.title}</p>
-                <div className="flex items-center mt-2">
-                  <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-                  <span className="text-sm font-bold text-gray-800 font-sans">{selectedProfessional.rating}</span>
-                  <span className="text-sm text-gray-600 ml-1 font-sans">({selectedProfessional.reviewCount} reviews)</span>
-                </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 font-handwritten">{selectedProfessional.name}</h3>
+                <p className="text-[#CB748E] font-semibold font-sans">{selectedProfessional.title}</p>
+                <p className="text-sm text-gray-600 font-sans">{selectedProfessional.location}</p>
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-8">
-              {/* Left Column - Services */}
-              <div className="space-y-6">
-                {/* Consultations */}
-                {consultations.length > 0 && (
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
-                      <UsersIcon className="h-5 w-5 mr-2 text-[#CB748E]" />
-                      Consultations
-                    </h4>
-                    <div className="space-y-3">
-                      {consultations.map((service) => (
-                        <div
-                          key={service.id}
-                          className={`border-2 rounded-2xl p-4 cursor-pointer transition-all duration-300 ${
-                            selectedServices.includes(service.id)
-                              ? 'border-[#CB748E] bg-pink-50'
-                              : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                          }`}
-                          onClick={() => handleServiceToggle(service.id)}
-                        >
-                          <div className="flex justify-between items-start">
-                            <div className="flex-1">
-                              <div className="flex items-center">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedServices.includes(service.id)}
-                                  onChange={() => handleServiceToggle(service.id)}
-                                  className="mr-3 h-4 w-4 text-[#CB748E] focus:ring-[#CB748E] border-gray-300 rounded"
-                                />
-                                <h5 className="font-bold text-gray-800 font-sans">{service.name}</h5>
-                              </div>
-                              <p className="text-sm text-gray-600 mt-2 ml-7 font-sans">{service.description}</p>
-                              <div className="flex items-center mt-3 ml-7 space-x-4">
-                                <div className="flex items-center text-sm text-gray-700 font-sans">
-                                  <Clock className="h-4 w-4 mr-1" />
-                                  {service.duration} min
-                                </div>
-                                <div className="flex items-center text-sm font-bold text-[#698a60] font-sans">
-                                  <DollarSign className="h-4 w-4 mr-1" />
-                                  ₱{service.rate}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Services */}
-                {services.length > 0 && (
-                  <div>
-                    <h4 className="text-xl font-bold text-gray-800 mb-4 font-handwritten flex items-center">
-                      <Award className="h-5 w-5 mr-2 text-[#698a60]" />
-                      Therapy Services
-                    </h4>
-                    <div className="space-y-3">
-                      {services.map((service) => (
-                        <div
-                          key={service.id}
-                          className={`border-2 rounded-2xl p-4 cursor-pointer transition-all duration-300 ${
-                            selectedServices.includes(service.id)
-                              ? 'border-[#698a60] bg-green-50'
-                              : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                          }`}
-                          onClick={() => handleServiceToggle(service.id)}
-                        >
-                          <div className="flex justify-between items-start">
-                            <div className="flex-1">
-                              <div className="flex items-center">
-                                <input
-                                  type="checkbox"
-                                  checked={selectedServices.includes(service.id)}
-                                  onChange={() => handleServiceToggle(service.id)}
-                                  className="mr-3 h-4 w-4 text-[#698a60] focus:ring-[#698a60] border-gray-300 rounded"
-                                />
-                                <h5 className="font-bold text-gray-800 font-sans">{service.name}</h5>
-                              </div>
-                              <p className="text-sm text-gray-600 mt-2 ml-7 font-sans">{service.description}</p>
-                              <div className="flex items-center mt-3 ml-7 space-x-4">
-                                <div className="flex items-center text-sm text-gray-700 font-sans">
-                                  <Clock className="h-4 w-4 mr-1" />
-                                  {service.duration} min
-                                </div>
-                                <div className="flex items-center text-sm font-bold text-[#698a60] font-sans">
-                                  <DollarSign className="h-4 w-4 mr-1" />
-                                  ₱{service.rate}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Right Column - Booking Details */}
-              <div className="space-y-6">
-                {/* Session Type */}
-                <div>
-                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Session Type *</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedSessionType('home-visit')}
-                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
-                        selectedSessionType === 'home-visit'
-                          ? 'border-[#CB748E] bg-pink-50 text-[#CB748E]'
-                          : 'border-gray-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <Home className="h-6 w-6 mx-auto mb-2" />
-                      <div className="font-bold font-sans">Home Visit</div>
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedSessionType('online')}
-                      className={`p-4 rounded-2xl border-2 text-center transition-all duration-300 ${
-                        selectedSessionType === 'online'
-                          ? 'border-[#698a60] bg-green-50 text-[#698a60]'
-                          : 'border-gray-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <Video className="h-6 w-6 mx-auto mb-2" />
-                      <div className="font-bold font-sans">Online</div>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Date Selection */}
-                <div>
-                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Preferred Date *</label>
-                  <input
-                    type="date"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    min={new Date().toISOString().split('T')[0]}
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
-                  />
-                </div>
-
-                {/* Time Selection */}
-                <div>
-                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Preferred Time *</label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {timeSlots.map((time) => (
-                      <button
-                        key={time}
-                        type="button"
-                        onClick={() => setSelectedTime(time)}
-                        className={`p-3 rounded-xl border-2 text-center transition-all duration-300 font-sans ${
-                          selectedTime === time
-                            ? 'border-[#CB748E] bg-pink-50 text-[#CB748E] font-bold'
-                            : 'border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        {time}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Special Requests */}
-                <div>
-                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Special Requests</label>
-                  <textarea
-                    value={specialRequests}
-                    onChange={(e) => setSpecialRequests(e.target.value)}
-                    rows={3}
-                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
-                    placeholder="Any specific needs or requests for the session..."
-                  />
-                </div>
-
-                {/* Total Cost */}
-                {selectedServices.length > 0 && (
-                  <div className="bg-gradient-to-r from-pink-50 to-green-50 rounded-2xl p-6 border border-pink-200">
-                    <h4 className="text-lg font-bold text-gray-800 mb-3 font-handwritten">Booking Summary</h4>
-                    <div className="space-y-2">
-                      {selectedServices.map((serviceId) => {
-                        const service = selectedProfessional.services?.find(s => s.id === serviceId);
-                        return service ? (
-                          <div key={serviceId} className="flex justify-between items-center text-sm font-sans">
-                            <span className="text-gray-700">{service.name}</span>
-                            <span className="font-bold text-gray-800">₱{service.rate}</span>
-                          </div>
-                        ) : null;
-                      })}
-                      <div className="border-t border-gray-300 pt-2 mt-3">
-                        <div className="flex justify-between items-center">
-                          <span className="text-lg font-bold text-gray-800 font-handwritten">Total:</span>
-                          <span className="text-2xl font-bold text-[#698a60] font-handwritten">₱{calculateTotal()}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Child Selection */}
             <div className="space-y-6">
               <div>
-                <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Select Child *</label>
+                <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Select Service</label>
                 <div className="space-y-3">
-                  {parentChildren.map((child) => (
-                    <div
-                      key={child.id}
-                      className={`border-2 rounded-2xl p-4 cursor-pointer transition-all duration-300 ${
-                        selectedChild === child.id
-                          ? 'border-[#CB748E] bg-pink-50'
-                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                      }`}
-                      onClick={() => setSelectedChild(child.id)}
-                    >
-                      <div className="flex items-center">
-                        <input
-                          type="radio"
-                          name="selectedChild"
-                          checked={selectedChild === child.id}
-                          onChange={() => setSelectedChild(child.id)}
-                          className="mr-3 h-4 w-4 text-[#CB748E] focus:ring-[#CB748E] border-gray-300"
-                        />
-                        <div className="flex-1">
-                          <h5 className="font-bold text-gray-800 font-sans">{child.name}</h5>
-                          <p className="text-sm text-gray-600 font-sans">Age {child.age}</p>
-                          <div className="flex flex-wrap gap-1 mt-2">
-                            {child.conditions.map((condition, index) => (
-                              <span key={index} className="px-2 py-1 bg-pink-100 text-[#CB748E] text-xs rounded-full font-semibold font-sans">
-                                {condition}
-                              </span>
-                            ))}
+                  {selectedProfessional.services.map((service) => (
+                    <div key={service.id} className="border border-gray-200 rounded-xl p-4 hover:bg-gray-50 cursor-pointer transition-colors">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-bold text-gray-800 font-handwritten">{service.name}</h4>
+                          <p className="text-sm text-gray-600 font-sans">{service.description}</p>
+                          <div className="flex items-center mt-2 text-sm text-gray-700 font-sans">
+                            <Clock className="h-4 w-4 mr-1" />
+                            {service.duration} minutes
                           </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-lg font-bold text-[#698a60] font-handwritten">₱{service.rate}</p>
+                          <span className={`px-2 py-1 text-xs rounded-full font-semibold font-sans ${
+                            service.type === 'assessment' ? 'bg-blue-100 text-blue-800' :
+                            service.type === 'therapy' ? 'bg-green-100 text-green-800' :
+                            'bg-purple-100 text-purple-800'
+                          }`}>
+                            {service.type}
+                          </span>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex space-x-4 mt-8 pt-6 border-t border-gray-200">
-              <button
-                onClick={handleBookingSubmit}
-                disabled={selectedServices.length === 0 || !selectedSessionType || !selectedDate || !selectedTime}
-                className={`flex-1 px-6 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten ${
-                  selectedServices.length > 0 && selectedSessionType && selectedDate && selectedTime
-                    ? 'bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white hover:from-pink-500 hover:to-green-600'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
-              >
-                <CheckCircle className="h-5 w-5 mr-2" />
-                Book Session (₱{calculateTotal()})
-              </button>
-              <button
-                onClick={handleCloseModal}
-                className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 text-gray-700 flex items-center justify-center font-handwritten"
-              >
-                <X className="h-5 w-5 mr-2" />
-                Cancel
-              </button>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Preferred Date</label>
+                  <input
+                    type="date"
+                    className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans"
+                    min={new Date().toISOString().split('T')[0]}
+                  />
+                </div>
+                
+                <div>
+                  <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Session Type</label>
+                  <select className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent font-sans">
+                    <option value="home-visit">Home Visit</option>
+                    <option value="online">Online Session</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-lg font-bold text-gray-800 mb-3 font-handwritten">Special Requirements</label>
+                <textarea
+                  rows={3}
+                  className="w-full border-2 border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent resize-none font-sans"
+                  placeholder="Any special requirements or notes for the session..."
+                />
+              </div>
+
+              <div className="flex space-x-4">
+                <button
+                  onClick={() => {
+                    setShowBookingModal(false);
+                    onPageChange('bookings');
+                  }}
+                  className="flex-1 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-4 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
+                >
+                  Book Session
+                </button>
+                <button
+                  onClick={() => setShowBookingModal(false)}
+                  className="px-6 py-4 border-2 border-gray-300 rounded-2xl font-bold hover:bg-gray-50 transition-all duration-300 text-gray-700 font-handwritten"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -870,30 +721,9 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-green-50">
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-[#d698ab] via-[#CB748E] to-[#698a60] text-white py-20 relative overflow-hidden">
-        {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -translate-x-16 -translate-y-16"></div>
         <div className="absolute top-4 right-0 w-24 h-24 bg-white bg-opacity-10 rounded-full translate-x-12"></div>
         <div className="absolute bottom-0 right-1/4 w-20 h-20 bg-white bg-opacity-10 rounded-full translate-y-10"></div>
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-white bg-opacity-5 rounded-full"></div>
-        
-        {/* Professional Page Floating Elements */}
-        <div className="absolute top-16 left-12 opacity-25 animate-pulse">
-          <svg width="50" height="50" viewBox="0 0 50 50" fill="none">
-            <circle cx="25" cy="25" r="20" fill="white" opacity="0.8"/>
-            <path d="M25 10V40M10 25H40" stroke="#CB748E" strokeWidth="3"/>
-          </svg>
-        </div>
-        <div className="absolute top-24 right-20 opacity-20 animate-bounce" style={{ animationDelay: '1s' }}>
-          <svg width="45" height="45" viewBox="0 0 45 45" fill="none">
-            <path d="M22.5 5L27 15H37L29.5 21L32 31L22.5 26L13 31L15.5 21L8 15H18L22.5 5Z" fill="white" opacity="0.9"/>
-          </svg>
-        </div>
-        <div className="absolute bottom-16 left-24 opacity-30 animate-float" style={{ animationDelay: '2s' }}>
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <rect x="8" y="8" width="24" height="24" rx="12" fill="white" opacity="0.7"/>
-            <circle cx="20" cy="20" r="6" fill="#698a60"/>
-          </svg>
-        </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
           <div className="flex justify-center items-center mb-6">
@@ -908,78 +738,39 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
           </div>
           
           <div className="max-w-4xl mx-auto">
-            <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4" style={{ fontFamily: 'Calibri, sans-serif' }}>
-              Connect with certified experts who understand your child's unique needs
+            <p className="text-xl md:text-2xl text-white text-opacity-95 mb-4 font-sans">
+              Connect with certified therapists and specialists in Mindanao
             </p>
-            <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed" style={{ fontFamily: 'Calibri, sans-serif' }}>
-              Browse our network of verified professionals including speech therapists, occupational therapists, 
-              developmental pediatricians, and special education teachers ready to support your family's journey.
+            <p className="text-lg md:text-xl text-white text-opacity-90 leading-relaxed font-sans">
+              Browse verified professionals who understand your child's unique needs and can provide 
+              quality developmental support right here in the Philippines.
             </p>
           </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Background floating elements for main content */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-20 left-10 opacity-20 animate-pulse">
-            <img src="/pattern/pattern pink.svg" alt="" className="w-60 h-60" />
-          </div>
-          <div className="absolute top-40 right-16 opacity-18 animate-bounce" style={{ animationDelay: '1.5s' }}>
-            <img src="/pattern/pattern light green.svg" alt="" className="w-56 h-56" />
-          </div>
-          <div className="absolute bottom-32 left-20 opacity-22 animate-float" style={{ animationDelay: '0.8s' }}>
-            <img src="/pattern/pattern dark green.svg" alt="" className="w-52 h-52" />
-          </div>
-        </div>
-
-        {/* Filters */}
-        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-8 border border-white border-opacity-50 font-handwritten relative">
-          {/* Filter section decorative elements */}
-          <div className="absolute -top-3 -right-3 opacity-30">
-            <img src="/pattern/pattern pink.svg" alt="" className="w-32 h-32" />
-          </div>
-          <div className="absolute -bottom-3 -left-3 opacity-25">
-            <img src="/pattern/pattern light green.svg" alt="" className="w-36 h-36" />
-          </div>
-          
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <Filter className="h-6 w-6 text-green-600 mr-3" />
-              <h3 className="text-2xl font-bold text-green-800">Find Your Perfect Match</h3>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Search and Filters */}
+        <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl p-8 mb-10 border border-white border-opacity-50">
+          <div className="grid lg:grid-cols-4 gap-6">
+            <div className="lg:col-span-2">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <input
+                  type="text"
+                  placeholder="Search by name, specialization, or location..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 border-2 border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans"
+                />
+              </div>
             </div>
             
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => setViewMode('thumbnail')}
-                className={`p-2 rounded-lg transition-colors ${
-                  viewMode === 'thumbnail' 
-                    ? 'bg-[#CB748E] text-white' 
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
-              >
-                <Grid className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => setViewMode('table')}
-                className={`p-2 rounded-lg transition-colors ${
-                  viewMode === 'table' 
-                    ? 'bg-[#CB748E] text-white' 
-                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-                }`}
-              >
-                <List className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            <div>
-              <label className="block text-sm font-bold text-green-600 mb-3 font-readable">Specialization</label>
+            <div className="relative">
               <select
                 value={selectedSpecialization}
                 onChange={(e) => setSelectedSpecialization(e.target.value)}
-                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white bg-opacity-95 shadow-lg font-readable backdrop-blur-sm"
+                className="w-full border-2 border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none pr-10"
               >
                 {specializations.map(spec => (
                   <option key={spec} value={spec}>
@@ -987,14 +778,14 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
                   </option>
                 ))}
               </select>
+              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
             </div>
             
-            <div>
-              <label className="block text-sm font-bold text-green-600 mb-3 font-readable">Location</label>
+            <div className="relative">
               <select
                 value={selectedLocation}
                 onChange={(e) => setSelectedLocation(e.target.value)}
-                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white bg-opacity-95 shadow-lg font-readable backdrop-blur-sm"
+                className="w-full border-2 border-gray-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#CB748E] focus:border-transparent bg-white shadow-lg font-sans appearance-none pr-10"
               >
                 {locations.map(location => (
                   <option key={location} value={location}>
@@ -1002,224 +793,179 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
                   </option>
                 ))}
               </select>
+              <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            </div>
+          </div>
+          
+          <div className="flex justify-between items-center mt-6">
+            <div className="flex items-center space-x-4">
+              <label className="text-sm font-bold text-gray-700 font-sans">Sort by:</label>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="border border-gray-300 rounded-xl px-3 py-2 text-sm font-sans"
+              >
+                <option value="rating">Highest Rated</option>
+                <option value="experience">Most Experienced</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name">Name A-Z</option>
+              </select>
             </div>
             
-            <div>
-              <label className="block text-sm font-bold text-green-600 mb-3 font-readable">Availability</label>
-              <select
-                value={selectedAvailability}
-                onChange={(e) => setSelectedAvailability(e.target.value)}
-                className="w-full border-2 border-green-300 rounded-2xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent bg-white bg-opacity-95 shadow-lg font-readable backdrop-blur-sm"
-              >
-                {availabilityOptions.map(option => (
-                  <option key={option} value={option}>
-                    {option === 'all' ? 'Any Time' : option}
-                  </option>
-                ))}
-              </select>
+            <div className="text-sm text-gray-600 font-sans">
+              {sortedProfessionals.length} professionals found
             </div>
           </div>
         </div>
 
         {/* Professionals Grid */}
-        {viewMode === 'thumbnail' ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProfessionals.map((professional) => (
-              <div key={professional.id} className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-3 border border-white border-opacity-50 font-handwritten relative group">
-                {/* Card floating elements */}
-                <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-30 transition-opacity duration-300">
-                  <img src="/pattern/pattern pink.svg" alt="" className="w-28 h-28" />
-                </div>
-                <div className="absolute -bottom-2 -left-2 opacity-0 group-hover:opacity-25 transition-opacity duration-300">
-                  <img src="/pattern/pattern light green.svg" alt="" className="w-32 h-32" />
-                </div>
-                
-                <div className="p-8">
-                  <div className="flex items-center mb-4">
+        <div className="grid lg:grid-cols-2 gap-8">
+          {sortedProfessionals.map((professional) => (
+            <div key={professional.id} className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-lg border border-white border-opacity-50 p-8 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center">
+                  <div className="relative">
                     <img
                       src={professional.avatar}
                       alt={professional.name}
-                      className="w-20 h-20 rounded-full object-cover mr-4 border-4 border-white shadow-xl ring-2 ring-pink-200"
+                      className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
                     />
-                    <div>
-                      <h3 className="text-xl font-bold text-green-800">{professional.name}</h3>
-                      <p className="text-green-600 text-sm font-bold font-readable">{professional.title}</p>
+                    {professional.isVerified && (
+                      <div className="absolute -bottom-1 -right-1 bg-green-500 text-white rounded-full p-1">
+                        <CheckCircle className="h-4 w-4" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-xl font-bold text-gray-900 font-handwritten">{professional.name}</h3>
+                    <p className="text-[#CB748E] font-semibold font-sans">{professional.title}</p>
+                    <div className="flex items-center mt-1">
+                      <MapPin className="h-4 w-4 text-gray-500 mr-1" />
+                      <span className="text-sm text-gray-600 font-sans">{professional.location}</span>
                     </div>
                   </div>
-
-                  <div className="flex items-center mb-3">
-                    <div className="flex items-center">
-                      <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                      <span className="ml-1 text-sm font-bold text-green-800 font-readable">{professional.rating}</span>
-                      <span className="ml-1 text-sm text-green-600 font-readable">({professional.reviewCount} reviews)</span>
-                    </div>
+                </div>
+                
+                <div className="text-right">
+                  <div className="flex items-center mb-1">
+                    <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
+                    <span className="font-bold text-gray-800 font-sans">{professional.rating}</span>
+                    <span className="text-sm text-gray-600 ml-1 font-sans">({professional.reviewCount})</span>
                   </div>
+                  <p className="text-sm text-gray-600 font-sans">{professional.experience} years exp.</p>
+                </div>
+              </div>
 
-                  <div className="flex items-center text-sm text-green-700 mb-3 font-readable">
-                    <MapPin className="h-4 w-4 mr-1" />
-                    {professional.location}
-                  </div>
-
-                  <div className="flex items-center text-sm text-green-700 mb-4 font-readable">
-                    <Clock className="h-4 w-4 mr-1" />
-                    {professional.experience} years experience
-                  </div>
-
-                  <div className="mb-4">
-                    <h4 className="text-sm font-bold text-green-800 mb-3 font-readable">Specializations:</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {professional.specialization.slice(0, 2).map((spec, index) => (
-                        <span
-                          key={index}
-                          className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold font-readable"
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                      {professional.specialization.length > 2 && (
-                        <span className="px-3 py-1 bg-pink-100 text-pink-800 text-xs rounded-full font-semibold font-readable">
-                          +{professional.specialization.length - 2} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between">
-                      <span className="text-sm text-green-600 font-readable">Starting from</span>
-                      <span className="text-xl font-bold text-green-800">₱{professional.hourlyRate}/hr</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center mb-4">
-                    <Award className="h-4 w-4 text-green-600 mr-2" />
-                    <span className="text-sm text-gray-600">
-                      {professional.credentials.slice(0, 2).join(', ')}
-                    </span>
-                  </div>
-
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleBookSession(professional)}
-                      className="flex-1 bg-gradient-to-r from-pink-400 to-green-500 text-white px-4 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl flex items-center justify-center border border-white border-opacity-20"
+              <div className="mb-6">
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {professional.specializations.slice(0, 3).map((spec, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-pink-100 text-[#CB748E] text-sm rounded-full font-semibold font-sans"
                     >
-                      <Calendar className="h-4 w-4 mr-2" />
-                      {user ? 'Book Session' : 'Sign In to Book'}
-                    </button>
-                    <button className="px-4 py-3 border-2 border-green-300 rounded-2xl hover:bg-green-50 transition-all duration-300 transform hover:scale-105 shadow-lg bg-white bg-opacity-80 backdrop-blur-sm">
-                      <MessageCircle className="h-4 w-4 text-green-600" />
-                    </button>
+                      {spec}
+                    </span>
+                  ))}
+                  {professional.specializations.length > 3 && (
+                    <span className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full font-semibold font-sans">
+                      +{professional.specializations.length - 3} more
+                    </span>
+                  )}
+                </div>
+                
+                <p className="text-gray-700 text-sm leading-relaxed font-sans line-clamp-3">{professional.bio}</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="space-y-3">
+                  <div className="flex items-center text-gray-700 font-sans">
+                    <Clock className="h-4 w-4 mr-2 text-[#698a60]" />
+                    <span className="text-sm">Responds in {professional.responseTime}</span>
+                  </div>
+                  
+                  <div className="flex items-center text-gray-700 font-sans">
+                    <Award className="h-4 w-4 mr-2 text-[#CB748E]" />
+                    <span className="text-sm">{professional.completionRate}% completion rate</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  <div className="flex items-center text-gray-700 font-sans">
+                    <Calendar className="h-4 w-4 mr-2 text-gray-500" />
+                    <span className="text-sm">{professional.totalSessions} sessions completed</span>
+                  </div>
+                  
+                  <div className="flex items-center text-gray-700 font-sans">
+                    <span className="text-lg font-bold text-[#698a60] font-handwritten">₱{professional.hourlyRate}/hour</span>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl shadow-xl border border-white border-opacity-50 overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gradient-to-r from-pink-100 to-green-100">
-                  <tr>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Professional</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Specialization</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Rating</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Experience</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Rate</th>
-                    <th className="px-6 py-4 text-left text-sm font-bold text-green-800 font-handwritten">Location</th>
-                    <th className="px-6 py-4 text-center text-sm font-bold text-green-800 font-handwritten">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-200">
-                  {filteredProfessionals.map((professional) => (
-                    <tr key={professional.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <img
-                            src={professional.avatar}
-                            alt={professional.name}
-                            className="w-12 h-12 rounded-full object-cover mr-3 border-2 border-white shadow-lg"
-                          />
-                          <div>
-                            <div className="text-sm font-bold text-gray-900 font-handwritten">{professional.name}</div>
-                            <div className="text-sm text-gray-600 font-sans">{professional.title}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex flex-wrap gap-1">
-                          {professional.specialization.slice(0, 2).map((spec, index) => (
-                            <span
-                              key={index}
-                              className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-semibold font-sans"
-                            >
-                              {spec}
-                            </span>
-                          ))}
-                          {professional.specialization.length > 2 && (
-                            <span className="px-2 py-1 bg-pink-100 text-pink-800 text-xs rounded-full font-semibold font-sans">
-                              +{professional.specialization.length - 2}
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center">
-                          <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-                          <span className="text-sm font-bold text-gray-900 font-sans">{professional.rating}</span>
-                          <span className="text-sm text-gray-600 ml-1 font-sans">({professional.reviewCount})</span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="text-sm text-gray-900 font-sans">{professional.experience} years</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="text-sm font-bold text-gray-900 font-sans">₱{professional.hourlyRate}/hr</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className="text-sm text-gray-900 font-sans">{professional.location}</span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex space-x-2 justify-center">
-                          <button
-                            onClick={() => handleBookSession(professional)}
-                            className="bg-gradient-to-r from-pink-400 to-green-500 text-white px-3 py-2 rounded-lg font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 text-xs font-sans"
-                          >
-                            {user ? 'Book' : 'Sign In'}
-                          </button>
-                          <button className="p-2 border border-green-300 rounded-lg hover:bg-green-50 transition-colors">
-                            <MessageCircle className="h-4 w-4 text-green-600" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
 
-        {filteredProfessionals.length === 0 && (
+              <div className="mb-6">
+                <h4 className="font-bold text-gray-800 mb-2 font-handwritten">Languages:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {professional.languages.map((language, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-green-100 text-[#698a60] text-xs rounded-full font-semibold font-sans"
+                    >
+                      {language}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mb-6">
+                <h4 className="font-bold text-gray-800 mb-2 font-handwritten">Available Days:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {professional.availability.map((day, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full font-semibold font-sans"
+                    >
+                      {day}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex space-x-3">
+                <button
+                  onClick={() => handleBookSession(professional)}
+                  className="flex-1 bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center font-handwritten"
+                >
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Book Session
+                </button>
+                <button className="px-4 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center font-sans">
+                  <User className="h-4 w-4 mr-2" />
+                  View Profile
+                </button>
+                <button className="px-4 py-3 border-2 border-gray-300 rounded-2xl hover:bg-gray-50 transition-all duration-300 text-gray-700 font-bold flex items-center font-sans">
+                  <Phone className="h-4 w-4 mr-2" />
+                  Contact
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {sortedProfessionals.length === 0 && (
           <div className="text-center py-16">
-            <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl relative">
-              <div className="absolute -top-4 -right-4 opacity-25" style={{ transform: 'translateX(21.6rem)' }}>
-                <img src="/pattern/pattern pink.svg" alt="" className="w-108 h-108" />
-              </div>
-              <div className="absolute -bottom-4 -left-4 opacity-20" style={{ transform: 'translateX(-19.2rem)' }}>
-                <img src="/pattern/pattern light green.svg" alt="" className="w-96 h-96" />
-              </div>
-              <div className="text-green-400 mb-6">
-                <Filter className="h-16 w-16 mx-auto" />
-              </div>
-              <h3 className="text-2xl font-bold text-green-800 mb-4 font-handwritten">No professionals found</h3>
-              <p className="text-green-600 mb-6 font-readable">Try adjusting your filters to see more results.</p>
+            <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-3xl p-12 max-w-md mx-auto border border-white border-opacity-50 shadow-xl">
+              <User className="h-20 w-20 text-[#CB748E] mx-auto mb-6" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 font-handwritten">No professionals found</h3>
+              <p className="text-gray-600 mb-6 font-sans">
+                Try adjusting your search criteria or browse all available professionals.
+              </p>
               <button
                 onClick={() => {
+                  setSearchTerm('');
                   setSelectedSpecialization('all');
                   setSelectedLocation('all');
-                  setSelectedAvailability('all');
                 }}
-                className="bg-gradient-to-r from-pink-400 to-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-xl font-handwritten border border-white border-opacity-20"
+                className="bg-gradient-to-r from-[#CB748E] to-[#698a60] text-white px-6 py-3 rounded-2xl font-bold hover:from-pink-500 hover:to-green-600 transition-all duration-300 transform hover:scale-105 shadow-lg font-handwritten"
               >
                 Clear Filters
               </button>
@@ -1230,9 +976,6 @@ export default function ProfessionalsPage({ onPageChange, user, onLogin }: Profe
       
       {/* Booking Modal */}
       <BookingModal />
-      
-      {/* Payment Modal */}
-      <PaymentModal />
     </div>
   );
 }
